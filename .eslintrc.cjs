@@ -5,4 +5,7 @@ module.exports = {
     parser: "@typescript-eslint/parser",
     ecmaVersion: "laster",
   },
+  rules: {
+    "no-undef": "off",
+  },
 };
