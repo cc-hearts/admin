@@ -1,4 +1,5 @@
 import { isDark } from "@/configs";
+import { setTheme } from "@/utils/localStore";
 export function useToggleDark() {
   const el = document.documentElement;
   const token = el.classList;
@@ -9,4 +10,5 @@ export function useToggleDark() {
     token.add("dark");
   }
   isDark.value = !isDark.value;
+  setTheme(isDark.value);
 }
