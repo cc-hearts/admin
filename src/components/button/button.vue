@@ -4,18 +4,25 @@ import { useNamespace } from "@/hooks";
 import { isDark } from "@/configs";
 
 const props = defineProps(buttonProps);
-
+const state = reactive({
+  x: "0px",
+  y: "0px",
+});
 const ns = useNamespace("button");
-// const clickType = ref<classBtnType>();
 const styles = computed(() => {
+  // TODO: size
   const styles = {
     primary: "#65b787",
     "danger-color": "#fff",
     "active-danger-color": "#fff",
+    "active-primary-color": "#fff",
     "flat-color": "#3ecd79a8",
+    "primary-color": "#fff",
     "default-bgc": "transparent",
+    "primary-bgc": "#65b787",
     "danger-bgc": "#ee8079",
     "default-border-color": "#ccc",
+    ...unref(state),
   };
   if (isDark.value) {
     return ns.genCssVar({
@@ -28,12 +35,19 @@ const styles = computed(() => {
     ...styles,
   });
 });
+
+const handleClick = (e: MouseEvent) => {
+  if (props.disabled) return;
+  state["x"] = e.offsetX + "px";
+  state["y"] = e.offsetY + "px";
+};
 </script>
 <template>
   <button
+    ref="btn"
     :class="[ns.cls, ns.e(props.type)]"
     :style="styles"
-    ref="btn"
+    @click="handleClick"
     :disabled="disabled"
   >
     <slot></slot>
@@ -60,7 +74,7 @@ const styles = computed(() => {
   // focus-within属性 后代元素获取到了焦点 则会变成默认主题色
   &:not([disabled]):hover,
   &:not([disabled]):focus-within {
-    @include changeColor(getCssVarName("button", "primary"));
+    @include changeColor(getCssVarName("button", "primary", "bgc"));
   }
 }
 
@@ -70,7 +84,7 @@ const styles = computed(() => {
 }
 
 @mixin primaryMixins(
-  $bgColor: getCssVarName("button", "default", "bgc"),
+  $bgColor: getCssVarName("button", "primary", "bgc"),
   $color: getCssVarName("button", "color")
 ) {
   @include colorAndBgcMixins($color, $bgColor);
@@ -83,7 +97,7 @@ const styles = computed(() => {
   @include colorAndBgcMixins($color, $bgColor);
 }
 
-@mixin gradientMixins($color: getCssVarName("button", "primary")) {
+@mixin gradientMixins($color: getCssVarName("button", "primary", "bgc")) {
   background-image: radial-gradient(
     circle,
     var($color) 10%,
@@ -128,8 +142,8 @@ const styles = computed(() => {
     position: absolute;
     width: 100%;
     height: 100%;
-    left: var(--x, 0);
-    top: var(--y, 0);
+    left: var(getCssVarName("button", "x"), 0);
+    top: var(getCssVarName("button", "y"), 0);
     pointer-events: none;
     background-repeat: no-repeat;
     background-position: 50%;
@@ -159,9 +173,14 @@ const styles = computed(() => {
   }
 
   @include e("primary") {
-    @include primaryMixins;
+    @include primaryMixins(
+      getCssVarName("button", "primary", "bgc"),
+      getCssVarName("button", "primary", "color")
+    );
     &::after {
-      @include gradientMixins(getCssVarName("button", "active", "color"));
+      @include gradientMixins(
+        getCssVarName("button", "active", "primary", "color")
+      );
     }
 
     @include m("disabled") {
@@ -186,7 +205,7 @@ const styles = computed(() => {
 
     &::after {
       @include gradientMixins(
-        getCssVarName("button", "active", "danger", "bgc")
+        getCssVarName("button", "active", "danger", "color")
       );
     }
     @include m("disabled") {
