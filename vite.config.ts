@@ -30,7 +30,7 @@ export default defineConfig({
     }),
     Pages({
       dirs: "src/pages",
-      extensions: ["vue"],
+      extensions: ["vue", "tsx"],
     }),
     Markdown({
       wrapperClasses: "prose prose-sm m-auto text-left",
