@@ -9,7 +9,6 @@ function handleToggleTheme() {
 }
 
 const ns = useNamespace("appearance");
-
 function toggleChecked() {
   checked.value = useIsDark();
 }
@@ -76,7 +75,6 @@ onMounted(() => {
       @include e("check") {
         transform: translate(var(--switch-translate-x));
       }
-
       $is-at-root: true !global;
 
       .sun {

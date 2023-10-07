@@ -2,12 +2,20 @@
 import Headers from "@/components/header/headers.vue";
 import Home from "@/layouts/home";
 import { useInitTheme } from "./hooks/useInitTheme";
+import { ConfigProvider, theme } from 'ant-design-vue'
+import { isDark } from '@/configs'
 useInitTheme();
 </script>
 
 <template>
-  <Headers />
-  <Home />
+    <ConfigProvider
+      :theme="{
+        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+      }"
+    >
+      <Headers />
+      <Home />
+    </ConfigProvider>
 </template>
 
 <style lang="scss">
@@ -21,5 +29,10 @@ html,
 #app {
   width: 100%;
   height: 100%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
 }
 </style>

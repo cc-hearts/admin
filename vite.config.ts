@@ -9,7 +9,8 @@ import Markdown from "vite-plugin-vue-markdown";
 import LinkAttributes from "markdown-it-link-attributes";
 import Shiki from "markdown-it-shiki";
 import AutoImport from "unplugin-auto-import/vite";
-
+import Components from 'unplugin-vue-components/vite';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -27,6 +28,13 @@ export default defineConfig({
       compositionOnly: true,
       fullInstall: true,
       include: [resolve(__dirname, "./src/locales/**")],
+    }),
+    Components({
+      resolvers: [
+        AntDesignVueResolver({
+          importStyle: false, // css in js
+        }),
+      ],
     }),
     Pages({
       dirs: "src/pages",
