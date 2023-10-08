@@ -1,16 +1,35 @@
 import { isDev } from "@/configs";
 import { App } from "vue";
-import { createRouter, createWebHashHistory } from "vue-router";
+import { RouteRecordRaw, createRouter, createWebHashHistory } from "vue-router";
 import routes from "~pages";
 
+const indexRoutes = { path: '/', name: 'home', component: () => import('@/pages/index.vue') }
+
+const filterRouteList = ['/login']
+
+function setupRouter(routes: RouteRecordRaw[]) {
+  const childrenRoute = [] as RouteRecordRaw[], _routes = [] as RouteRecordRaw[]
+  routes.forEach(route => {
+    if (route.path === '/') return
+    if (filterRouteList.includes(route.path)) {
+      _routes.push(route)
+    } else {
+      childrenRoute.push(route)
+    }
+  })
+  Reflect.set(indexRoutes, 'children', childrenRoute)
+  return [indexRoutes, ..._routes]
+}
+
+const _routes = setupRouter(routes)
 export const router = createRouter({
   history: createWebHashHistory(),
-  routes,
+  routes: _routes,
 });
 
 export const setup = ({ app }: { app: App }) => {
   if (isDev) {
-    console.log(routes);
+    console.log(_routes);
   }
   app.use(router);
 };

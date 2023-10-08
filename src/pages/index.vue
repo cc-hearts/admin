@@ -4,7 +4,7 @@ import SideMenu from '@/layouts/menu'
 <template>
   <div class="h-full m-t-1px flex">
     <SideMenu />
-    <div class="flex-1">
+    <div class="flex-1 p-2">
       <router-view />
     </div>
   </div>
