@@ -1,18 +1,43 @@
-# Vue 3 + TypeScript + Vite
+# Admin Project
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Admin Project is a management dashboard project based on Vue and Ant Design Vue. It features the following:
 
-## Recommended IDE Setup
+📦 Out-of-the-box Components: Admin Project provides a wide range of pre-built components that allow you to quickly build powerful management dashboard interfaces.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+🎨 Styling with Unocss and SCSS: Admin Project uses Unocss and SCSS for styling, allowing you to easily customize the appearance and style of the interface.
 
-## Type Support For `.vue` Imports in TS
+🔧 BEM Naming Convention: The project follows the BEM (Block, Element, Modifier) naming convention for styles, ensuring clear and understandable code structure.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+💪 Comprehensive TypeScript Data Types: Admin Project provides comprehensive TypeScript type definitions, enabling static type checking and intelligent auto-completion during development, enhancing code reliability and maintainability.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## Installation and Usage
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+### 1. Install Dependencies
+
+Use the following command to install project dependencies:
+
+```shell
+npm install
+```
+
+### 2. Start Development Server
+
+Run the following command to start the development server:
+
+```shell
+npm run dev
+```
+
+### 3. Access the Application
+
+Open the following link in your browser to access the application:
+
+<http://localhost:5173>
+
+## Contributing
+
+If you have any suggestions or discover any bugs in the Admin Project, feel free to raise an issue or submit a pull request. We welcome your contributions!
+
+## Copyright and License
+
+The Admin Project is released under the [MIT License](./LICENSE). See the license file for more details.

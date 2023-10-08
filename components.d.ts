@@ -23,6 +23,7 @@ declare module 'vue' {
     ATabs: typeof import('ant-design-vue/es')['Tabs']
     Button: typeof import('./src/components/button/button.vue')['default']
     Headers: typeof import('./src/components/header/headers.vue')['default']
+    Ipopover: typeof import('./src/components/header/Ipopover.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ToggleDark: typeof import('./src/components/switch/toggleDark.vue')['default']

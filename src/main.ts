@@ -4,7 +4,7 @@ import 'uno.css'
 import '@/assets/scss/theme.scss'
 import './main.css'
 import './modules/i18n'
-
+import './guards/router.guard'
 const app = createApp(App)
 
 Object.entries(import.meta.glob('./modules/*.ts', { eager: true })).forEach(([, Module]) => {

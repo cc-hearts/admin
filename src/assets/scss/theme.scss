@@ -1,16 +1,18 @@
 :root {
- // text
- --text-color: #303133;
- // background
- --bg-color: #ffffff;
- --bg-color-2: #f5f5f5;
- // text color
- --color-text-1: #141414;
- --color-text-2: #5c5c5c;
- --color-text-3: #909399;
- --color-white: #fff;
- // box
- --box-color-1: rgb(229, 230, 235);
+  // text
+  --text-color: #303133;
+  // background
+  --bg-color: #ffffff;
+  --bg-color-2: #f5f5f5;
+  // text color
+  --color-text-1: #141414;
+  --color-text-2: #5c5c5c;
+  --color-text-3: #909399;
+  --color-white: #fff;
+  // box
+  --box-color-1: rgb(229, 230, 235);
+
+  --cc-popover-hover-bg-color: rgba(0, 0, 0, 0.06);
 }
 
 :root.dark {
@@ -24,6 +26,8 @@
   --color-text-3: rgba(255, 255, 255, 0.5);
 
   --box-color-1: rgb(72, 72, 73);
+
+  --cc-popover-hover-bg-color: rgba(255, 255, 255, 0.12);
 }
 
 html {
