@@ -6,7 +6,7 @@ import SwitchTheme from '../switch/toggleDark.vue'
 import IPopover from './IPopover'
 import LogOut from '@/icons/LogOut.vue'
 import { Modal, Popover } from 'ant-design-vue'
-import { MoreOutlined } from '@ant-design/icons-vue'
+import { MoreOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
 import { clearRefreshToken, clearToken } from '@/storage'
 import { useRouter } from 'vue-router'
 import ArrowUp from '@/icons/arrowUp.vue'
@@ -15,6 +15,7 @@ import I18n from '@/icons/i18n.vue'
 import { loadLanguageAsync } from '@/modules/i18n'
 import { successTips } from '@/utils/message'
 import { setLocates } from '@/storage/locates'
+import { collapsed } from "@/configs";
 
 const router = useRouter()
 const ns = useNamespace('header')
@@ -47,12 +48,21 @@ const handleToggleLocates = async (value: string) => {
   setLocates(value)
   successTips(t('headers.toggleLocatesSuccessMsg'))
 }
+
+const toggleCollapsed = () => {
+  collapsed.value = !collapsed.value
+}
 </script>
 
 <template>
   <header class="flex justify-between items-center px-3 shrink-0" :class="[ns.cls]">
     <slot name="left">
-      <div></div>
+      <div>
+        <a-button @click="toggleCollapsed">
+          <MenuUnfoldOutlined v-if="collapsed" />
+          <MenuFoldOutlined v-else />
+        </a-button>
+      </div>
     </slot>
     <div class="flex text-xl items-center" :class="[ns.e('icon')]">
       <slot name="right-icon"></slot>

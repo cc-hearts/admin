@@ -2,14 +2,13 @@ import { useNamespace } from "@/hooks";
 import { ItemType, Menu } from "ant-design-vue"
 import { MenuInfo } from "ant-design-vue/es/menu/src/interface";
 import { useRouter } from "vue-router";
-
+import { collapsed } from '@/configs'
 import '@/assets/scss/pages/menu.scss'
 
 const menu: ItemType[] = reactive([
   { key: 'deploy', label: 'Deploy' },
 ]);
 
-export const isCollapsed = ref(true);
 export default defineComponent({
   name: "SideMenu",
   setup() {
@@ -19,7 +18,7 @@ export default defineComponent({
       const { key } = params
       router.push(key as string)
     }
-    return () => <nav class={(isCollapsed.value ? 'w-200px ' : "w-80px ") + 'h-full ' + ns.cls}>
+    return () => <nav class={(collapsed.value ? 'w-200px ' : "w-80px ") + 'h-full ' + ns.cls}>
       <Menu items={menu} onClick={handleClickMenu}></Menu>
     </nav>
   }

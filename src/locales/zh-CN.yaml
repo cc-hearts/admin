@@ -3,6 +3,8 @@ pages-index:
   passwordPlaceholder: 请输入密码
   submitButton: 登录
 
+logout: 退出登录
+
 headers:
   title: '确认退出登陆吗？'
   content: '您将被注销并重定向到登录页面'

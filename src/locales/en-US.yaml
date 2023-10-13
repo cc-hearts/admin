@@ -3,6 +3,8 @@ pages-index:
   passwordPlaceholder: Please enter password
   submitButton: Login
 
+logout: Logout
+
 headers:
   title: 'Are you sure to log out?'
   content: 'You will be logged out and redirected to the login page.'
