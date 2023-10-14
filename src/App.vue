@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Headers from "@/components/header/headers.vue";
 import Home from "@/layouts/home";
 import { useInitTheme } from "./hooks/useInitTheme";
 import { ConfigProvider, theme } from 'ant-design-vue'
@@ -13,7 +12,6 @@ useInitTheme();
         algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }"
     >
-      <Headers />
       <Home />
     </ConfigProvider>
 </template>
