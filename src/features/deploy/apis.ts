@@ -2,6 +2,8 @@ import { IPagination } from "@/types";
 import { Get } from "@/utils/request";
 
 const { VITE_DEPLOY_URL } = import.meta.env
+
+const prefix = 'api/deploy'
 interface IGetDeployListReturnType {
   dataSource: Array<{
     id: number
@@ -16,7 +18,7 @@ interface IGetDeployListReturnType {
 }
 
 export function getDeployList<T extends IPagination>(params: T) {
-  const { data } = Get<IGetDeployListReturnType>('deploy', params)
+  const { data } = Get<IGetDeployListReturnType>(`${prefix}/deploy`, params)
   return data
 }
 

@@ -66,4 +66,20 @@ export default defineConfig({
       "@": "/src",
     },
   },
+  server: {
+    proxy: {
+      '/api/rbac': {
+        target: 'http://localhost:30001',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/rbac/, ""),
+
+
+      },
+      '/api/deploy': {
+        target: 'http://localhost:30003',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/deploy/, ""),
+      }
+    }
+  }
 });

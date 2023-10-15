@@ -3,9 +3,11 @@ import type { IBaseResponse } from '@/types'
 import { getToken, getRefreshToken, setToken, setRefreshToken } from '@/storage'
 import { errorMsg } from './message'
 import { refreshTokenApi } from '@/features/user/api'
+import { isDev } from '@/configs'
 export type params = Record<string, any> | FormData
+
 const config = {
-  baseUrl: import.meta.env.VITE_BASE_URL,
+  baseUrl: isDev ? location.origin : import.meta.env.VITE_BASE_URL,
   prefix: import.meta.env.VITE_PREFIX,
 }
 const request = new Request<IBaseResponse>(
