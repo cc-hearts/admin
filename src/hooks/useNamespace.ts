@@ -1,42 +1,40 @@
-import { defaultNamespace } from "@/configs";
+import { defaultNamespace } from '@/configs'
 
 export function useDerivedNamespace(ns?: string) {
-  return ns || defaultNamespace;
+  return ns || defaultNamespace
 }
 
 export function useNamespace(
   block?: string | number,
-  overrideNamespace?: string
+  overrideNamespace?: string,
 ) {
-  const ns = useDerivedNamespace(overrideNamespace);
-  const cls = block ? `${ns}-${block}` : ns;
+  const ns = useDerivedNamespace(overrideNamespace)
+  const cls = block ? `${ns}-${block}` : ns
 
   const b = (blockSuffix?: string) => {
-    return blockSuffix ? `${cls}-${blockSuffix}` : cls;
-  };
+    return blockSuffix ? `${cls}-${blockSuffix}` : cls
+  }
 
   const e = (element?: string) => {
-    return element ? `${cls}__${element}` : cls;
-  };
+    return element ? `${cls}__${element}` : cls
+  }
 
   const m = (modifier?: string) => {
-    return modifier ? `${cls}--${modifier}` : cls;
-  };
+    return modifier ? `${cls}--${modifier}` : cls
+  }
   const be = (blockSuffix?: string, element?: string) => {
-    return (
-      (blockSuffix && element && `${cls}-${blockSuffix}__${element}`) || ""
-    );
-  };
+    return (blockSuffix && element && `${cls}-${blockSuffix}__${element}`) || ''
+  }
 
   const bm = (blockSuffix?: string, modifier?: string) => {
     return (
-      (blockSuffix && modifier && `${cls}-${blockSuffix}--${modifier}`) || ""
-    );
-  };
+      (blockSuffix && modifier && `${cls}-${blockSuffix}--${modifier}`) || ''
+    )
+  }
 
   const em = (element?: string, modifier?: string) => {
-    return (element && modifier && `${cls}__${element}--${modifier}`) || "";
-  };
+    return (element && modifier && `${cls}__${element}--${modifier}`) || ''
+  }
 
   const bem = (blockSuffix?: string, element?: string, modifier?: string) => {
     return (
@@ -44,21 +42,21 @@ export function useNamespace(
         element &&
         modifier &&
         `${cls}-${blockSuffix}__${element}--${modifier}`) ||
-      ""
-    );
-  };
+      ''
+    )
+  }
 
   const genCssVar = (target: Record<string, string>) => {
-    const styles: Record<string, string> = {};
+    const styles: Record<string, string> = {}
     Object.keys(target).forEach((key) => {
       if (target[key]) {
-        styles[`--${cls}-${key}`] = target[key];
+        styles[`--${cls}-${key}`] = target[key]
       }
-    });
-    return styles;
-  };
+    })
+    return styles
+  }
 
-  const getCssVar = (key: string) => `--${cls}-${key}`;
+  const getCssVar = (key: string) => `--${cls}-${key}`
 
   return {
     cls,
@@ -71,7 +69,7 @@ export function useNamespace(
     bem,
     genCssVar,
     getCssVar,
-  };
+  }
 }
 
-export type useNamespace = ReturnType<typeof useNamespace>;
+export type useNamespace = ReturnType<typeof useNamespace>

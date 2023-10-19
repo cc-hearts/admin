@@ -1,10 +1,17 @@
 <template>
   <div class="h-full w-full flex justify-center items-center">
     <div class="w-80 text-center">
-      <Input class="m-b-6" v-model:value="userInfo.username" :placeholder="$t('pages-index.usernamePlaceholder')" />
-      <InputPassword v-model:value="userInfo.password" :placeholder="$t('pages-index.passwordPlaceholder')" />
+      <Input
+        class="m-b-6"
+        v-model:value="userInfo.username"
+        :placeholder="$t('login.usernamePlaceholder')"
+      />
+      <InputPassword
+        v-model:value="userInfo.password"
+        :placeholder="$t('login.passwordPlaceholder')"
+      />
       <Button class="m-t-6" @click="handleSubmit">{{
-        $t('pages-index.submitButton')
+        $t('login.submitButton')
       }}</Button>
     </div>
   </div>

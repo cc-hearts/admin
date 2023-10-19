@@ -11,7 +11,7 @@ const config = {
   prefix: import.meta.env.VITE_PREFIX,
 }
 const request = new Request<IBaseResponse>(
-  [config.baseUrl, config.prefix].join('/')
+  [config.baseUrl, config.prefix].join('/'),
 )
 
 async function getRouter() {
@@ -34,7 +34,7 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
           setRefreshToken(refreshToken)
         }
         const { data: _data } = await Promise.resolve(
-          request.request(url, config.method, config.body, config.interceptor)
+          request.request(url, config.method, config.body, config.interceptor),
         )
         return Promise.resolve(_data)
       }
@@ -65,7 +65,7 @@ export default request
 export function Get<T, U extends params = params>(
   url: string,
   params?: U,
-  requestInit?: RequestInit
+  requestInit?: RequestInit,
 ) {
   return request.Get<IBaseResponse<T>>(url, params, requestInit)
 }
@@ -73,7 +73,7 @@ export function Get<T, U extends params = params>(
 export function Post<T, U extends params = params>(
   url: string,
   params?: U,
-  requestInit?: RequestInit
+  requestInit?: RequestInit,
 ) {
   return request.Post<IBaseResponse<T>>(url, params, requestInit)
 }
@@ -81,7 +81,7 @@ export function Post<T, U extends params = params>(
 export function Put<T, U extends params = params>(
   url: string,
   params?: U,
-  requestInit?: RequestInit
+  requestInit?: RequestInit,
 ) {
   return request.Put<IBaseResponse<T>>(url, params, requestInit)
 }
@@ -89,7 +89,7 @@ export function Put<T, U extends params = params>(
 export function Delete<T, U extends params = params>(
   url: string,
   params?: U,
-  requestInit?: RequestInit
+  requestInit?: RequestInit,
 ) {
   return request.Delete<IBaseResponse<T>>(url, params, requestInit)
 }

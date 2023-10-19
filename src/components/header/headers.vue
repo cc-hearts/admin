@@ -6,7 +6,11 @@ import SwitchTheme from '../switch/toggleDark.vue'
 import IPopover from './IPopover'
 import LogOut from '@/icons/LogOut.vue'
 import { Modal, Popover } from 'ant-design-vue'
-import { MoreOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+import {
+  MoreOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from '@ant-design/icons-vue'
 import { clearRefreshToken, clearToken } from '@/storage'
 import { useRouter } from 'vue-router'
 import ArrowUp from '@/icons/arrowUp.vue'
@@ -15,7 +19,7 @@ import I18n from '@/icons/i18n.vue'
 import { loadLanguageAsync } from '@/modules/i18n'
 import { successTips } from '@/utils/message'
 import { setLocates } from '@/storage/locates'
-import { collapsed } from "@/configs";
+import { collapsed } from '@/configs'
 
 const router = useRouter()
 const ns = useNamespace('header')
@@ -25,10 +29,10 @@ const toGithub = () => {
 const { t } = useI18n()
 const handleLogout = () => {
   Modal.confirm({
-    title: t('headers.title'),
-    content: t('headers.content'),
-    okText: t('headers.okText'),
-    cancelText: t('headers.cancelText'),
+    title: t('components.headers.title'),
+    content: t('components.headers.content'),
+    okText: t('components.headers.okText'),
+    cancelText: t('components.headers.cancelText'),
     onOk() {
       clearToken()
       clearRefreshToken()
@@ -36,7 +40,6 @@ const handleLogout = () => {
     },
   })
 }
-
 
 const locates = [
   { label: '简体中文', value: 'zh-CN' },
@@ -46,7 +49,7 @@ const locates = [
 const handleToggleLocates = async (value: string) => {
   await loadLanguageAsync(value)
   setLocates(value)
-  successTips(t('headers.toggleLocatesSuccessMsg'))
+  successTips(t('components.headers.toggleLocatesSuccessMsg'))
 }
 
 const toggleCollapsed = () => {
@@ -55,7 +58,10 @@ const toggleCollapsed = () => {
 </script>
 
 <template>
-  <header class="flex justify-between items-center px-3 shrink-0" :class="[ns.cls]">
+  <header
+    class="flex justify-between items-center px-3 shrink-0"
+    :class="[ns.cls]"
+  >
     <slot name="left">
       <div>
         <a-button @click="toggleCollapsed">
@@ -74,8 +80,11 @@ const toggleCollapsed = () => {
         <Popover>
           <template #content>
             <template v-for="item in locates" :key="item.value">
-              <div class="cursor-pointer m-y-1 justify-center p-x-2 flex items-center" :class="[ns.e('popover')]"
-                @click="handleToggleLocates(item.value)">
+              <div
+                class="cursor-pointer m-y-1 justify-center p-x-2 flex items-center"
+                :class="[ns.e('popover')]"
+                @click="handleToggleLocates(item.value)"
+              >
                 <span>{{ item.label }}</span>
                 <ArrowUp />
               </div>
@@ -84,12 +93,19 @@ const toggleCollapsed = () => {
           <I18n />
         </Popover>
       </div>
-      <Popover :overlayClassName="ns.e('custom-popover')" placement="bottomRight">
+      <Popover
+        :overlayClassName="ns.e('custom-popover')"
+        placement="bottomRight"
+      >
         <template #content>
-          <div class="flex items-center" :class="[ns.e('popover')]" @click="handleLogout">
+          <div
+            class="flex items-center"
+            :class="[ns.e('popover')]"
+            @click="handleLogout"
+          >
             <LogOut />
             <div class="popover__split"></div>
-            <span>{{ $t('logout') }}</span>
+            <span>{{ $t('common.logout') }}</span>
           </div>
         </template>
         <MoreOutlined />
@@ -112,13 +128,13 @@ const toggleCollapsed = () => {
   &__icon {
     color: var(--color-text-2);
 
-    &>div,
-    &>button,
-    &>span>svg {
+    & > div,
+    & > button,
+    & > span > svg {
       margin: 0 0.2rem;
     }
 
-    &>span {
+    & > span {
       box-sizing: content-box;
       padding: 0.3rem;
       transition: all 0.3s;

@@ -7,10 +7,12 @@ import './modules/i18n'
 import './guards/router.guard'
 const app = createApp(App)
 
-Object.entries(import.meta.glob('./modules/*.ts', { eager: true })).forEach(([, Module]) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  Module.setup?.({ app })
-})
+Object.entries(import.meta.glob('./modules/*.ts', { eager: true })).forEach(
+  ([, Module]) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    Module.setup?.({ app })
+  },
+)
 
 app.mount('#app')

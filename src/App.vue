@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import Home from "@/layouts/home";
-import { useInitTheme } from "./hooks/useInitTheme";
+import Home from '@/layouts/home'
+import { useInitTheme } from './hooks/useInitTheme'
 import { ConfigProvider, theme } from 'ant-design-vue'
 import { isDark } from '@/configs'
-useInitTheme();
+useInitTheme()
 </script>
 
 <template>
-    <ConfigProvider
-      :theme="{
-        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-      }"
-    >
-      <Home />
-    </ConfigProvider>
+  <ConfigProvider
+    :theme="{
+      algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    }"
+  >
+    <Home />
+  </ConfigProvider>
 </template>
 
 <style lang="scss">

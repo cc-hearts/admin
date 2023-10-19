@@ -1,16 +1,14 @@
 @use '../var/variable.scss' as *;
 @use '../common/mixins.scss' as *;
 
-
 @include b('side-menu') {
   --side-menu-color: rgba(5, 5, 5, 0.06);
   border-inline-end: 1px solid var(--side-menu-color);
   transition: all 0.3s ease-in-out;
-  &>ul {
+  & > ul {
     border-inline-end: none !important;
   }
 }
-
 
 .dark {
   @include b('side-menu') {

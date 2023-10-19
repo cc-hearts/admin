@@ -1,16 +1,14 @@
-import { useNamespace } from "@/hooks";
-import { ItemType, Menu } from "ant-design-vue"
-import { MenuInfo } from "ant-design-vue/es/menu/src/interface";
-import { useRouter } from "vue-router";
+import { useNamespace } from '@/hooks'
+import { ItemType, Menu } from 'ant-design-vue'
+import { MenuInfo } from 'ant-design-vue/es/menu/src/interface'
+import { useRouter } from 'vue-router'
 import { collapsed } from '@/configs'
 import '@/assets/scss/pages/menu.scss'
 
-const menu: ItemType[] = reactive([
-  { key: 'deploy', label: 'Deploy' },
-]);
+const menu: ItemType[] = reactive([{ key: 'deploy', label: 'Deploy' }])
 
 export default defineComponent({
-  name: "SideMenu",
+  name: 'SideMenu',
   setup() {
     const ns = useNamespace('side-menu')
     const router = useRouter()
@@ -18,8 +16,12 @@ export default defineComponent({
       const { key } = params
       router.push(key as string)
     }
-    return () => <nav class={(collapsed.value ? 'w-200px ' : "w-80px ") + 'h-full ' + ns.cls}>
-      <Menu items={menu} onClick={handleClickMenu}></Menu>
-    </nav>
-  }
+    return () => (
+      <nav
+        class={(collapsed.value ? 'w-200px ' : 'w-80px ') + 'h-full ' + ns.cls}
+      >
+        <Menu items={menu} onClick={handleClickMenu}></Menu>
+      </nav>
+    )
+  },
 })

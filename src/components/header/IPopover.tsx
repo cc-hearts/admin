@@ -11,7 +11,7 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     return () => (
-<Popover>
+      <Popover>
         {{
           content: () => props.content || slots?.content?.(),
           default: () => (

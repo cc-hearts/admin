@@ -1,8 +1,8 @@
-<script setup lang='ts'>
-import { onMounted, shallowReactive } from 'vue';
-import { definePagination } from '@/utils/pagination';
+<script setup lang="ts">
+import { onMounted, shallowReactive } from 'vue'
+import { definePagination } from '@/utils/pagination'
 import { getDeployList, requestDeploy } from '@/features/deploy/apis'
-import { getApiType } from '@/types/helper';
+import { getApiType } from '@/types/helper'
 
 const tableProps = shallowReactive({
   dataSource: [] as getApiType<typeof getDeployList>['dataSource'],
@@ -10,23 +10,23 @@ const tableProps = shallowReactive({
     {
       title: 'Name',
       dataIndex: 'name',
-      key: "name"
+      key: 'name',
     },
     {
       name: 'Action',
       title: 'Action',
-      dataIndex: "action",
-      key: "action",
-    }
+      dataIndex: 'action',
+      key: 'action',
+    },
   ],
-  total: 0
+  total: 0,
 })
 
 const paginationProps = definePagination()
 
 const handleDeploy = (id: number) => {
   const data = requestDeploy(id)
-  console.log(data);
+  console.log(data)
 }
 
 onMounted(async () => {
@@ -44,11 +44,12 @@ onMounted(async () => {
         <span v-if="column.key === 'action'">
           <a-button type="link">Edit</a-button>
           <a-button type="link">Delete</a-button>
-          <a-button type="link" @click="() => handleDeploy(record.id)">Deploy</a-button>
-
+          <a-button type="link" @click="() => handleDeploy(record.id)"
+            >Deploy</a-button
+          >
         </span>
       </template>
     </a-table>
   </div>
 </template>
-<style lang='scss'></style>
+<style lang="scss"></style>

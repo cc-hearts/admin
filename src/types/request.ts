@@ -6,7 +6,6 @@ export interface IBaseResponse<T = any> {
   timestamp?: string
 }
 
-
 export interface IPagination {
   pageNum: number
   pageSize: number

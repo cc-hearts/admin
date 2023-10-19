@@ -1,5 +1,5 @@
-import { IPagination } from "@/types";
-import { Get } from "@/utils/request";
+import { IPagination } from '@/types'
+import { Get } from '@/utils/request'
 
 const { VITE_DEPLOY_URL } = import.meta.env
 
@@ -13,7 +13,7 @@ interface IGetDeployListReturnType {
     shellCommand: string
     createTime: string
     updateTime: string
-  }>,
+  }>
   total: number
 }
 
