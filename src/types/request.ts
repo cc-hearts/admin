@@ -10,3 +10,8 @@ export interface IPagination {
   pageNum: number
   pageSize: number
 }
+
+export type ITableResponse<T = any> = {
+  dataSource: T[]
+  total: number
+}

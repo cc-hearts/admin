@@ -5,8 +5,20 @@ export const TableProps = buildProps({
     type: Array,
     default: () => [],
   },
+  bordered: {
+    type: Boolean,
+    default: true,
+  },
+  total: {
+    type: Number,
+    default: 0,
+  },
   dataSource: {
     type: Array,
     default: () => [],
+  },
+  loadData: {
+    type: Function,
+    default: () => ({}),
   },
 })
