@@ -1,6 +1,10 @@
 import { buildProps } from '@/utils/props'
 import { PropType } from 'vue'
 
+interface Options {
+  label: string
+  value: any
+}
 export interface Column {
   label: string
   type: string
@@ -9,6 +13,7 @@ export interface Column {
   fixed?: 'left' | 'right'
   slot?: { name: string; [props: string]: any }
   extra?: { [props: string]: any }
+  options?: Options[]
 }
 
 export default buildProps({
@@ -16,8 +21,16 @@ export default buildProps({
     type: String,
     default: 'basic',
   },
+  labelCol: {
+    type: Object,
+    default: () => ({ span: 5 }),
+  },
   columns: {
     type: Array as PropType<Column[]>,
     default: () => [],
+  },
+  defaultValue: {
+    type: Object,
+    default: () => ({}),
   },
 })

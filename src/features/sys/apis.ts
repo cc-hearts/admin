@@ -1,6 +1,6 @@
 import { Get, Post } from '@/utils/request'
 import { sysPrefix } from '@/features/constant/index'
-import { IPagination, ITableResponse } from '@/types'
+import { IPagination } from '@/types'
 
 interface IAddMenu {
   name: string
@@ -12,7 +12,7 @@ interface IAddMenu {
 }
 export default {
   list<T extends IPagination>(params: T) {
-    const { data } = Get<ITableResponse<IAddMenu & { id: number }>>(
+    const { data } = Get<Array<IAddMenu & { children?: IAddMenu[] }>>(
       `${sysPrefix}/menu/list`,
       params,
     )
@@ -22,4 +22,21 @@ export default {
     const { data } = Post(`${sysPrefix}/menu/add`, params)
     return data
   },
+}
+
+export interface IMenuTree {
+  id: number
+  name: string
+  icon: string
+  type: string
+  path: null | string
+  pid: string
+  components: null | string
+  sort: number
+  children?: IMenuTree[]
+}
+
+export function getMenuTree() {
+  const { data } = Post<IMenuTree[]>(`${sysPrefix}/menu/tree`)
+  return data
 }

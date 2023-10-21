@@ -10,6 +10,11 @@ const indexRoutes = {
   component: () => import('@/pages/index.vue'),
 }
 
+const notFoundRoutes = {
+  path: '/:pathMatch(.*)*',
+  name: 'notFound',
+  component: () => import('@/components/not-found/not-found.vue'),
+}
 const filterRouteList = ['/login']
 
 function setupRouter(routes: RouteRecordRaw[]) {
@@ -23,11 +28,12 @@ function setupRouter(routes: RouteRecordRaw[]) {
       childrenRoute.push(route)
     }
   })
+
   Reflect.set(indexRoutes, 'children', childrenRoute)
   return [indexRoutes, ..._routes, ...sysRouters]
 }
 
-const _routes = setupRouter(routes)
+const _routes = setupRouter(routes.concat([notFoundRoutes]))
 export const router = createRouter({
   history: createWebHashHistory(),
   routes: _routes,

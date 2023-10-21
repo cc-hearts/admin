@@ -1,5 +1,5 @@
 import { isDark } from '@/configs'
-import { setTheme } from '@/utils/localStore'
+import { setTheme } from '@/storage/theme'
 export function useToggleDark() {
   const el = document.documentElement
   const token = el.classList

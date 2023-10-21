@@ -7,12 +7,12 @@ import AddMenu from '@/features/sys/add-menu.vue'
 import addMenuApi from '@/features/sys/apis'
 import { IPagination } from '@/types'
 import { getApiType } from '@/types/helper'
+
 const addMenuRef = ref()
-const handleOpenModal = () => {
-  addMenuRef.value.onOpen()
-}
+const tableRef = ref()
+
 const tableProps = reactive({
-  dataSource: [] as getApiType<(typeof addMenuApi)['list']>['dataSource'],
+  dataSource: [] as getApiType<(typeof addMenuApi)['list']>,
   bordered: true,
   columns: markRaw([
     {
@@ -55,15 +55,23 @@ const tableProps = reactive({
   ]),
 })
 
+const handleOpenModal = () => {
+  addMenuRef.value.onOpen()
+}
+
 const loadData = <T extends IPagination>(params: T) => {
   return addMenuApi.list(params).then((res) => {
     const { data } = res
-    if (data) tableProps.dataSource = data.dataSource
+    if (data) tableProps.dataSource = data
   })
+}
+
+const handleSuccessRefresh = () => {
+  tableRef.value.reload()
 }
 </script>
 <template>
-  <Table v-bind="tableProps" :loadData="loadData">
+  <Table ref="tableRef" v-bind="tableProps" :loadData="loadData">
     <template #action>
       <AddModule @click="handleOpenModal" />
       <BatchDelete />
@@ -74,6 +82,6 @@ const loadData = <T extends IPagination>(params: T) => {
       </template>
     </template>
   </Table>
-  <AddMenu ref="addMenuRef" />
+  <AddMenu ref="addMenuRef" @refresh="handleSuccessRefresh" />
 </template>
 <style lang="scss"></style>

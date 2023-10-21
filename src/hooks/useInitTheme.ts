@@ -1,4 +1,4 @@
-import { getTheme } from '@/utils/localStore'
+import { getTheme } from '@/storage/theme'
 import { useIsDark, useToggleDark } from '.'
 
 export function useInitTheme() {

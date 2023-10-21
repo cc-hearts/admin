@@ -32,6 +32,9 @@ onMounted(() => {
 const handleRefresh = () => {
   loadData()
 }
+defineExpose({
+  reload: loadData,
+})
 </script>
 <template>
   <div class="m-b-2 flex items-center">
