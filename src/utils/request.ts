@@ -1,9 +1,9 @@
-import { Request } from '@cc-heart/utils-client'
-import type { IBaseResponse } from '@/types'
-import { getToken, getRefreshToken, setToken, setRefreshToken } from '@/storage'
-import { errorMsg } from './message'
-import { refreshTokenApi } from '@/features/user/api'
 import { isDev } from '@/configs'
+import { refreshTokenApi } from '@/features/user/api'
+import { getRefreshToken, getToken, setRefreshToken, setToken } from '@/storage'
+import type { IBaseResponse } from '@/types'
+import { Request } from '@cc-heart/utils-client'
+import { errorMsg } from './message'
 export type params = Record<string, any> | FormData
 
 const config = {

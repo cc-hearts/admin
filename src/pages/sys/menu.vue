@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import Table from '@/components/table/table.vue'
 import AddModule from '@/features/components/button/AddModule.vue'
 import BatchDelete from '@/features/components/button/BatchDelete.vue'
@@ -7,6 +6,8 @@ import AddMenu from '@/features/sys/add-menu.vue'
 import addMenuApi from '@/features/sys/apis'
 import { IPagination } from '@/types'
 import { getApiType } from '@/types/helper'
+import { TableColumnType } from 'ant-design-vue'
+import { ref } from 'vue'
 
 const addMenuRef = ref()
 const tableRef = ref()
@@ -50,7 +51,7 @@ const tableProps = reactive({
       dataIndex: 'action',
       align: 'center',
     },
-  ]),
+  ] as TableColumnType[]),
 })
 
 const handleOpenModal = () => {

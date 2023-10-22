@@ -1,6 +1,6 @@
-import { ref } from 'vue'
 import { useIsDark } from '@/hooks'
 import { getMenuCollapse, setMenuCollapse } from '@/storage/collapse'
+import { ref } from 'vue'
 export const defaultNamespace = 'cc'
 
 export const isDark = ref(useIsDark())

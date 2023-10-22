@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import Form from '@/components/form/form.vue'
-import Modal from '@/components/modal/modal.vue'
-import { defineModal } from '@/components/modal/modal-helper'
 import { Column } from '@/components/form/form'
+import Form from '@/components/form/form.vue'
+import { defineModal } from '@/components/modal/modal-helper'
+import Modal from '@/components/modal/modal.vue'
 import { menuType } from '@/configs/dict'
-import addMenuApi, { getMenuTree } from './apis'
 import { RadioChangeEvent } from 'ant-design-vue'
+import { ref } from 'vue'
+import addMenuApi, { getMenuTree } from './apis'
 const modalProps = defineModal({ title: '新增菜单' })
 const formRef = ref()
 const menuOptions = ref<{ label: string; value: string | number }[]>([])

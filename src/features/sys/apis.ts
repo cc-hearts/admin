@@ -1,6 +1,6 @@
-import { Get, Post } from '@/utils/request'
 import { sysPrefix } from '@/features/constant/index'
 import { IPagination } from '@/types'
+import { Get, Post } from '@/utils/request'
 
 interface IAddMenu {
   name: string

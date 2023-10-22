@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import SideMenu from '@/layouts/menu'
+import IPopover from '@/components/header/IPopover'
 import Headers from '@/components/header/headers.vue'
 import Module from '@/icons/module.vue'
-import IPopover from '@/components/header/IPopover'
+import SideMenu from '@/layouts/menu'
 </script>
 <template>
   <div class="h-full m-t-1px flex">

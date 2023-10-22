@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { SettingOutlined, SyncOutlined } from '@ant-design/icons-vue'
 import { noop } from '@cc-heart/utils'
-import { TableProps } from './props'
-import ColumnsOperation from './columns-operation.vue'
-import { SyncOutlined, SettingOutlined } from '@ant-design/icons-vue'
-import { DataIndex } from 'ant-design-vue/es/vc-table/interface'
 import { TableColumnType } from 'ant-design-vue'
+import { DataIndex } from 'ant-design-vue/es/vc-table/interface'
+import ColumnsOperation from './columns-operation.vue'
+import { TableProps } from './props'
 
 const props = defineProps(TableProps)
 const state = reactive({

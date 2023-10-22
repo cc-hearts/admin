@@ -18,12 +18,10 @@
 </template>
 
 <script setup lang="ts">
-import { InputPassword, Button, Input } from 'ant-design-vue'
-import { reactive } from 'vue'
 import { loginApi } from '@/features/user/api'
-import { setToken, setRefreshToken } from '@/storage'
-import { onMounted } from 'vue'
-import { onUnmounted } from 'vue'
+import { setRefreshToken, setToken } from '@/storage'
+import { Button, Input, InputPassword } from 'ant-design-vue'
+import { onMounted, onUnmounted, reactive } from 'vue'
 // @ts-ignore
 import md5 from 'md5'
 import { useRouter } from 'vue-router'

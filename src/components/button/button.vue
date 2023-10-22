@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { buttonProps } from './button'
-import { useNamespace } from '@/hooks'
 import { isDark } from '@/configs'
+import { useNamespace } from '@/hooks'
+import { buttonProps } from './button'
 
 const props = defineProps(buttonProps)
 const state = reactive({

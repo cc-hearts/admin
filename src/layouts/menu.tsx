@@ -1,10 +1,10 @@
+import '@/assets/scss/pages/menu.scss'
+import { collapsed } from '@/configs'
+import { getMenuTree, type IMenuTree } from '@/features/sys/apis'
 import { useNamespace } from '@/hooks'
 import { Menu } from 'ant-design-vue'
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface'
 import { useRouter } from 'vue-router'
-import { collapsed } from '@/configs'
-import { type IMenuTree, getMenuTree } from '@/features/sys/apis'
-import '@/assets/scss/pages/menu.scss'
 
 export default defineComponent({
   name: 'SideMenu',

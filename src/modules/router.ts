@@ -1,8 +1,8 @@
 import { isDev } from '@/configs'
+import { sysRouters } from '@/configs/router'
 import { App } from 'vue'
 import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
 import routes from '~pages'
-import { sysRouters } from '@/configs/router'
 
 const indexRoutes = {
   path: '/',

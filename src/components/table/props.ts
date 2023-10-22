@@ -1,6 +1,6 @@
 import { buildProps } from '@/utils/props'
-import { PropType } from 'vue'
 import { type TableColumnType } from 'ant-design-vue'
+import { PropType } from 'vue'
 export const TableProps = buildProps({
   columns: {
     type: Array as PropType<TableColumnType[]>,

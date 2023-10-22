@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useIsDark, useNamespace, useToggleDark } from '@/hooks'
+import { MoonIcon, SunIcon } from '@/icons'
 import { onMounted, ref } from 'vue'
-import { useIsDark, useToggleDark, useNamespace } from '@/hooks'
-import { SunIcon, MoonIcon } from '@/icons'
 const checked = ref(false)
 function handleToggleTheme() {
   useToggleDark()

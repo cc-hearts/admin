@@ -1,25 +1,24 @@
 <script setup lang="ts">
+import { collapsed, githubUrl } from '@/configs'
 import { useNamespace } from '@/hooks'
 import { GithubIcon } from '@/icons'
-import { githubUrl } from '@/configs'
-import SwitchTheme from '../switch/toggleDark.vue'
-import IPopover from './IPopover'
 import LogOut from '@/icons/LogOut.vue'
-import { Modal, Popover } from 'ant-design-vue'
-import {
-  MoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons-vue'
-import { clearRefreshToken, clearToken } from '@/storage'
-import { useRouter } from 'vue-router'
 import ArrowUp from '@/icons/arrowUp.vue'
-import { useI18n } from 'vue-i18n'
 import I18n from '@/icons/i18n.vue'
 import { loadLanguageAsync } from '@/modules/i18n'
-import { successTips } from '@/utils/message'
+import { clearRefreshToken, clearToken } from '@/storage'
 import { setLocates } from '@/storage/locates'
-import { collapsed } from '@/configs'
+import { successTips } from '@/utils/message'
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  MoreOutlined,
+} from '@ant-design/icons-vue'
+import { Modal, Popover } from 'ant-design-vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import SwitchTheme from '../switch/toggleDark.vue'
+import IPopover from './IPopover'
 
 const router = useRouter()
 const ns = useNamespace('header')

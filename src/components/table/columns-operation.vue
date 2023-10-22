@@ -1,8 +1,8 @@
 <script setup lang="ts" name="ColumnsOperation">
-import draggable from 'vuedraggable'
 import DragSort from '@/icons/dragSort.vue'
-import { PropType } from 'vue'
 import { TableColumnType } from 'ant-design-vue'
+import { PropType } from 'vue'
+import draggable from 'vuedraggable'
 const props = defineProps({
   columns: {
     type: Array as PropType<TableColumnType[]>,

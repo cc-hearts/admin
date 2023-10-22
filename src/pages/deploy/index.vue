@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, shallowReactive } from 'vue'
-import { definePagination } from '@/utils/pagination'
 import { getDeployList, requestDeploy } from '@/features/deploy/apis'
 import { getApiType } from '@/types/helper'
+import { definePagination } from '@/utils/pagination'
+import { onMounted, shallowReactive } from 'vue'
 
 const tableProps = shallowReactive({
   dataSource: [] as getApiType<typeof getDeployList>['dataSource'],

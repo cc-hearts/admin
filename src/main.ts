@@ -1,10 +1,10 @@
+import '@/assets/scss/theme.scss'
+import 'uno.css'
 import { createApp } from 'vue'
 import App from './App.vue'
-import 'uno.css'
-import '@/assets/scss/theme.scss'
+import './guards/router.guard'
 import './main.css'
 import './modules/i18n'
-import './guards/router.guard'
 const app = createApp(App)
 
 Object.entries(import.meta.glob('./modules/*.ts', { eager: true })).forEach(
