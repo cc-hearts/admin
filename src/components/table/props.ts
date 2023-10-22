@@ -1,8 +1,9 @@
 import { buildProps } from '@/utils/props'
-
+import { PropType } from 'vue'
+import { type TableColumnType } from 'ant-design-vue'
 export const TableProps = buildProps({
   columns: {
-    type: Array,
+    type: Array as PropType<TableColumnType[]>,
     default: () => [],
   },
   bordered: {
@@ -20,5 +21,13 @@ export const TableProps = buildProps({
   loadData: {
     type: Function,
     default: () => ({}),
+  },
+  rowSelection: {
+    type: Object,
+    default: null,
+  },
+  rowKey: {
+    type: String,
+    default: 'id',
   },
 })

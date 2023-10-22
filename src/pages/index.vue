@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import SideMenu from '@/layouts/menu'
 import Headers from '@/components/header/headers.vue'
+import Module from '@/icons/module.vue'
+import IPopover from '@/components/header/IPopover'
 </script>
 <template>
   <div class="h-full m-t-1px flex">
     <SideMenu />
     <div class="flex-1 flex flex-col">
-      <Headers />
-      <div class="p-2 flex-1">
+      <Headers>
+        <template #right-icon>
+          <IPopover :content="$t('common.config')">
+            <Module />
+          </IPopover>
+        </template>
+      </Headers>
+      <div class="p-2 flex-1 bg-main">
         <router-view />
       </div>
     </div>

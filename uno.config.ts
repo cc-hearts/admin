@@ -8,4 +8,12 @@ export default defineConfig({
     presetUno(),
     // ...custom presets
   ],
+  rules: [
+    [
+      'bg-main',
+      {
+        'background-color': 'var(--main-background-color)',
+      },
+    ],
+  ],
 })

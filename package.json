@@ -31,7 +31,8 @@
     "vite-plugin-vue-markdown": "^0.23.4",
     "vue": "^3.2.47",
     "vue-i18n": "^9.2.2",
-    "vue-router": "^4.2.0"
+    "vue-router": "^4.2.0",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@ant-design/icons-vue": "^7.0.1",

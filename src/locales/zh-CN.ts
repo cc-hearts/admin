@@ -10,6 +10,7 @@ Object.values(import.meta.glob('/src/**/locales/zh-CN.ts')).forEach(
 )
 const common = {
   logout: '退出登录',
+  config: '配置',
 }
 
 Object.assign(zhCNLocale, {

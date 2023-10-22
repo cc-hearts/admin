@@ -13,6 +13,8 @@
   --box-color-1: rgb(229, 230, 235);
 
   --cc-popover-hover-bg-color: rgba(0, 0, 0, 0.06);
+
+  --main-background-color: rgb(240, 242, 245);
 }
 
 :root.dark {
@@ -28,6 +30,8 @@
   --box-color-1: rgb(72, 72, 73);
 
   --cc-popover-hover-bg-color: rgba(255, 255, 255, 0.12);
+
+  --main-background-color: rgb(33, 33, 33);
 }
 
 html {

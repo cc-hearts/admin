@@ -18,13 +18,11 @@ const tableProps = reactive({
     {
       title: '菜单名称',
       dataIndex: 'name',
-      width: 100,
       align: 'center',
     },
     {
       title: '图标',
       dataIndex: 'icon',
-      width: 100,
       align: 'center',
     },
     {
@@ -71,17 +69,30 @@ const handleSuccessRefresh = () => {
 }
 </script>
 <template>
-  <Table ref="tableRef" v-bind="tableProps" :loadData="loadData">
-    <template #action>
-      <AddModule @click="handleOpenModal" />
-      <BatchDelete />
-    </template>
-    <template #bodyCell="{ column }">
-      <template v-if="column.dataIndex === 'action'">
-        <a-button type="link">编辑</a-button>
+  <a-card>
+    <Table
+      ref="tableRef"
+      v-bind="tableProps"
+      :row-selection="{}"
+      :loadData="loadData"
+    >
+      <template #action>
+        <AddModule @click="handleOpenModal" />
+        <BatchDelete />
       </template>
-    </template>
-  </Table>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'path'">
+          {{ record.path || '-' }}
+        </template>
+        <template v-if="column.dataIndex === 'components'">
+          {{ record.components || '-' }}
+        </template>
+        <template v-if="column.dataIndex === 'action'">
+          <a-button type="link">编辑</a-button>
+        </template>
+      </template>
+    </Table>
+  </a-card>
   <AddMenu ref="addMenuRef" @refresh="handleSuccessRefresh" />
 </template>
 <style lang="scss"></style>

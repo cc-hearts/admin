@@ -10,6 +10,7 @@ Object.values(import.meta.glob('/src/**/locales/en-US.ts')).forEach(
 )
 const common = {
   logout: 'Logout',
+  config: 'Config',
 }
 
 Object.assign(enUsLocale, {
