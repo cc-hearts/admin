@@ -1,12 +1,20 @@
 import { isDev } from '@/configs'
-import { getProfile } from '@/features/user/api'
+import { getProfile as fetchProfile } from '@/features/user/api'
 import { router } from '@/modules/router'
+import { getProfile, setProfile } from '@/store/profile'
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // TODO
   if (isDev) {
     console.log('router.beforeEach', to, from)
   }
-  getProfile()
+  if (getProfile() === null) {
+    try {
+      const { data } = await fetchProfile()
+      data && setProfile(data)
+    } catch (e) {
+      console.log('e')
+    }
+  }
   next()
 })

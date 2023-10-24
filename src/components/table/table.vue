@@ -16,8 +16,9 @@ const state = reactive({
 const selections = reactive({
   selectedRowKeys: [] as string[],
   selectedRows: [] as any[],
-  onChange: (selectedRowKeys: string[]) => {
+  onChange: (selectedRowKeys: string[], selectedRows: any[]) => {
     selections.selectedRowKeys = selectedRowKeys
+    selections.selectedRows = selectedRows
   },
 })
 
@@ -70,6 +71,13 @@ const tableColumns = computed(() => {
   )
 })
 
+const resetSelection = () => {
+  selections.onChange([], [])
+  if (props.rowSelection?.onChange) {
+    props.rowSelection.onChange([], [])
+  }
+}
+
 watchEffect(() => {
   handleResetColumns()
 })
@@ -102,7 +110,7 @@ defineExpose({
       <template #message>
         <span>已选择</span>
         <a-button size="small" type="text">{{ getSelectedLength() }}</a-button>
-        <a-button type="link">清空</a-button>
+        <a-button type="link" @click="resetSelection">清空</a-button>
       </template>
     </a-alert>
   </div>
@@ -113,7 +121,7 @@ defineExpose({
     :dataSource="props.dataSource"
     :bordered="props.bordered"
     :row-key="props.rowKey"
-    :row-selection="props.rowSelection"
+    :row-selection="props.rowSelection || selections"
   >
     <template #bodyCell="records">
       <slot name="bodyCell" v-bind="records" />

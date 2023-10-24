@@ -3,7 +3,7 @@ import Table from '@/components/table/table.vue'
 import AddModule from '@/features/components/button/AddModule.vue'
 import BatchDelete from '@/features/components/button/BatchDelete.vue'
 import AddMenu from '@/features/sys/add-menu.vue'
-import addMenuApi from '@/features/sys/apis'
+import menuApi from '@/features/sys/apis'
 import { IPagination } from '@/types'
 import { getApiType } from '@/types/helper'
 import { TableColumnType } from 'ant-design-vue'
@@ -13,7 +13,7 @@ const addMenuRef = ref()
 const tableRef = ref()
 
 const tableProps = reactive({
-  dataSource: [] as getApiType<(typeof addMenuApi)['list']>,
+  dataSource: [] as getApiType<(typeof menuApi)['list']>,
   bordered: true,
   columns: markRaw([
     {
@@ -59,7 +59,7 @@ const handleOpenModal = () => {
 }
 
 const loadData = <T extends IPagination>(params: T) => {
-  return addMenuApi.list(params).then((res) => {
+  return menuApi.list(params).then((res) => {
     const { data } = res
     if (data) tableProps.dataSource = data
   })
@@ -68,15 +68,19 @@ const loadData = <T extends IPagination>(params: T) => {
 const handleSuccessRefresh = () => {
   tableRef.value.reload()
 }
+
+const handleDeleteMenus = async (ids: (string | number)[]) => {
+  const params = {
+    id: ids.map((target) => String(target)),
+  }
+
+  await menuApi.deleteMenus(params)
+  handleSuccessRefresh()
+}
 </script>
 <template>
   <a-card>
-    <Table
-      ref="tableRef"
-      v-bind="tableProps"
-      :row-selection="{}"
-      :loadData="loadData"
-    >
+    <Table ref="tableRef" v-bind="tableProps" :loadData="loadData">
       <template #action>
         <AddModule @click="handleOpenModal" />
         <BatchDelete />
@@ -90,6 +94,10 @@ const handleSuccessRefresh = () => {
         </template>
         <template v-if="column.dataIndex === 'action'">
           <a-button type="link">编辑</a-button>
+          <a-divider type="vertical" />
+          <a-button type="link" danger @click="handleDeleteMenus([record.id])"
+            >删除</a-button
+          >
         </template>
       </template>
     </Table>

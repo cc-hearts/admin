@@ -8,6 +8,7 @@ import I18n from '@/icons/i18n.vue'
 import { loadLanguageAsync } from '@/modules/i18n'
 import { clearRefreshToken, clearToken } from '@/storage'
 import { setLocates } from '@/storage/locates'
+import { type Locales } from '@/types/config'
 import { successTips } from '@/utils/message'
 import {
   MenuFoldOutlined,
@@ -43,9 +44,9 @@ const handleLogout = () => {
 const locates = [
   { label: '简体中文', value: 'zh-CN' },
   { label: 'English', value: 'en-US' },
-]
+] as const
 
-const handleToggleLocates = async (value: string) => {
+const handleToggleLocates = async (value: Locales) => {
   await loadLanguageAsync(value)
   setLocates(value)
   successTips(t('components.headers.toggleLocatesSuccessMsg'))

@@ -3,7 +3,7 @@ import { refreshTokenApi } from '@/features/user/api'
 import { getRefreshToken, getToken, setRefreshToken, setToken } from '@/storage'
 import type { IBaseResponse } from '@/types'
 import { Request } from '@cc-heart/utils-client'
-import { errorMsg } from './message'
+import { errorMsg, successMsg } from './message'
 export type params = Record<string, any> | FormData
 
 const config = {
@@ -14,6 +14,8 @@ const request = new Request<IBaseResponse>(
   [config.baseUrl, config.prefix].join('/'),
 )
 
+const tipsPathList = ['add', 'delete', 'update', 'edit']
+
 async function getRouter() {
   return import('../modules/router')
 }
@@ -21,6 +23,11 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
   const { message, code } = data
   const { router } = await getRouter()
   if ([200].includes(code)) {
+    const { pathname } = new URL(url)
+    const [path] = pathname.split('/').slice(-1)
+    if (tipsPathList.includes(path)) {
+      successMsg(message)
+    }
     return Promise.resolve(data)
   }
   if ([401].includes(code)) {

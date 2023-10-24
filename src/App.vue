@@ -1,9 +1,21 @@
 <script setup lang="ts">
+import { isDark, locales } from '@/configs'
 import Home from '@/layouts/home'
-import { useInitTheme } from './hooks/useInitTheme'
 import { ConfigProvider, theme } from 'ant-design-vue'
-import { isDark } from '@/configs'
+import enUS from 'ant-design-vue/es/calendar/locale/en_US'
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import { useInitTheme } from './hooks/useInitTheme'
+
+const localesMap = {
+  'zh-CN': zhCN,
+  'en-US': enUS,
+}
+
 useInitTheme()
+
+const antLocale = computed(() => {
+  return localesMap[locales.value] || zhCN
+})
 </script>
 
 <template>
@@ -11,6 +23,7 @@ useInitTheme()
     :theme="{
       algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
     }"
+    :locale="antLocale"
   >
     <Home />
   </ConfigProvider>
