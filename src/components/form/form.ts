@@ -33,4 +33,8 @@ export default buildProps({
     type: Object,
     default: () => ({}),
   },
+  rules: {
+    type: Object,
+    default: () => ({}),
+  },
 })

@@ -51,7 +51,7 @@ export default defineComponent({
         <Menu
           items={state.menu}
           mode="inline"
-          inline-collapsed={false}
+          inline-collapsed={!collapsed.value}
           onClick={handleClickMenu}
         ></Menu>
       </nav>

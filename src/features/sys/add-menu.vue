@@ -5,6 +5,7 @@ import { defineModal } from '@/components/modal/modal-helper'
 import Modal from '@/components/modal/modal.vue'
 import { menuType } from '@/configs/dict'
 import { RadioChangeEvent } from 'ant-design-vue'
+import SelectIcon from '@/features/components/icon/selectIcon.vue'
 import { ref } from 'vue'
 import addMenuApi, { getMenuTree } from './apis'
 const modalProps = defineModal({ title: '新增菜单' })
@@ -33,7 +34,7 @@ function handleChangeFormColumns(e: RadioChangeEvent) {
   const menuNameIndex = formColumn.findIndex((item) => item.name === 'name')
   formColumn[menuNameIndex].label = value === '0' ? '目录名称' : '菜单名称'
   switch (value) {
-    case '0':
+    case '0': {
       const pathIndex = formColumn.findIndex((item) => item.name === 'path')
       formColumn.splice(pathIndex, 1)
       const componentsIndex = formColumn.findIndex(
@@ -41,7 +42,8 @@ function handleChangeFormColumns(e: RadioChangeEvent) {
       )
       formColumn.splice(componentsIndex, 1)
       break
-    case '1':
+    }
+    case '1': {
       const pidIndex = formColumn.findIndex((item) => item.name === 'pid')
       formColumn.splice(
         pidIndex + 1,
@@ -58,6 +60,11 @@ function handleChangeFormColumns(e: RadioChangeEvent) {
         },
       )
       break
+    }
+
+    default: {
+      break
+    }
   }
 }
 const formColumn: Column[] = shallowReactive([
@@ -88,6 +95,7 @@ const formColumn: Column[] = shallowReactive([
     type: 'input',
     name: 'icon',
     label: '图标',
+    slot: { name: 'icon' },
   },
   {
     type: 'input-number',
@@ -99,6 +107,10 @@ const formColumn: Column[] = shallowReactive([
 const emits = defineEmits<{ (event: 'refresh'): void }>()
 
 const handleOk = async () => {
+  const bool = await formRef.value.validate()
+  if (!bool) {
+    return
+  }
   const val = formRef.value.getFieldsValue()
   await addMenuApi.addMenu(val)
   modalProps.visible = false
@@ -109,12 +121,12 @@ defineExpose({
 })
 </script>
 <template>
-  <Modal
-    v-bind="modalProps"
-    v-model:visible="modalProps.visible"
-    @ok="handleOk"
-  >
-    <Form ref="formRef" :columns="formColumn" :default-value="defaultValue" />
+  <Modal v-bind="modalProps" v-model:visible="modalProps.visible" @ok="handleOk">
+    <Form ref="formRef" :columns="formColumn" :default-value="defaultValue">
+      <template #icon="{ formState }">
+        <SelectIcon v-model:modal-value="formState.icon" />
+      </template>
+    </Form>
   </Modal>
 </template>
 <style lang="scss"></style>

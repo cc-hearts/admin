@@ -8,17 +8,37 @@ const formState = ref({ ...props.defaultValue })
 const getFieldsValue = () => {
   return formState.value
 }
+const setFieldsValue = (key: keyof typeof formState.value, val: any) => {
+  formState.value[key] = val
+}
+const formRef = ref()
+
+const validate = async () => {
+  try {
+    await formRef.value.validate()
+  } catch (e) {
+    return false
+  }
+  return true
+}
 
 defineExpose({
   getFieldsValue,
+  setFieldsValue,
+  validate,
 })
 </script>
 <template>
-  <a-form :label-col="props.labelCol" :model="formState" :name="props.name">
+  <a-form
+    ref="formRef"
+    :label-col="props.labelCol"
+    :model="formState"
+    :name="props.name"
+  >
     <template v-for="item in props.columns">
       <a-form-item :label="item.label" :name="item.name">
         <template v-if="item.slot">
-          <slot :name="item.slot.name" />
+          <slot :name="item.slot.name" :formState="formState" />
         </template>
         <template v-else-if="item.type === 'input'">
           <a-input

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { noop } from '@cc-heart/utils'
+
 const props = defineProps({
   title: String,
   visible: Boolean,
@@ -9,6 +11,10 @@ const props = defineProps({
   cancelText: {
     type: String,
     default: '取消',
+  },
+  onCancel: {
+    type: Function as PropType<() => any>,
+    default: noop,
   },
 })
 const handleOk = () => {

@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "icon": "ts-node-esm ./scripts/genIcons/generatorIcon.ts"
   },
   "dependencies": {
     "@cc-heart/eslint-config": "^0.0.5",
@@ -50,8 +51,7 @@
   },
   "lint-staged": {
     "*.{vue,js,ts,jsx,tsx,json}": [
-      "eslint --fix",
-      "prettier --write"
+      "eslint --fix"
     ],
     "*.{md}": "prettier --write"
   }

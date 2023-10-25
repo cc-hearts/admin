@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 
-interface ModalProps {
+export interface ModalProps {
   visible: boolean
   title: string
   okText: string
