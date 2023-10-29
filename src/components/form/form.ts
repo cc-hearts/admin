@@ -1,6 +1,5 @@
 import { buildProps } from '@/utils/props'
 import { PropType } from 'vue'
-
 interface Options {
   label: string
   value: any
@@ -14,6 +13,14 @@ export interface Column {
   slot?: { name: string; [props: string]: any }
   extra?: { [props: string]: any }
   options?: Options[]
+}
+
+export interface FormExpose {
+  validate: () => Promise<boolean>
+  getFieldsValue: <T extends Record<PropertyKey, any>>() => T
+  setFieldValue: (key: PropertyKey, value: any) => void
+  setFieldsValue: (target: Record<PropertyKey, any>) => void
+  resetFields: () => void
 }
 
 export default buildProps({

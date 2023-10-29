@@ -1,11 +1,12 @@
 import '@/assets/scss/pages/menu.scss'
-import { collapsed } from '@/configs'
+import { collapsed, defaultMenuIconName } from '@/configs'
+import { getIconFunc } from '@/features/components/icon/install'
 import { getMenuTree, type IMenuTree } from '@/features/sys/apis'
 import { useNamespace } from '@/hooks'
 import { Menu } from 'ant-design-vue'
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface'
 import { useRouter } from 'vue-router'
-
+import { CustomerComponent } from '@/types/component'
 export default defineComponent({
   name: 'SideMenu',
   setup() {
@@ -19,10 +20,17 @@ export default defineComponent({
       menu: [] as MenuTree[],
     })
 
+    function renderIcon(name: string) {
+      const Comp = (getIconFunc(name) ||
+        getIconFunc(defaultMenuIconName)) as CustomerComponent
+      if (Comp) return <Comp />
+      return null
+    }
+
     interface MenuTree {
       key: string | number
       label: string
-      icon?: string
+      icon?: () => JSX.Element | null
       children?: MenuTree[]
     }
     function traverseMenu(menu: IMenuTree[]): MenuTree[] {
@@ -30,7 +38,7 @@ export default defineComponent({
         const target: MenuTree = {
           key: item.path || item.id,
           label: item.name,
-          // icon: item.icon,
+          icon: () => renderIcon(item.icon),
         }
         if (item.children) {
           target.children = traverseMenu(item.children)
@@ -42,6 +50,7 @@ export default defineComponent({
       const { data } = res
       if (data) {
         state.menu = shallowReactive(traverseMenu(data))
+        console.log(state.menu)
       }
     })
     return () => (

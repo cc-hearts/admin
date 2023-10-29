@@ -3,7 +3,7 @@ import Table from '@/components/table/table.vue'
 import AddModule from '@/features/components/button/AddModule.vue'
 import BatchDelete from '@/features/components/button/BatchDelete.vue'
 import AddMenu from '@/features/sys/add-menu.vue'
-import menuApi from '@/features/sys/apis'
+import menuApi, { IAddMenu } from '@/features/sys/apis'
 import { IPagination } from '@/types'
 import { getApiType } from '@/types/helper'
 import { TableColumnType } from 'ant-design-vue'
@@ -11,6 +11,11 @@ import { ref } from 'vue'
 
 const addMenuRef = ref()
 const tableRef = ref()
+type menuStatus = 'add' | 'edit'
+const addMenuStatus = reactive({
+  status: 'add' as menuStatus,
+  id: null as number | null,
+})
 
 const tableProps = reactive({
   dataSource: [] as getApiType<(typeof menuApi)['list']>,
@@ -54,8 +59,15 @@ const tableProps = reactive({
   ] as TableColumnType[]),
 })
 
-const handleOpenModal = () => {
+const handleOpenModal = (status: menuStatus = 'add') => {
+  addMenuStatus.status = status
   addMenuRef.value.onOpen()
+}
+
+const handleOpenEditModal = (record: IAddMenu & { id: number }) => {
+  addMenuStatus.id = record.id
+  addMenuRef.value.setFieldsValue({ ...record })
+  handleOpenModal('edit')
 }
 
 const loadData = <T extends IPagination>(params: T) => {
@@ -93,7 +105,9 @@ const handleDeleteMenus = async (ids: (string | number)[]) => {
           {{ record.components || '-' }}
         </template>
         <template v-if="column.dataIndex === 'action'">
-          <a-button type="link">编辑</a-button>
+          <a-button type="link" @click="handleOpenEditModal(record)"
+            >编辑</a-button
+          >
           <a-divider type="vertical" />
           <a-button type="link" danger @click="handleDeleteMenus([record.id])"
             >删除</a-button
@@ -102,6 +116,10 @@ const handleDeleteMenus = async (ids: (string | number)[]) => {
       </template>
     </Table>
   </a-card>
-  <AddMenu ref="addMenuRef" @refresh="handleSuccessRefresh" />
+  <AddMenu
+    ref="addMenuRef"
+    @refresh="handleSuccessRefresh"
+    v-bind="addMenuStatus"
+  />
 </template>
 <style lang="scss"></style>

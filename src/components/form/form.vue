@@ -8,9 +8,14 @@ const formState = ref({ ...props.defaultValue })
 const getFieldsValue = () => {
   return formState.value
 }
-const setFieldsValue = (key: keyof typeof formState.value, val: any) => {
-  formState.value[key] = val
+const setFieldValue = (key: PropertyKey, val: any) => {
+  Reflect.set(formState.value, key, val)
 }
+
+const setFieldsValue = (target: Record<PropertyKey, any>) => {
+  Object.assign(formState.value, target)
+}
+
 const formRef = ref()
 
 const validate = async () => {
@@ -22,9 +27,15 @@ const validate = async () => {
   return true
 }
 
+const resetFields = () => {
+  formRef.value.resetFields()
+}
+
 defineExpose({
   getFieldsValue,
+  setFieldValue,
   setFieldsValue,
+  resetFields,
   validate,
 })
 </script>

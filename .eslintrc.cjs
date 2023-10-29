@@ -8,6 +8,6 @@ module.exports = {
   rules: {
     'no-undef': 'off',
     '@typescript-eslint/no-extra-semi': 'off',
-    "no-case-declarations": "off"
+    'no-case-declarations': 'off',
   },
 }

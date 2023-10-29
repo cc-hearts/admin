@@ -1,8 +1,8 @@
 import { sysPrefix } from '@/features/constant/index'
 import { IPagination } from '@/types'
-import { Delete, Get, Post } from '@/utils/request'
+import { Delete, Get, Post, Put } from '@/utils/request'
 
-interface IAddMenu {
+export interface IAddMenu {
   name: string
   icon: string
   type: string
@@ -20,6 +20,10 @@ export default {
   },
   addMenu<T extends IAddMenu>(params: T) {
     const { data } = Post(`${sysPrefix}/menu/add`, params)
+    return data
+  },
+  editMenu<T extends IAddMenu>(id: number, params: T) {
+    const { data } = Put(`${sysPrefix}/menu/edit/${id}`, params)
     return data
   },
   deleteMenus(params: { id: (number | string)[] }) {

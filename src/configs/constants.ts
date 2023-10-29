@@ -8,7 +8,7 @@ export const defaultNamespace = 'cc'
 export const locales = ref<Locales>(getLocates())
 export const isDark = ref(useIsDark())
 export const collapsed = ref(getMenuCollapse())
-
+export const defaultMenuIconName = 'AppstoreOutlined'
 watch(
   () => collapsed.value,
   (bool) => setMenuCollapse(bool),

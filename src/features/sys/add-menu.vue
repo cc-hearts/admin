@@ -1,15 +1,34 @@
 <script setup lang="ts">
-import { Column } from '@/components/form/form'
+import { Column, FormExpose } from '@/components/form/form'
 import Form from '@/components/form/form.vue'
 import { defineModal } from '@/components/modal/modal-helper'
 import Modal from '@/components/modal/modal.vue'
 import { menuType } from '@/configs/dict'
-import { RadioChangeEvent } from 'ant-design-vue'
 import SelectIcon from '@/features/components/icon/selectIcon.vue'
+import {
+  ModalFormExpose,
+  useModalFormExpose,
+} from '@/features/hooks/useModalFormExpose'
+import type { fn } from '@cc-heart/utils/helper'
+import { RadioChangeEvent } from 'ant-design-vue'
 import { ref } from 'vue'
-import addMenuApi, { getMenuTree } from './apis'
+import addMenuApi, { IAddMenu, getMenuTree } from './apis'
+import { errorMsg } from '@/utils/message'
+
+const props = defineProps({
+  status: {
+    type: String,
+    default: 'add',
+    valid: (val: string) => ['add', 'edit'].includes(val),
+  },
+  id: {
+    type: Number as PropType<number | null>,
+    default: null,
+  },
+})
+
 const modalProps = defineModal({ title: '新增菜单' })
-const formRef = ref()
+const formRef = ref<FormExpose>()
 const menuOptions = ref<{ label: string; value: string | number }[]>([])
 const onOpen = () => {
   modalProps.visible = true
@@ -22,25 +41,30 @@ const onOpen = () => {
           value: item.id,
         }
       })
+      menuOptions.value.unshift({
+        label: '根目录',
+        value: 0,
+      })
     }
   })
 }
 const defaultValue = {
   type: '0',
+  pid: 0,
+  sort: 1,
 }
 
-function handleChangeFormColumns(e: RadioChangeEvent) {
-  const { value } = e.target
+function changeFormColumns(value: string) {
   const menuNameIndex = formColumn.findIndex((item) => item.name === 'name')
   formColumn[menuNameIndex].label = value === '0' ? '目录名称' : '菜单名称'
   switch (value) {
     case '0': {
       const pathIndex = formColumn.findIndex((item) => item.name === 'path')
-      formColumn.splice(pathIndex, 1)
+      if (pathIndex !== -1) formColumn.splice(pathIndex, 1)
       const componentsIndex = formColumn.findIndex(
         (item) => item.name === 'components',
       )
-      formColumn.splice(componentsIndex, 1)
+      if (componentsIndex !== -1) formColumn.splice(componentsIndex, 1)
       break
     }
     case '1': {
@@ -61,12 +85,17 @@ function handleChangeFormColumns(e: RadioChangeEvent) {
       )
       break
     }
-
     default: {
       break
     }
   }
 }
+
+function handleChangeFormColumns(e: RadioChangeEvent) {
+  const { value } = e.target
+  changeFormColumns(value)
+}
+
 const formColumn: Column[] = shallowReactive([
   {
     type: 'radio',
@@ -82,7 +111,6 @@ const formColumn: Column[] = shallowReactive([
     name: 'name',
     label: '菜单名称',
   },
-
   {
     type: 'select',
     name: 'pid',
@@ -107,21 +135,57 @@ const formColumn: Column[] = shallowReactive([
 const emits = defineEmits<{ (event: 'refresh'): void }>()
 
 const handleOk = async () => {
-  const bool = await formRef.value.validate()
+  const bool = await formRef.value!.validate()
   if (!bool) {
     return
   }
-  const val = formRef.value.getFieldsValue()
-  await addMenuApi.addMenu(val)
+  const val = formRef.value!.getFieldsValue<IAddMenu>()
+  if (props.status === 'add') {
+    await addMenuApi.addMenu(val)
+  } else {
+    if (!props.id) {
+      errorMsg('[add menu]:id 参数错误')
+      return
+    }
+    await addMenuApi.editMenu(props.id, { ...val, children: undefined })
+  }
   modalProps.visible = false
   emits('refresh')
 }
-defineExpose({
-  onOpen,
+
+const exposePipe = (name: keyof ModalFormExpose, fn: fn) => {
+  if (name === 'setFieldsValue') {
+    return function (target: Record<PropertyKey, any>) {
+      const spliceTarget = { ...target }
+      if (spliceTarget.pid) {
+        spliceTarget.pid = Number(spliceTarget.pid)
+      }
+      fn(spliceTarget)
+      changeFormColumns(spliceTarget.type || defaultValue.type)
+    }
+  } else if (name === 'resetFields') {
+    return function () {
+      fn()
+      formRef.value!.setFieldsValue({ ...defaultValue })
+    }
+  }
+}
+useModalFormExpose(formRef, exposePipe)
+
+defineExpose({ onOpen })
+
+watchEffect(() => {
+  if (!modalProps.visible && formRef.value) {
+    formRef.value.resetFields()
+  }
 })
 </script>
 <template>
-  <Modal v-bind="modalProps" v-model:visible="modalProps.visible" @ok="handleOk">
+  <Modal
+    v-bind="modalProps"
+    v-model:visible="modalProps.visible"
+    @ok="handleOk"
+  >
     <Form ref="formRef" :columns="formColumn" :default-value="defaultValue">
       <template #icon="{ formState }">
         <SelectIcon v-model:modal-value="formState.icon" />
