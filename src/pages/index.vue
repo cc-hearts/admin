@@ -3,6 +3,10 @@ import IPopover from '@/components/header/IPopover'
 import Headers from '@/components/header/headers.vue'
 import Module from '@/icons/module.vue'
 import SideMenu from '@/layouts/menu'
+import { getProfile } from '@/store/profile'
+import { Watermark, Layout } from 'ant-design-vue'
+
+const profile = getProfile()
 </script>
 <template>
   <div class="h-full m-t-1px flex">
@@ -15,9 +19,11 @@ import SideMenu from '@/layouts/menu'
           </IPopover>
         </template>
       </Headers>
-      <div class="p-2 flex-1 bg-main">
-        <router-view />
-      </div>
+      <Watermark :content="[profile?.name]" class="p-2 flex-1 bg-main">
+        <Layout>
+          <router-view />
+        </Layout>
+      </Watermark>
     </div>
   </div>
 </template>

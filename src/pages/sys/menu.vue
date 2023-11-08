@@ -4,6 +4,8 @@ import AddModule from '@/features/components/button/AddModule.vue'
 import BatchDelete from '@/features/components/button/BatchDelete.vue'
 import AddMenu from '@/features/sys/add-menu.vue'
 import menuApi, { IAddMenu } from '@/features/sys/apis'
+import MenuType from '@/features/sys/menu-type.vue'
+
 import { IPagination } from '@/types'
 import { getApiType } from '@/types/helper'
 import { TableColumnType } from 'ant-design-vue'
@@ -103,6 +105,9 @@ const handleDeleteMenus = async (ids: (string | number)[]) => {
         </template>
         <template v-if="column.dataIndex === 'components'">
           {{ record.components || '-' }}
+        </template>
+        <template v-if="column.dataIndex === 'type'">
+          <MenuType :type="record.type" />
         </template>
         <template v-if="column.dataIndex === 'action'">
           <a-button type="link" @click="handleOpenEditModal(record)"

@@ -9,11 +9,11 @@ import {
   ModalFormExpose,
   useModalFormExpose,
 } from '@/features/hooks/useModalFormExpose'
+import { errorMsg } from '@/utils/message'
 import type { fn } from '@cc-heart/utils/helper'
 import { RadioChangeEvent } from 'ant-design-vue'
 import { ref } from 'vue'
 import addMenuApi, { IAddMenu, getMenuTree } from './apis'
-import { errorMsg } from '@/utils/message'
 
 const props = defineProps({
   status: {
@@ -170,9 +170,9 @@ const exposePipe = (name: keyof ModalFormExpose, fn: fn) => {
     }
   }
 }
-useModalFormExpose(formRef, exposePipe)
+const modalFormExposeResult = useModalFormExpose(formRef, exposePipe)
 
-defineExpose({ onOpen })
+defineExpose({ onOpen, ...modalFormExposeResult })
 
 watchEffect(() => {
   if (!modalProps.visible && formRef.value) {

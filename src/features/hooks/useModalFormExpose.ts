@@ -1,7 +1,6 @@
 import { FormExpose } from '@/components/form/form'
 import { useFormSetFields } from '@/components/form/useFormSetFields'
 import { useResetFields } from '@/components/form/useReset'
-import { useExposed } from '@/hooks/useExposed'
 import { fn } from '@cc-heart/utils/helper'
 import { type Ref } from 'vue'
 
@@ -10,18 +9,18 @@ export interface ModalFormExpose {
   resetFields: () => void
 }
 export function useModalFormExpose(
-  ins: Ref<FormExpose | undefined>,
-  pipe?: (name: keyof ModalFormExpose, target: fn) => fn | void,
+  formInstanceRef: Ref<FormExpose | undefined>,
+  extensionFunc?: (name: keyof ModalFormExpose, target: fn) => fn | void,
 ) {
-  const exposed: ModalFormExpose = {
-    setFieldsValue: useFormSetFields(ins),
-    resetFields: useResetFields(ins),
+  const exposedResult: ModalFormExpose = {
+    setFieldsValue: useFormSetFields(formInstanceRef),
+    resetFields: useResetFields(formInstanceRef),
   }
-  if (pipe instanceof Function) {
-    Object.keys(exposed).forEach((key) => {
-      const k = key as keyof typeof exposed
-      exposed[k] = pipe(k, exposed[k]) || exposed[k]
+  if (extensionFunc instanceof Function) {
+    Object.keys(exposedResult).forEach((key) => {
+      const k = key as keyof typeof exposedResult
+      exposedResult[k] = extensionFunc(k, exposedResult[k]) || exposedResult[k]
     })
   }
-  useExposed(exposed)
+  return exposedResult
 }

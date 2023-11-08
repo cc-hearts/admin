@@ -37,4 +37,3 @@ const handleCancel = () => {
     <slot />
   </a-modal>
 </template>
-<style lang="scss"></style>
