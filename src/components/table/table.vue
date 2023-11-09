@@ -31,6 +31,7 @@ function getSelectedLength() {
 const pagination = reactive({
   current: 1,
   pageSize: 10,
+  total: 0,
   showSizeChanger: true,
   showQuickJumper: true,
   showTotal: (total: number) => `共 ${total} 条`,
@@ -80,6 +81,10 @@ const resetSelection = () => {
 
 watchEffect(() => {
   handleResetColumns()
+})
+
+watchEffect(() => {
+  pagination.total = props.total || 0
 })
 
 defineExpose({

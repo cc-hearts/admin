@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { defineTableProps } from '@/components/table/define-table-props'
 import Table from '@/components/table/table.vue'
 import AddModule from '@/features/components/button/AddModule.vue'
 import BatchDelete from '@/features/components/button/BatchDelete.vue'
@@ -19,7 +20,7 @@ const addMenuStatus = reactive({
   id: null as number | null,
 })
 
-const tableProps = reactive({
+const tableProps = defineTableProps({
   dataSource: [] as getApiType<(typeof menuApi)['list']>,
   bordered: true,
   columns: markRaw([
@@ -96,7 +97,7 @@ const handleDeleteMenus = async (ids: (string | number)[]) => {
   <a-card>
     <Table ref="tableRef" v-bind="tableProps" :loadData="loadData">
       <template #action>
-        <AddModule @click="handleOpenModal" />
+        <AddModule @click="handleOpenModal('add')" />
         <BatchDelete />
       </template>
       <template #bodyCell="{ column, record }">
