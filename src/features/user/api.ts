@@ -12,9 +12,16 @@ export async function getProfile() {
   return data
 }
 
+let refreshTokenInstance: ReturnType<typeof Post<ILoginApi>>['data'] | null =
+  null
 export async function refreshTokenApi(refreshToken: string) {
+  if (refreshTokenInstance !== null) return refreshTokenInstance
   const { data } = Post<ILoginApi>(`${prefix}/user/refresh`, {
     refreshToken,
   })
-  return data
+  refreshTokenInstance = data
+  refreshTokenInstance.finally(() => {
+    refreshTokenInstance = null
+  })
+  return refreshTokenInstance
 }

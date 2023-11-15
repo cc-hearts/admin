@@ -8,6 +8,10 @@ router.beforeEach(async (to, from, next) => {
   if (isDev) {
     console.log('router.beforeEach', to, from)
   }
+  if (to.path === '/login') {
+    next()
+    return
+  }
   if (getProfile() === null) {
     try {
       const { data } = await fetchProfile()

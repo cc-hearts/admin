@@ -1,6 +1,14 @@
 import { isDev } from '@/configs'
 import { refreshTokenApi } from '@/features/user/api'
-import { getRefreshToken, getToken, setRefreshToken, setToken } from '@/storage'
+import {
+  clearRefreshToken,
+  clearToken,
+  getRefreshToken,
+  getToken,
+  setRefreshToken,
+  setToken,
+} from '@/storage'
+import { clearProfile } from '@/store/profile'
 import type { IBaseResponse } from '@/types'
 import { Request } from '@cc-heart/utils-client'
 import { errorMsg, successMsg } from './message'
@@ -15,6 +23,7 @@ const request = new Request<IBaseResponse>(
 )
 
 const tipsPathList = ['add', 'delete', 'update', 'edit']
+const refreshApiMap = new Map<string, Promise<IBaseResponse<any>>>()
 
 async function getRouter() {
   return import('../modules/router')
@@ -40,12 +49,28 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
           setToken(accessToken)
           setRefreshToken(refreshToken)
         }
-        const { data: _data } = await Promise.resolve(
-          request.request(url, config.method, config.body, config.interceptor),
+
+        if (refreshApiMap.has(url)) {
+          return refreshApiMap.get(url)
+        }
+        const { data: _data } = request.request(
+          url,
+          config.method,
+          config.body,
+          config.interceptor,
         )
+        refreshApiMap.set(url, _data)
+
+        _data.then(() => {
+          refreshApiMap.delete(url)
+        })
+
         return Promise.resolve(_data)
       }
     } catch (error) {
+      clearToken()
+      clearRefreshToken()
+      clearProfile()
       console.log(error)
     }
     router.push('/login')
