@@ -1,4 +1,4 @@
-import { isDev } from '@/configs'
+import { __IS_DEV__ } from '@/configs'
 import type { App } from 'vue'
 import type { Locale } from 'vue-i18n'
 import { createI18n } from 'vue-i18n'
@@ -21,7 +21,7 @@ const localesMap = Object.fromEntries(
 ) as Record<Locale, () => { default: Promise<Record<string, string>> }>
 
 console.log(localesMap)
-if (isDev) {
+if (__IS_DEV__) {
   console.log(localesMap)
 }
 

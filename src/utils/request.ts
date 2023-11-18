@@ -1,4 +1,4 @@
-import { isDev } from '@/configs'
+import { __IS_DEV__ } from '@/configs'
 import { refreshTokenApi } from '@/features/user/api'
 import {
   clearRefreshToken,
@@ -15,7 +15,7 @@ import { errorMsg, successMsg } from './message'
 export type params = Record<string, any> | FormData
 
 const config = {
-  baseUrl: isDev ? location.origin : import.meta.env.VITE_BASE_URL,
+  baseUrl: __IS_DEV__ ? location.origin : import.meta.env.VITE_BASE_URL,
   prefix: import.meta.env.VITE_PREFIX,
 }
 const request = new Request<IBaseResponse>(
