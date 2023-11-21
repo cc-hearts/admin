@@ -1,11 +1,10 @@
 @use '../var/variable.scss' as *;
-
+@use '../functions/string.scss' as *;
 $b: null;
 $e: null;
 $m: null;
 
 @mixin isAtRoot() {
-
   @if ($is-at-root) {
     @at-root {
       @content;
@@ -18,7 +17,7 @@ $m: null;
 }
 
 @mixin b($block) {
-  $b: #{$namespace}#{$common-separator}#{$block} !global; // 局部变量
+  $b: join($namespace, $common-separator, $block) !global; // 局部变量
 
   .#{$b} {
     @content;
@@ -30,9 +29,10 @@ $m: null;
   $currentSelector: (
   );
 
-
 @each $item in $element {
-  $currentSelector: append($currentSelector, $e+#{$element-separator}+#{$item}, comma);
+  $currentSelector: append($currentSelector,
+      join($e, $element-separator, $item),
+      comma);
 }
 
 $e: $currentSelector !global;
@@ -63,12 +63,11 @@ $m: append($m, $_b, comma);
   );
 
 @each $unit in $modify {
-  $current: append($current, $_e+#{$modifier-separator}+#{$unit}, comma);
+  $current: append($current, join($_e, $modifier-separator, $unit), comma);
 }
 
 $currentSelector: append($currentSelector, $current, comma);
 }
-
 
 @include isAtRoot {
   .#{$currentSelector} {
