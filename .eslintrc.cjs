@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const autoImport = require('./.eslintrc-auto-import.json')
 module.exports = {
   extends: '@cc-heart/eslint-config',
   parser: 'vue-eslint-parser',
@@ -10,4 +12,5 @@ module.exports = {
     '@typescript-eslint/no-extra-semi': 'off',
     'no-case-declarations': 'off',
   },
+  ...autoImport
 }

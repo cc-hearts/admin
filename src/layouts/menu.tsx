@@ -3,10 +3,16 @@ import { collapsed, defaultMenuIconName } from '@/configs'
 import { getIconFunc } from '@/features/components/icon/install'
 import { getMenuTree, type IMenuTree } from '@/features/sys/apis'
 import { useNamespace } from '@/hooks'
-import { Menu } from 'ant-design-vue'
+import { ItemType, Menu } from 'ant-design-vue'
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface'
 import { useRouter } from 'vue-router'
 import { CustomerComponent } from '@/types/component'
+import { VNode } from 'vue'
+
+type MenuTree = ItemType & {
+  children?: ItemType[]
+}
+
 export default defineComponent({
   name: 'SideMenu',
   setup() {
@@ -17,22 +23,16 @@ export default defineComponent({
       router.push(key as string)
     }
     const state = reactive({
-      menu: [] as MenuTree[],
+      menu: [] as ItemType[],
     })
 
-    function renderIcon(name: string) {
+    function renderIcon(name: string): VNode {
       const Comp = (getIconFunc(name) ||
         getIconFunc(defaultMenuIconName)) as CustomerComponent
       if (Comp) return <Comp />
-      return null
+      return null as unknown as VNode
     }
 
-    interface MenuTree {
-      key: string | number
-      label: string
-      icon?: () => JSX.Element | null
-      children?: MenuTree[]
-    }
     function traverseMenu(menu: IMenuTree[]): MenuTree[] {
       return menu.map((item) => {
         const target: MenuTree = {
@@ -55,7 +55,11 @@ export default defineComponent({
     })
     return () => (
       <nav
-        class={(collapsed.value ? 'w-200px ' : 'w-80px ') + 'h-full ' + ns.cls}
+        class={
+          (collapsed.value ? 'w-200px ' : 'w-80px ') +
+          'h-full shrink-0 ' +
+          ns.cls
+        }
       >
         <Menu
           items={state.menu}

@@ -68,6 +68,7 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
         return Promise.resolve(_data)
       }
     } catch (error) {
+      console.log(error, '--------')
       clearToken()
       clearRefreshToken()
       clearProfile()
