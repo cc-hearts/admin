@@ -2,7 +2,7 @@
 import { isDark, locales } from '@/configs'
 import Home from '@/layouts/home'
 import { ConfigProvider, theme } from 'ant-design-vue'
-import enUS from 'ant-design-vue/es/calendar/locale/en_US'
+import enUS from 'ant-design-vue/es/locale/en_US'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import { useInitTheme } from './hooks/useInitTheme'
 
