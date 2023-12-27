@@ -53,6 +53,7 @@ export default defineComponent({
         console.log(state.menu)
       }
     })
+
     return () => (
       <nav
         class={

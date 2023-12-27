@@ -53,6 +53,17 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
         if (refreshApiMap.has(url)) {
           return refreshApiMap.get(url)
         }
+
+        if (
+          config.headers['Content-type'] === 'application/json' &&
+          typeof config.body === 'string'
+        ) {
+          try {
+            config.body = JSON.parse(config.body)
+          } catch (error) {
+            console.log('[refresh request parse config body] :', error)
+          }
+        }
         const { data: _data } = request.request(
           url,
           config.method,
