@@ -1,10 +1,12 @@
 import { buildProps } from '@/utils/props'
 import { PropType } from 'vue'
+
 interface Options {
   label: string
   value: any
 }
-export interface Column {
+
+export interface FormColumn {
   label: string
   type: string
   name: string
@@ -15,8 +17,16 @@ export interface Column {
   options?: Options[]
 }
 
+export interface FormProps {
+  name?: string
+  labelCol?: { span: number }
+  columns?: FormColumn[]
+  defaultValue?: Record<string, any>
+  rules?: Record<string, any>
+}
+
 export interface FormExpose {
-  validate: () => Promise<boolean>
+  validate: () => Promise<[boolean, Record<string, unknown>]>
   getFieldsValue: <T extends Record<PropertyKey, any>>() => T
   setFieldValue: (key: PropertyKey, value: any) => void
   setFieldsValue: (target: Record<PropertyKey, any>) => void
@@ -33,7 +43,7 @@ export default buildProps({
     default: () => ({ span: 5 }),
   },
   columns: {
-    type: Array as PropType<Column[]>,
+    type: Array as PropType<FormColumn[]>,
     default: () => [],
   },
   defaultValue: {

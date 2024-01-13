@@ -4,19 +4,28 @@ import { noop } from '@cc-heart/utils'
 import { TableColumnType } from 'ant-design-vue'
 import { DataIndex } from 'ant-design-vue/es/vc-table/interface'
 import ColumnsOperation from './columns-operation.vue'
-import { TableProps } from './props'
+import { RowSelection, type TableProps } from './helper'
 
-const props = defineProps(TableProps)
+const props = withDefaults(defineProps<TableProps>(), {
+  columns: () => [],
+  bordered: false,
+  total: 0,
+  dataSource: () => [],
+  loadData: noop,
+  rowSelection: null,
+  rowKey: 'id',
+})
+
 const state = reactive({
   loading: false,
   columnSetting: [] as any[],
   showColumnIds: [] as DataIndex[],
 })
 
-const selections = reactive({
-  selectedRowKeys: [] as string[],
-  selectedRows: [] as any[],
-  onChange: (selectedRowKeys: string[], selectedRows: any[]) => {
+const selections = reactive(<RowSelection<any, string>>{
+  selectedRowKeys: [],
+  selectedRows: [],
+  onChange: (selectedRowKeys, selectedRows) => {
     selections.selectedRowKeys = selectedRowKeys
     selections.selectedRows = selectedRows
   },
@@ -36,6 +45,7 @@ const pagination = reactive({
   showQuickJumper: true,
   showTotal: (total: number) => `共 ${total} 条`,
 })
+
 const loadData = () => {
   state.loading = true
   Promise.resolve(
@@ -133,4 +143,3 @@ defineExpose({
     </template>
   </a-table>
 </template>
-<style lang="scss"></style>

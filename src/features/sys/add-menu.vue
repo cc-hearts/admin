@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Column, FormExpose } from '@/components/form/form'
+import { FormColumn, FormExpose } from '@/components/form/form'
 import Form from '@/components/form/form.vue'
 import { defineModal } from '@/components/modal/modal-helper'
 import Modal from '@/components/modal/modal.vue'
@@ -96,7 +96,7 @@ function handleChangeFormColumns(e: RadioChangeEvent) {
   changeFormColumns(value)
 }
 
-const formColumn: Column[] = shallowReactive([
+const formColumn: FormColumn[] = shallowReactive([
   {
     type: 'radio',
     name: 'type',

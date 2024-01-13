@@ -22,9 +22,9 @@ const validate = async () => {
   try {
     await formRef.value.validate()
   } catch (e) {
-    return false
+    return [false, null]
   }
-  return true
+  return [true, formState.value]
 }
 
 const resetFields = () => {
@@ -93,4 +93,3 @@ defineExpose({
     </template>
   </a-form>
 </template>
-<style lang="scss"></style>

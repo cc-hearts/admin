@@ -9,7 +9,7 @@ import MenuType from '@/features/sys/menu-type.vue'
 
 import { IPagination } from '@/types'
 import { getApiType } from '@/types/helper'
-import { TableColumnType } from 'ant-design-vue'
+import { Modal, TableColumnType } from 'ant-design-vue'
 import { ref } from 'vue'
 
 const addMenuRef = ref()
@@ -89,8 +89,14 @@ const handleDeleteMenus = async (ids: (string | number)[]) => {
     id: ids.map((target) => String(target)),
   }
 
-  await menuApi.deleteMenus(params)
-  handleSuccessRefresh()
+  Modal.confirm({
+    title: '提示',
+    content: '确认删除吗？',
+    onOk: async () => {
+      await menuApi.deleteMenus(params)
+      handleSuccessRefresh()
+    },
+  })
 }
 </script>
 <template>

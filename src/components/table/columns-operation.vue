@@ -3,6 +3,7 @@ import DragSort from '@/icons/dragSort.vue'
 import { TableColumnType } from 'ant-design-vue'
 import { PropType } from 'vue'
 import draggable from 'vuedraggable'
+
 const props = defineProps({
   columns: {
     type: Array as PropType<TableColumnType[]>,
@@ -13,6 +14,7 @@ const props = defineProps({
     default: () => [],
   },
 })
+
 const emits = defineEmits<{
   (event: 'update:columns', args: any[]): void
   (event: 'update:columnIds', args: any[]): void
