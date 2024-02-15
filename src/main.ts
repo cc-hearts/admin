@@ -6,6 +6,7 @@ import './guards/router.guard'
 import './main.css'
 import './modules/i18n'
 import { install as installIcon } from '@/features/components/icon/install'
+import './mocks/index'
 const app = createApp(App)
 
 installIcon(app)
