@@ -19,7 +19,10 @@ const profile = getProfile()
           </IPopover>
         </template>
       </Headers>
-      <Watermark :content="[profile?.name]" class="p-2 flex-1 bg-main">
+      <Watermark
+        :content="[profile?.name]"
+        class="border-box p-2 flex-1 bg-main overflow-auto"
+      >
         <Layout>
           <router-view />
         </Layout>
