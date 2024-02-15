@@ -23,7 +23,7 @@ const request = new Request<IBaseResponse>(
 )
 
 const tipsPathList = ['add', 'delete', 'update', 'edit']
-const refreshApiMap = new Map<string, Promise<IBaseResponse<any>>>()
+// const refreshApiMap = new Map<string, Promise<IBaseResponse<any>>>()
 
 async function getRouter() {
   return import('../modules/router')
@@ -49,10 +49,9 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
           setToken(accessToken)
           setRefreshToken(refreshToken)
         }
-
-        if (refreshApiMap.has(url)) {
-          return refreshApiMap.get(url)
-        }
+        // if (refreshApiMap.has(url)) {
+        //   return refreshApiMap.get(url)
+        // }
 
         if (
           config.headers['Content-type'] === 'application/json' &&
@@ -70,16 +69,15 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
           config.body,
           config.interceptor,
         )
-        refreshApiMap.set(url, _data)
+        // refreshApiMap.set(url, _data)
 
-        _data.then(() => {
-          refreshApiMap.delete(url)
-        })
+        // _data.then(() => {
+        //   refreshApiMap.delete(url)
+        // })
 
         return Promise.resolve(_data)
       }
     } catch (error) {
-      console.log(error, '--------')
       clearToken()
       clearRefreshToken()
       clearProfile()
