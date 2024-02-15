@@ -23,7 +23,7 @@ const profile = getProfile()
         :content="[profile?.name]"
         class="border-box p-2 flex-1 bg-main overflow-auto"
       >
-        <Layout>
+        <Layout class="bg-transparent">
           <router-view />
         </Layout>
       </Watermark>
