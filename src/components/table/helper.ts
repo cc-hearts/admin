@@ -8,11 +8,11 @@ export interface RowSelection<T, K> {
   onChange: (selectedRowKeys: K[], selectedRows: T[]) => void
 }
 
-export interface TableProps {
+export interface TableProps<T = unknown> {
   columns: TableColumnType[]
   bordered: boolean
   total: number
-  dataSource: Array<unknown>
+  dataSource: Array<T>
   loadData: <T extends IPagination>(args: T) => any
   rowSelection: RowSelection<any, any> | null
   rowKey: string

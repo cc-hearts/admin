@@ -48,7 +48,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/rbac': {
-        target: 'http://localhost:30001',
+        target: 'http://114.55.225.186:30001',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/rbac/, ''),
       },

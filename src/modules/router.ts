@@ -34,6 +34,7 @@ function setupRouter(routes: RouteRecordRaw[]) {
 }
 
 const _routes = setupRouter(routes.concat([notFoundRoutes]))
+
 export const router = createRouter({
   history: createWebHashHistory(),
   routes: _routes,
