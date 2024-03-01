@@ -6,7 +6,6 @@ import BatchDelete from '@/features/components/button/BatchDelete.vue'
 import AddMenu from '@/features/sys/add-menu.vue'
 import menuApi, { IAddMenu } from '@/features/sys/apis'
 import MenuType from '@/features/sys/menu-type.vue'
-
 import { IPagination } from '@/types'
 import { getApiType } from '@/types/helper'
 import { Modal, TableColumnType } from 'ant-design-vue'

@@ -19,4 +19,3 @@ import CurrentTime from '@/features/dashboard/components/current-time.vue'
     </a-col>
   </a-row>
 </template>
-<style lang="scss"></style>

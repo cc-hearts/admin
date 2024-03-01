@@ -9,9 +9,7 @@ $m: null;
     @at-root {
       @content;
     }
-  }
-
-  @else {
+  } @else {
     @content;
   }
 }
@@ -26,52 +24,47 @@ $m: null;
 
 @mixin e($element...) {
   $e: #{$b};
-  $currentSelector: (
-  );
+  $currentSelector: ();
 
-@each $item in $element {
-  $currentSelector: append($currentSelector,
+  @each $item in $element {
+    $currentSelector: append(
+      $currentSelector,
       join($e, $element-separator, $item),
-      comma);
-}
-
-$e: $currentSelector !global;
-
-@include isAtRoot {
-  .#{$currentSelector} {
-    @content;
+      comma
+    );
   }
-}
+
+  $e: $currentSelector !global;
+
+  @include isAtRoot {
+    .#{$currentSelector} {
+      @content;
+    }
+  }
 }
 
 @mixin m($modify...) {
-  $m: (
-  );
-$currentSelector: (
-);
+  $m: ();
+  $currentSelector: ();
 
-@each $_b in $e {
-  $current: (
-  );
-$m: append($m, $_b, comma);
-}
-
-@debug $m;
-
-@each $_e in $m {
-  $current: (
-  );
-
-@each $unit in $modify {
-  $current: append($current, join($_e, $modifier-separator, $unit), comma);
-}
-
-$currentSelector: append($currentSelector, $current, comma);
-}
-
-@include isAtRoot {
-  .#{$currentSelector} {
-    @content;
+  @each $_b in $e {
+    $current: ();
+    $m: append($m, $_b, comma);
   }
-}
+
+  @each $_e in $m {
+    $current: ();
+
+    @each $unit in $modify {
+      $current: append($current, join($_e, $modifier-separator, $unit), comma);
+    }
+
+    $currentSelector: append($currentSelector, $current, comma);
+  }
+
+  @include isAtRoot {
+    .#{$currentSelector} {
+      @content;
+    }
+  }
 }
