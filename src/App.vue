@@ -4,7 +4,7 @@ import Home from '@/layouts/home'
 import { ConfigProvider, theme } from 'ant-design-vue'
 import enUS from 'ant-design-vue/es/locale/en_US'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
-import { useInitTheme } from './hooks/useInitTheme'
+import { useInitTheme } from './hooks/use-init-theme'
 
 const localesMap = {
   'zh-CN': zhCN,

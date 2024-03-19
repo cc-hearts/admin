@@ -1,4 +1,4 @@
-import { useIsDark } from '@/hooks'
+import { useIsDark } from '@/hooks/use-is-dark'
 import { getMenuCollapse, setMenuCollapse } from '@/storage/collapse'
 import { getLocates } from '@/storage/locates'
 import { type Locales } from '@/types/config'

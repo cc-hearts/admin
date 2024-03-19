@@ -1,9 +1,5 @@
-import * as MenuModule from './menu'
+import fetchMock from 'fetch-mock'
 
-export function getHandlers() {
-  return [
-    ...Object.values(MenuModule).map((menu) => {
-      return menu()
-    }),
-  ]
+export function handleMock(url: string, responseData: any, headers?: any) {
+  fetchMock.post(location.origin + url, responseData, headers)
 }
