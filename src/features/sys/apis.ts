@@ -46,5 +46,6 @@ export interface IMenuTree {
 
 export function getMenuTree() {
   const { data } = Post<IMenuTree[]>(`${sysPrefix}/menu/tree`)
+  console.log(data)
   return data
 }

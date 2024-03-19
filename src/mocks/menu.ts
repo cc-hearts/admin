@@ -1,9 +1,7 @@
-import { http, HttpResponse } from 'msw'
+import { handleMock } from './handles'
 import routes from '~pages'
 
-export function getMenuTree() {
-  return http.post('http://localhost:5173/api/mock', () => {
-    console.log(routes)
-    return HttpResponse.json({ code: 200 })
-  })
-}
+handleMock('/api/rbac/menu/tree', {
+  code: 200,
+  data: routes,
+})

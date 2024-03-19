@@ -29,6 +29,8 @@ async function getRouter() {
   return import('../modules/router')
 }
 request.useResponseInterceptor(async (data, { url, data: config }) => {
+  console.log(data)
+
   const { message, code } = data
   const { router } = await getRouter()
   if ([200].includes(code)) {
