@@ -14,7 +14,7 @@
   "dependencies": {
     "@cc-heart/eslint-config": "^0.0.5",
     "@cc-heart/utils": "^2.0.17",
-    "@cc-heart/utils-client": "^2.0.1",
+    "@cc-heart/utils-client": "^2.0.2",
     "@intlify/unplugin-vue-i18n": "^0.10.1",
     "@types/node": "^20.10.5",
     "@types/nprogress": "^0.2.3",

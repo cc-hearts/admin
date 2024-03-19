@@ -4,7 +4,7 @@ import { getLocates } from '@/storage/locates'
 import { type Locales } from '@/types/config'
 import { ref } from 'vue'
 
-export const defaultNamespace = 'cc'
+export const defaultNamespace = 'cc-admin'
 export const locales = ref<Locales>(getLocates())
 export const isDark = ref(useIsDark())
 export const collapsed = ref(getMenuCollapse())

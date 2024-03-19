@@ -34,11 +34,3 @@
   --main-background-color: rgb(33, 33, 33);
 }
 
-html {
-  color: var(--text-color);
-}
-
-body {
-  background-color: var(--bg-color);
-  transition: background-color 0.2s ease;
-}

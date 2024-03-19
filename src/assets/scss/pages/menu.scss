@@ -1,5 +1,4 @@
-@use '../var/variable.scss' as *;
-@use '../common/mixins.scss' as *;
+@use '@/assets/scss/lib.scss' as *;
 
 @include b('side-menu') {
   --side-menu-color: rgba(5, 5, 5, 0.06);
