@@ -40,8 +40,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@use '@/assets/scss/var/variable.scss' as *;
-@use '@/assets/scss/common/mixins.scss' as *;
+@use '@/assets/scss/lib.scss' as *;
 
 .dark {
   @include b('appearance') {

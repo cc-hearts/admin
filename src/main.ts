@@ -1,12 +1,13 @@
+import '@/assets/scss/reset.scss'
 import '@/assets/scss/theme.scss'
 import 'uno.css'
+import './guards/router.guard'
+import './modules/i18n'
+import './mocks/index'
 import { createApp } from 'vue'
 import App from './App.vue'
-import './guards/router.guard'
-import './main.css'
-import './modules/i18n'
 import { install as installIcon } from '@/features/components/icon/install'
-import './mocks/index'
+
 const app = createApp(App)
 
 installIcon(app)

@@ -54,9 +54,7 @@ const handleClick = (e: MouseEvent) => {
   </button>
 </template>
 <style lang="scss">
-@use '@/assets/scss/var/variable.scss' as *;
-@use '@/assets/scss/common/mixins.scss' as *;
-@use '@/assets/scss/common/function.scss' as *;
+@use '@/assets/scss/lib.scss' as *;
 
 @mixin changeColor($color: getCssVarName('button', 'color')) {
   color: var($color);
