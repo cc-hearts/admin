@@ -19,7 +19,7 @@ import { Modal, Popover } from 'ant-design-vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import SwitchTheme from '../switch/toggleDark.vue'
-import IPopover from './IPopover'
+import IPopover from '@/components/i-popover/IPopover'
 
 const router = useRouter()
 const ns = useNamespace('header')

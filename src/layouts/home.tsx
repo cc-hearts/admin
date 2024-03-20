@@ -1,10 +1,8 @@
 import { defineComponent } from 'vue'
 import SideMenu from '@/layouts/menu'
-import Headers from '@/components/header/headers.vue'
-import IPopover from '@/components/header/IPopover'
+import Headers from './headers/headers.vue'
+import IPopover from '@/components/i-popover/IPopover'
 import Module from '@/icons/module.vue'
-import { Watermark, Layout } from 'ant-design-vue'
-
 import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
@@ -24,13 +22,11 @@ export default defineComponent({
                 ),
               }}
             </Headers>
-
             <div class="flex-1">
               <router-view />
             </div>
           </div>
         </div>
-        {/* <router-view /> */}
       </div>
     )
   },
