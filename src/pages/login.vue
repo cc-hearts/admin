@@ -22,13 +22,18 @@ import { loginApi } from '@/features/user/api'
 import { setRefreshToken, setToken } from '@/storage'
 import { Button, Input, InputPassword } from 'ant-design-vue'
 import { onMounted, onUnmounted, reactive } from 'vue'
-// @ts-ignore
 import md5 from 'md5'
 import { useRouter } from 'vue-router'
+import { __IS_DEV__ } from '@/configs'
 const userInfo = reactive({
   username: '',
   password: '',
 })
+
+if (__IS_DEV__) {
+  userInfo.username = 'admin'
+  userInfo.password = '123456'
+}
 
 const router = useRouter()
 const handleSubmit = async () => {

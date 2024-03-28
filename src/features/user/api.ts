@@ -1,4 +1,4 @@
-import { Get, Post } from '@/utils/request.ts'
+import { Get, Post } from '@/utils/request'
 import type { ILoginApi, ILoginParams, Profile } from './types'
 
 const prefix = 'api/rbac'

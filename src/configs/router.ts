@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw, Router } from 'vue-router'
 
 export const sysRouters: RouteRecordRaw[] = [
   // {
@@ -11,3 +11,10 @@ export const sysRouters: RouteRecordRaw[] = [
   //   children: [],
   // },
 ]
+
+
+export let router: Router
+
+export const setRouter = (_router: any) => {
+  router = _router
+}

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { isDark, locales } from '@/configs'
-import Home from '@/layouts/home'
 import { ConfigProvider, theme } from 'ant-design-vue'
 import enUS from 'ant-design-vue/es/locale/en_US'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
@@ -25,7 +24,7 @@ const antLocale = computed(() => {
     }"
     :locale="antLocale"
   >
-    <Home />
+    <RouterView />
   </ConfigProvider>
 </template>
 

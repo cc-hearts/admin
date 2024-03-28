@@ -25,12 +25,13 @@ const request = new Request<IBaseResponse>(
 const tipsPathList = ['add', 'delete', 'update', 'edit']
 // const refreshApiMap = new Map<string, Promise<IBaseResponse<any>>>()
 
-async function getRouter() {
-  return import('../modules/router')
+export async function getRouter() {
+  return import('../configs/router')
 }
 request.useResponseInterceptor(async (data, { url, data: config }) => {
-  console.log(data)
-
+  if (typeof data === 'string') {
+    data = JSON.parse(data)
+  }
   const { message, code } = data
   const { router } = await getRouter()
   if ([200].includes(code)) {
@@ -92,7 +93,8 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
 })
 
 request.useErrorInterceptor((error) => {
-  errorMsg(error.toString())
+  if (error)
+    errorMsg(error.toString())
   return Promise.reject(error)
 })
 

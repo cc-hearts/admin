@@ -1,5 +1,6 @@
 import fetchMock from 'fetch-mock'
 
 export function handleMock(url: string, responseData: any, headers?: any) {
-  fetchMock.post(location.origin + url, responseData, headers)
+  let retData = typeof responseData === 'function' ? responseData?.() : responseData
+  fetchMock.post(location.origin + url, retData, headers)
 }

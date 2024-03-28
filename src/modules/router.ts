@@ -1,8 +1,9 @@
 import { __IS_DEV__ } from '@/configs'
 import { sysRouters } from '@/configs/router'
+import { setRouter } from '@/configs/router.ts'
 import { App } from 'vue'
 import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
-import routes from '~pages'
+import routePages from '~pages'
 
 const indexRoutes = {
   path: '/',
@@ -15,13 +16,14 @@ const notFoundRoutes = {
   name: 'notFound',
   component: () => import('@/components/not-found/not-found.vue'),
 }
-const filterRouteList = ['/login']
+const filterRouteList = ['/login', '/:pathMatch(.*)*']
 
 function setupRouter(routes: RouteRecordRaw[]) {
   const childrenRoute = [] as RouteRecordRaw[],
     _routes = [] as RouteRecordRaw[]
   routes.forEach((route) => {
     if (route.path === '/') return
+
     if (filterRouteList.includes(route.path)) {
       _routes.push(route)
     } else {
@@ -33,15 +35,15 @@ function setupRouter(routes: RouteRecordRaw[]) {
   return [indexRoutes, ..._routes, ...sysRouters]
 }
 
-const _routes = setupRouter(routes.concat([notFoundRoutes]))
-export const router = createRouter({
+const routes = setupRouter(routePages.concat([notFoundRoutes]))
+const router = createRouter({
   history: createWebHashHistory(),
-  routes: _routes,
+  routes,
 })
-
+setRouter(router)
 export const setup = ({ app }: { app: App }) => {
   if (__IS_DEV__) {
-    console.log(_routes)
+    console.log(routes)
   }
   app.use(router)
 }
