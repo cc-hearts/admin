@@ -27,7 +27,9 @@ function setupRouter(routes: RouteRecordRaw[]) {
     if (filterRouteList.includes(route.path)) {
       _routes.push(route)
     } else {
-      childrenRoute.push(route)
+      const newRoute = { ...route }
+      // newRoute.path = newRoute.path.replace('/', '')
+      childrenRoute.push(newRoute)
     }
   })
 
@@ -45,5 +47,6 @@ export const setup = ({ app }: { app: App }) => {
   if (__IS_DEV__) {
     console.log(routes)
   }
+
   app.use(router)
 }

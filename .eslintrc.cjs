@@ -12,5 +12,5 @@ module.exports = {
     '@typescript-eslint/no-extra-semi': 'off',
     'no-case-declarations': 'off',
   },
-  ...autoImport
+  ...autoImport,
 }

@@ -62,3 +62,11 @@ onUnmounted(() => {
   window.removeEventListener('keypress', listenerEnterToLogin)
 })
 </script>
+
+<route>
+  {
+    meta:{
+      hidden: true
+    }
+  }
+</route>

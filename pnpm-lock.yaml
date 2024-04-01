@@ -8,6 +8,9 @@ dependencies:
   '@cc-heart/eslint-config':
     specifier: ^0.0.5
     version: 0.0.5(eslint@8.57.0)(typescript@5.3.3)
+  '@cc-heart/storage-cache':
+    specifier: ^0.0.5
+    version: 0.0.5
   '@cc-heart/utils':
     specifier: ^2.0.17
     version: 2.0.17
@@ -454,12 +457,22 @@ packages:
       - typescript
     dev: false
 
+  /@cc-heart/storage-cache@0.0.5:
+    resolution: {integrity: sha512-3n5x920Nx0no6kELK4rhqgXOhfzvBJ3Ry6jbTrQGmtjy3TyD7BPkAHwKSASHGwp0CzJ6d/6S4QOqf5Tajpbxkg==}
+    dependencies:
+      '@cc-heart/utils': 5.1.1
+    dev: false
+
   /@cc-heart/utils-client@2.0.2:
     resolution: {integrity: sha512-Y59w0CzO/v5rzgVheUL665HHMCxBxBvm/OFYsTTIqrjrM5NdPltQqrrOcC4yfPGz4z1K74wHMXulyIMmORogww==}
     dev: false
 
   /@cc-heart/utils@2.0.17:
     resolution: {integrity: sha512-PIC2Suhi2o/NggdJUkaq+AQmsw4rrjZLjxqtvcw9HsDD4ch1BRNIrmfR4CPe1R6ricmT2U3xQrkiix2bHUeBQw==}
+    dev: false
+
+  /@cc-heart/utils@5.1.1:
+    resolution: {integrity: sha512-GXUABZe+LfB6PbUDEiyGZS7+xdx1O1RkaNsNoDUkeA4F1yrtYTYKtzP7IUaLsN8v39Lg5TWQHtiM/o/1zEm3dA==}
     dev: false
 
   /@colors/colors@1.5.0:

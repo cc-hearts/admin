@@ -29,3 +29,11 @@ const profile = getProfile()
     </div>
   </div>
 </template>
+
+<route>
+  {
+    meta:{
+      hidden: true
+    }
+  }
+</route>

@@ -4,9 +4,8 @@ import Table from '@/components/table/table.vue'
 import AddModule from '@/features/components/button/AddModule.vue'
 import BatchDelete from '@/features/components/button/BatchDelete.vue'
 import AddMenu from '@/features/sys/add-menu.vue'
-import menuApi, { IAddMenu } from '@/features/sys/apis'
+import menuApi, { type IAddMenu } from '@/features/sys/apis'
 import MenuType from '@/features/sys/menu-type.vue'
-
 import { IPagination } from '@/types'
 import { getApiType } from '@/types/helper'
 import { Modal, TableColumnType } from 'ant-design-vue'
@@ -67,7 +66,8 @@ const handleOpenModal = (status: menuStatus = 'add') => {
   addMenuRef.value.onOpen()
 }
 
-const handleOpenEditModal = (record: IAddMenu & { id: number }) => {
+type EditModal = IAddMenu & { id: number }
+const handleOpenEditModal = (record: EditModal) => {
   addMenuStatus.id = record.id
   addMenuRef.value.setFieldsValue({ ...record })
   handleOpenModal('edit')
@@ -117,7 +117,9 @@ const handleDeleteMenus = async (ids: (string | number)[]) => {
           <MenuType :type="record.type" />
         </template>
         <template v-if="column.dataIndex === 'action'">
-          <a-button type="link" @click="handleOpenEditModal(record)"
+          <a-button
+            type="link"
+            @click="handleOpenEditModal(record as EditModal)"
             >编辑</a-button
           >
           <a-divider type="vertical" />
@@ -134,4 +136,3 @@ const handleDeleteMenus = async (ids: (string | number)[]) => {
     v-bind="addMenuStatus"
   />
 </template>
-<style lang="scss"></style>

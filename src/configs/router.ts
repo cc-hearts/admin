@@ -12,7 +12,6 @@ export const sysRouters: RouteRecordRaw[] = [
   // },
 ]
 
-
 export let router: Router
 
 export const setRouter = (_router: any) => {

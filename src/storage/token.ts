@@ -1,23 +1,25 @@
+import { localStorageCache } from '@/utils/define-storage'
+
 export function setToken(token: string) {
-  localStorage.setItem('token', token)
+  localStorageCache.setItem('token', token)
 }
 
 export function getToken() {
-  return localStorage.getItem('token')
+  return localStorageCache.getItem('token')
 }
 
 export function clearToken() {
-  localStorage.removeItem('token')
+  localStorageCache.removeItem('token')
 }
 
 export function setRefreshToken(token: string) {
-  localStorage.setItem('refreshToken', token)
+  localStorageCache.setItem('refreshToken', token)
 }
 
 export function getRefreshToken() {
-  return localStorage.getItem('refreshToken')
+  return localStorageCache.getItem('refreshToken')
 }
 
 export function clearRefreshToken() {
-  localStorage.removeItem('refreshToken')
+  localStorageCache.removeItem('refreshToken')
 }

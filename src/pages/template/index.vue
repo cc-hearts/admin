@@ -25,4 +25,3 @@ const handleOpenModal = (modalType: MODEL_TYPE) => {
   </Table>
   <AddTemplateModal ref="addTemplateModalRef" />
 </template>
-<style lang="scss"></style>

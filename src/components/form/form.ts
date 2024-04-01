@@ -1,4 +1,4 @@
-import { buildProps } from '@/utils/props'
+// import { buildProps } from '@/utils/props'
 import { PropType } from 'vue'
 
 interface Options {
@@ -33,7 +33,7 @@ export interface FormExpose {
   resetFields: () => void
 }
 
-export default buildProps({
+export default ({
   name: {
     type: String,
     default: 'basic',

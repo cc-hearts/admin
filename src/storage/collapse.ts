@@ -1,7 +1,9 @@
+import { localStorageCache } from '@/utils/define-storage'
+
 export function setMenuCollapse(collapse: boolean) {
-  localStorage.setItem('menuCollapse', String(collapse))
+  localStorageCache.setItem('menuCollapse', String(collapse))
 }
 
 export function getMenuCollapse() {
-  return localStorage.getItem('menuCollapse') === 'true'
+  return localStorageCache.getItem('menuCollapse') === 'true'
 }

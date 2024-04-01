@@ -34,23 +34,24 @@ export default defineComponent({
     }
 
     function traverseMenu(menu: IMenuTree[]): MenuTree[] {
-      return menu.map((item) => {
-        const target: MenuTree = {
-          key: item.path || item.id,
-          label: item.name,
-          icon: () => renderIcon(item.icon),
-        }
-        if (item.children) {
-          target.children = traverseMenu(item.children)
-        }
-        return target
-      })
+      return menu
+        .filter((target) => !target?.meta?.hidden)
+        .map((item) => {
+          const target: MenuTree = {
+            key: item.path || item.id,
+            label: item.name,
+            icon: () => renderIcon(item.icon),
+          }
+          if (item.children) {
+            target.children = traverseMenu(item.children)
+          }
+          return target
+        })
     }
     getMenuTree().then((res) => {
       const { data } = res
       if (data) {
         state.menu = shallowReactive(traverseMenu(data))
-        console.log(state.menu)
       }
     })
 

@@ -1,8 +1,10 @@
-import type { theme } from '@/types'
-export function getTheme(): theme {
-  return localStorage.getItem('theme') as theme
+import type { Theme } from '@/types'
+import { localStorageCache } from '@/utils/define-storage'
+
+export function getTheme(): Theme {
+  return localStorageCache.getItem('theme') as Theme
 }
 
 export function setTheme(isDark: boolean) {
-  localStorage.setItem('theme', isDark ? 'dark' : 'light')
+  localStorageCache.setItem('theme', isDark ? 'dark' : 'light')
 }

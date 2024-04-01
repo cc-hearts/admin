@@ -21,6 +21,7 @@ export function setupRouterGuard() {
         console.log('fetch profile failed:' + e)
       }
     }
+
     next()
   })
 }

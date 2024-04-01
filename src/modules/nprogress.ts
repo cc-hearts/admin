@@ -7,6 +7,7 @@ export const setup = () => {
   })
 
   router.afterEach(() => {
+    console.log('-----test--')
     NProgress.done()
   })
 }
