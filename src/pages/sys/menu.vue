@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { defineTableProps } from '@/components/table/define-table-props'
-import Table from '@/components/table/table.vue'
-import AddModule from '@/features/components/button/AddModule.vue'
-import BatchDelete from '@/features/components/button/BatchDelete.vue'
+import { CcCard } from '@/components'
+import { Pagination } from '@/components/table-pro/helper'
+import { defineTableProps } from '@/components/table-pro/define-table-props'
+import BatchDeleteButton from '@/features/components/button/batch-delete-button.vue'
 import AddMenu from '@/features/sys/add-menu.vue'
 import menuApi, { type IAddMenu } from '@/features/sys/apis'
 import MenuType from '@/features/sys/menu-type.vue'
-import { IPagination } from '@/types'
 import { getApiType } from '@/types/helper'
 import { Modal, TableColumnType } from 'ant-design-vue'
 import { ref } from 'vue'
+import { CcDivider } from '@/components/index'
+import AddButton from '@/features/components/button/add-button.vue'
 
 const addMenuRef = ref()
 const tableRef = ref()
@@ -59,6 +60,7 @@ const tableProps = defineTableProps({
       align: 'center',
     },
   ] as TableColumnType[]),
+  rowKey: 'id',
 })
 
 const handleOpenModal = (status: menuStatus = 'add') => {
@@ -73,8 +75,11 @@ const handleOpenEditModal = (record: EditModal) => {
   handleOpenModal('edit')
 }
 
-const loadData = <T extends IPagination>(params: T) => {
-  return menuApi.list(params).then((res) => {
+const loadData = <T extends Pick<Pagination, 'current' | 'pageSize'>>(
+  params: T,
+) => {
+  const { current, ...otherParams } = params
+  return menuApi.list({ ...otherParams, pageNum: current }).then((res) => {
     const { data } = res
     if (data) tableProps.dataSource = data
   })
@@ -100,11 +105,11 @@ const handleDeleteMenus = async (ids: (string | number)[]) => {
 }
 </script>
 <template>
-  <a-card>
-    <Table ref="tableRef" v-bind="tableProps" :loadData="loadData">
+  <CcCard>
+    <TablePro ref="tableRef" v-bind="tableProps" :loadData="loadData">
       <template #action>
-        <AddModule @click="handleOpenModal('add')" />
-        <BatchDelete />
+        <AddButton @click="handleOpenModal('add')" />
+        <BatchDeleteButton />
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.dataIndex === 'path'">
@@ -117,19 +122,19 @@ const handleDeleteMenus = async (ids: (string | number)[]) => {
           <MenuType :type="record.type" />
         </template>
         <template v-if="column.dataIndex === 'action'">
-          <a-button
+          <LinkButton
             type="link"
             @click="handleOpenEditModal(record as EditModal)"
-            >编辑</a-button
+            >编辑</LinkButton
           >
-          <a-divider type="vertical" />
-          <a-button type="link" danger @click="handleDeleteMenus([record.id])"
-            >删除</a-button
+          <CcDivider type="vertical" />
+          <LinkButton type="link" danger @click="handleDeleteMenus([record.id])"
+            >删除</LinkButton
           >
         </template>
       </template>
-    </Table>
-  </a-card>
+    </TablePro>
+  </CcCard>
   <AddMenu
     ref="addMenuRef"
     @refresh="handleSuccessRefresh"

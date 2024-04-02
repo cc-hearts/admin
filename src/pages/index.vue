@@ -20,9 +20,12 @@ const profile = getProfile()
         </template>
       </Headers>
       <div class="flex-1">
-        <Watermark :content="profile?.name || 'carl chen'" class="h-full p-2 flex-1 bg-main overflow-auto">
+        <Watermark
+          :content="profile?.name || 'carl chen'"
+          class="h-full p-2 flex-1 bg-main overflow-auto"
+        >
           <Layout class="bg-transparent">
-            <router-view />
+            <RouterView />
           </Layout>
         </Watermark>
       </div>
@@ -32,6 +35,7 @@ const profile = getProfile()
 
 <route>
   {
+    name: 'Home',
     meta:{
       hidden: true
     }

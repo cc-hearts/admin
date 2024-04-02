@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { FormColumn, FormExpose } from '@/components/form/form'
-import Form from '@/components/form/form.vue'
 import { defineModal } from '@/components/modal/modal-helper'
 import Modal from '@/components/modal/modal.vue'
-import { menuType } from '@/configs/dict'
 import SelectIcon from '@/features/components/icon/selectIcon.vue'
 import {
   ModalFormExpose,
@@ -101,8 +99,11 @@ const formColumn: FormColumn[] = shallowReactive([
     type: 'radio',
     name: 'type',
     label: '菜单类型',
-    extra: {
-      options: menuType,
+    componentProperty: {
+      options: [
+        { label: '目录', value: '0' },
+        { label: '菜单', value: '1' },
+      ],
       onChange: handleChangeFormColumns,
     },
   },
@@ -115,7 +116,7 @@ const formColumn: FormColumn[] = shallowReactive([
     type: 'select',
     name: 'pid',
     label: '父级菜单',
-    extra: {
+    componentProperty: {
       options: menuOptions,
     },
   },
@@ -186,11 +187,16 @@ watchEffect(() => {
     v-model:visible="modalProps.visible"
     @ok="handleOk"
   >
-    <Form ref="formRef" :columns="formColumn" :default-value="defaultValue">
-      <template #icon="{ formState }">
-        <SelectIcon v-model:modal-value="formState.icon" />
+    <FormSchema
+      ref="formRef"
+      :layout="{ span: 1, labelCol: { span: 4 } }"
+      :schema="formColumn"
+      :default-value="defaultValue"
+    >
+      <template #icon="{ value }">
+        <SelectIcon v-model:modal-value="value.icon" />
       </template>
-    </Form>
+    </FormSchema>
   </Modal>
 </template>
 <style lang="scss"></style>

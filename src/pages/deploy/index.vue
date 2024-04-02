@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { defineTableProps } from '@/components/table/define-table-props'
-import Table from '@/components/table/table.vue'
+import { defineTableProps } from '@/components/table-pro/define-table-props'
 import { getDeployList, requestDeploy } from '@/features/deploy/apis'
 import { getApiType } from '@/types/helper'
 import { definePagination } from '@/utils/pagination'
 import type { TableColumnType } from 'ant-design-vue'
-
+import { CcTag } from '@/components/index'
 const tableProps = defineTableProps({
   dataSource: [] as getApiType<typeof getDeployList>['dataSource'],
   bordered: true,
@@ -32,6 +31,7 @@ const tableProps = defineTableProps({
     },
   ] as TableColumnType[],
   total: 0,
+  rowKey: 'id',
 })
 
 const paginationProps = definePagination()
@@ -51,20 +51,17 @@ const loadData = async () => {
 </script>
 <template>
   <div>
-    <Table ref="tableRef" v-bind="tableProps" :load-data="loadData">
+    <TablePro ref="tableRef" v-bind="tableProps" :load-data="loadData">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'rootPath'">
-          <a-tag color="green">{{ record.rootPath }}</a-tag>
+          <CcTag color="green">{{ record.rootPath }}</CcTag>
         </template>
         <span v-if="column.key === 'action'">
-          <a-button type="link">Edit</a-button>
-          <a-button type="link">Delete</a-button>
-          <a-button type="link" @click="() => handleDeploy(record.id)"
-            >Deploy</a-button
-          >
+          <LinkButton>Edit</LinkButton>
+          <LinkButton>Delete</LinkButton>
+          <LinkButton @click="() => handleDeploy(record.id)">Deploy</LinkButton>
         </span>
       </template>
-    </Table>
+    </TablePro>
   </div>
 </template>
-<style lang="scss"></style>

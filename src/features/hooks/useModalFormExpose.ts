@@ -1,6 +1,6 @@
-import { FormExpose } from '@/components/form/form'
-import { useFormSetFields } from '@/components/form/useFormSetFields'
-import { useResetFields } from '@/components/form/useReset'
+import { FormExpose } from '@/components/form-schema/helper'
+import { useFormSetFields } from '@/components/form-schema/useFormSetFields'
+import { useResetFields } from '@/components/form-schema/useReset'
 import { fn } from '@cc-heart/utils/helper'
 import { type Ref } from 'vue'
 

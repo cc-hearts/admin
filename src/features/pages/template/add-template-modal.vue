@@ -49,3 +49,4 @@ defineExpose({ onOpen })
     <Form ref="formRef" v-bind="formProps"> </Form>
   </Modal>
 </template>
+@/components/form-schema/define-form-props

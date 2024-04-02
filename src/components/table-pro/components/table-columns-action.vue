@@ -1,25 +1,40 @@
 <script setup lang="ts" name="ColumnsOperation">
-import DragSort from '@/icons/dragSort.vue'
+import { noop } from '@cc-heart/utils'
 import { TableColumnType } from 'ant-design-vue'
-import { PropType } from 'vue'
+import { ComputedRef, PropType, Ref, computed, unref } from 'vue'
 import draggable from 'vuedraggable'
+import DragSort from './drag-sort-icon.vue'
+
+type DataIndex = string | number
 
 const props = defineProps({
-  columns: {
-    type: Array as PropType<TableColumnType[]>,
+  sortedColumns: {
+    type: [Array, Object] as PropType<
+      Array<TableColumnType> | Ref<Array<TableColumnType>>
+    >,
     default: () => [],
   },
-  columnIds: {
-    type: Array,
+  columnsField: {
+    type: Array as PropType<Array<DataIndex> | Ref<Array<DataIndex>>>,
     default: () => [],
+  },
+  rowKey: {
+    type: String as PropType<ComputedRef<string> | string>,
+    default: 'key',
+  },
+  onUpdateSortedColumns: {
+    type: Function as PropType<(val: TableColumnType[]) => void>,
+    default: noop,
+  },
+  onUpdateColumnsField: {
+    type: Function as PropType<(val: (DataIndex | boolean)[]) => void>,
+    default: noop,
+  },
+  onReset: {
+    type: Function as PropType<() => void>,
+    default: noop,
   },
 })
-
-const emits = defineEmits<{
-  (event: 'update:columns', args: any[]): void
-  (event: 'update:columnIds', args: any[]): void
-  (event: 'reset'): void
-}>()
 
 let tempColumnSettings = [] as any[]
 const handleChangeColumns = (val: any[]) => {
@@ -27,29 +42,35 @@ const handleChangeColumns = (val: any[]) => {
 }
 
 const emitChangeColumn = () => {
-  emits('update:columns', tempColumnSettings)
+  props.onUpdateSortedColumns(tempColumnSettings)
   tempColumnSettings = []
 }
 
-const handleChangeCheckbox = (columnIds: Array<string | number>) => {
-  emits('update:columnIds', columnIds)
+const checkboxValue = computed(() => {
+  return unref(props.columnsField)
+})
+
+const handleChangeCheckbox = (columnIds: Array<string | number | boolean>) => {
+  props.onUpdateColumnsField(columnIds)
 }
 const isAllSelected = computed(() => {
-  return props.columnIds.length === props.columns.length
+  return unref(props.columnsField).length === unref(props.sortedColumns).length
 })
 
 const toggleShowColumns = () => {
   if (isAllSelected.value) {
-    emits('update:columnIds', [])
+    props.onUpdateColumnsField([])
   } else {
-    emits(
-      'update:columnIds',
-      props.columns.map((item) => Reflect.get(item, 'dataIndex')!),
+    props.onUpdateColumnsField(
+      unref(props.sortedColumns).map(
+        (item: TableColumnType) =>
+          Reflect.get(item, unref(props.rowKey) as string)!,
+      ),
     )
   }
 }
 const handleReset = () => {
-  emits('reset')
+  props.onReset()
 }
 </script>
 <template>
@@ -64,9 +85,12 @@ const handleReset = () => {
       </div>
       <a-divider class="m-y-2" />
 
-      <a-checkbox-group :value="columnIds" @update:value="handleChangeCheckbox">
+      <a-checkbox-group
+        :value="checkboxValue"
+        @update:value="handleChangeCheckbox"
+      >
         <draggable
-          :model-value="columns"
+          :model-value="unref(sortedColumns)"
           @update:model-value="handleChangeColumns"
           @end="emitChangeColumn"
           group="description"
@@ -96,7 +120,7 @@ const handleReset = () => {
 </template>
 <style lang="scss">
 .drag-handle {
-  .anticon-more {
+  .action-more {
     display: inline-block;
     width: 1em;
   }

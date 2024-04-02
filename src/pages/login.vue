@@ -65,8 +65,10 @@ onUnmounted(() => {
 
 <route>
   {
+    name: 'Login',
     meta:{
-      hidden: true
+      hidden: true,
+      isolated: true
     }
   }
 </route>

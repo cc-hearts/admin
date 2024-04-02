@@ -1,5 +1,5 @@
 import { fn } from '@cc-heart/utils/helper'
-import { FormExpose } from './form'
+import { FormExpose } from './helper'
 
 export function useFormSetFields(ins: Ref<FormExpose | undefined>) {
   const taskList: Array<fn> = []
