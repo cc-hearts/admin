@@ -1,4 +1,4 @@
-import { AppStore, getAppStore } from '@/store/app'
+import { getAppStore } from '@/store/app'
 
 export function useToggleThemeAnimation(event: MouseEvent) {
   const x = event.clientX
@@ -14,8 +14,7 @@ export function useToggleThemeAnimation(event: MouseEvent) {
 
   const transition = document.startViewTransition(() => {
     const root = document.documentElement
-    _isDark = root.classList.contains('dark')
-    const methodField = _isDark ? 'remove' : 'add'
+    const methodField = root.classList.contains('dark') ? 'remove' : 'add'
     root.classList[methodField]('dark')
     appStore.isDark = !appStore.isDark
   })

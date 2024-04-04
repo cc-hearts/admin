@@ -15,3 +15,9 @@ declare module '*.md' {
   const Component: ComponentOptions
   export default Component
 }
+
+declare namespace globalThis {
+  export interface Document {
+    startViewTransition(callback: () => void): { ready: Promise<void> }
+  }
+}
