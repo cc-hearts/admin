@@ -7,7 +7,7 @@ import SelectIcon from '@/features/components/icon/selectIcon.vue'
 import {
   ModalFormExpose,
   useModalFormExpose,
-} from '@/features/hooks/useModalFormExpose'
+} from '@/features/hooks/use-modal-form-expose'
 import { errorMsg } from '@/utils/message'
 import type { fn } from '@cc-heart/utils/helper'
 import { RadioChangeEvent } from 'ant-design-vue'
@@ -205,3 +205,4 @@ watchEffect(() => {
   </Modal>
 </template>
 <style lang="scss"></style>
+@/features/hooks/use-modal-form-expose

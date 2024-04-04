@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineFormProps } from '@/components/form-schema/define-form-props'
+import { defineFormSchemaProps } from '@/components/form-schema/utils/define-form-schema-props'
 import { FormExpose } from '@/components/form-schema/helper'
 import { FormSchema } from '@/components/form-schema/index'
 import { defineModal } from '@/components/modal/modal-helper'
@@ -17,7 +17,7 @@ const onOpen = () => {
 }
 
 const formRef = ref<FormExpose>()
-const formProps = defineFormProps({
+const formProps = defineFormSchemaProps({
   schema: [],
 })
 
