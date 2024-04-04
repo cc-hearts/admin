@@ -6,8 +6,7 @@ import { useNamespace } from '@/hooks'
 import { ItemType, Menu } from 'ant-design-vue'
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface'
 import { useRouter } from 'vue-router'
-import { CustomerComponent } from '@/types/component'
-import { VNode } from 'vue'
+import type { VNode } from 'vue'
 
 type MenuTree = ItemType & {
   children?: ItemType[]
@@ -28,7 +27,7 @@ export default defineComponent({
 
     function renderIcon(name: string): VNode {
       const Comp = (getIconFunc(name) ||
-        getIconFunc(defaultMenuIconName)) as CustomerComponent
+        getIconFunc(defaultMenuIconName)) as () => VNode
       if (Comp) return <Comp />
       return null as unknown as VNode
     }
@@ -54,7 +53,6 @@ export default defineComponent({
         state.menu = shallowReactive(traverseMenu(data))
       }
     })
-
     return () => (
       <nav
         class={
