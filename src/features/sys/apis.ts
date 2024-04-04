@@ -41,11 +41,11 @@ export interface IMenuTree {
   pid: string
   components: null | string
   sort: number
+  meta?: Record<string, unknown>
   children?: IMenuTree[]
 }
 
 export function getMenuTree() {
   const { data } = Post<IMenuTree[]>(`${sysPrefix}/menu/tree`)
-  console.log(data)
   return data
 }

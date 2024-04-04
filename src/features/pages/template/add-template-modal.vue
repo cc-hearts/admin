@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { FormExpose } from '@/components/form/form'
-import Form from '@/components/form/form.vue'
-import Modal from '@/components/modal/modal.vue'
+import { defineFormSchemaProps } from '@/components/form-schema/utils/define-form-schema-props'
+import { FormExpose } from '@/components/form-schema/helper'
+import { FormSchema } from '@/components/form-schema/index'
 import { defineModal } from '@/components/modal/modal-helper'
+import Modal from '@/components/modal/modal.vue'
 import { ref } from 'vue'
-import { defineFormProps } from '@/components/form/define-form-props'
+
 const emits = defineEmits<{
   (evt: 'submit', args: Record<string, unknown>): void
 }>()
@@ -16,8 +17,8 @@ const onOpen = () => {
 }
 
 const formRef = ref<FormExpose>()
-const formProps = defineFormProps({
-  columns: [],
+const formProps = defineFormSchemaProps({
+  schema: [],
 })
 
 watch(
@@ -46,6 +47,6 @@ defineExpose({ onOpen })
     v-model:visible="modalProps.visible"
     @ok="handleOk"
   >
-    <Form ref="formRef" v-bind="formProps"> </Form>
+    <FormSchema ref="formRef" v-bind="formProps"> </FormSchema>
   </Modal>
 </template>

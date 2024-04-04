@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { FormColumn, FormExpose } from '@/components/form/form'
-import Form from '@/components/form/form.vue'
+import { FormExpose } from '@/components/form-schema/helper'
+import { defineFormSchemaProps } from '@/components/form-schema/utils/define-form-schema-props'
 import { defineModal } from '@/components/modal/modal-helper'
 import Modal from '@/components/modal/modal.vue'
-import { menuType } from '@/configs/dict'
 import SelectIcon from '@/features/components/icon/selectIcon.vue'
 import {
   ModalFormExpose,
   useModalFormExpose,
-} from '@/features/hooks/useModalFormExpose'
+} from '@/features/hooks/use-modal-form-expose'
 import { errorMsg } from '@/utils/message'
 import type { fn } from '@cc-heart/utils/helper'
 import { RadioChangeEvent } from 'ant-design-vue'
@@ -55,6 +54,8 @@ const defaultValue = {
 }
 
 function changeFormColumns(value: string) {
+  const formColumn = formSchemaProps.schema || []
+
   const menuNameIndex = formColumn.findIndex((item) => item.name === 'name')
   formColumn[menuNameIndex].label = value === '0' ? '目录名称' : '菜单名称'
   switch (value) {
@@ -96,41 +97,47 @@ function handleChangeFormColumns(e: RadioChangeEvent) {
   changeFormColumns(value)
 }
 
-const formColumn: FormColumn[] = shallowReactive([
-  {
-    type: 'radio',
-    name: 'type',
-    label: '菜单类型',
-    extra: {
-      options: menuType,
-      onChange: handleChangeFormColumns,
+const formSchemaProps = defineFormSchemaProps({
+  layout: { span: 1, labelCol: { span: 4 } },
+  schema: [
+    {
+      type: 'radio',
+      name: 'type',
+      label: '菜单类型',
+      componentProperty: {
+        options: [
+          { label: '目录', value: '0' },
+          { label: '菜单', value: '1' },
+        ],
+        onChange: handleChangeFormColumns,
+      },
     },
-  },
-  {
-    type: 'input',
-    name: 'name',
-    label: '菜单名称',
-  },
-  {
-    type: 'select',
-    name: 'pid',
-    label: '父级菜单',
-    extra: {
-      options: menuOptions,
+    {
+      type: 'input',
+      name: 'name',
+      label: '菜单名称',
     },
-  },
-  {
-    type: 'input',
-    name: 'icon',
-    label: '图标',
-    slot: { name: 'icon' },
-  },
-  {
-    type: 'input-number',
-    name: 'sort',
-    label: '排序',
-  },
-])
+    {
+      type: 'select',
+      name: 'pid',
+      label: '父级菜单',
+      componentProperty: {
+        options: menuOptions,
+      },
+    },
+    {
+      type: 'input',
+      name: 'icon',
+      label: '图标',
+      slot: { name: 'icon' },
+    },
+    {
+      type: 'input-number',
+      name: 'sort',
+      label: '排序',
+    },
+  ],
+})
 
 const emits = defineEmits<{ (event: 'refresh'): void }>()
 
@@ -186,11 +193,16 @@ watchEffect(() => {
     v-model:visible="modalProps.visible"
     @ok="handleOk"
   >
-    <Form ref="formRef" :columns="formColumn" :default-value="defaultValue">
-      <template #icon="{ formState }">
-        <SelectIcon v-model:modal-value="formState.icon" />
+    <FormSchema
+      ref="formRef"
+      v-bind="formSchemaProps"
+      :default-value="defaultValue"
+    >
+      <template #icon="{ value }">
+        <SelectIcon v-model:modal-value="value.icon" />
       </template>
-    </Form>
+    </FormSchema>
   </Modal>
 </template>
 <style lang="scss"></style>
+@/features/hooks/use-modal-form-expose

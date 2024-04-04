@@ -23,7 +23,6 @@ const request = new Request<IBaseResponse>(
 )
 
 const tipsPathList = ['add', 'delete', 'update', 'edit']
-// const refreshApiMap = new Map<string, Promise<IBaseResponse<any>>>()
 
 export async function getRouter() {
   return import('../configs/router')
@@ -52,9 +51,6 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
           setToken(accessToken)
           setRefreshToken(refreshToken)
         }
-        // if (refreshApiMap.has(url)) {
-        //   return refreshApiMap.get(url)
-        // }
 
         if (
           config.headers['Content-type'] === 'application/json' &&
@@ -66,17 +62,13 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
             console.log('[refresh request parse config body] :', error)
           }
         }
+
         const { data: _data } = request.request(
           url,
           config.method,
           config.body,
           config.interceptor,
         )
-        // refreshApiMap.set(url, _data)
-
-        // _data.then(() => {
-        //   refreshApiMap.delete(url)
-        // })
 
         return Promise.resolve(_data)
       }
@@ -84,7 +76,7 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
       clearToken()
       clearRefreshToken()
       clearProfile()
-      console.log(error)
+      console.log('fetch request error:' + error)
     }
     router.push('/login')
     return
@@ -93,8 +85,7 @@ request.useResponseInterceptor(async (data, { url, data: config }) => {
 })
 
 request.useErrorInterceptor((error) => {
-  if (error)
-    errorMsg(error.toString())
+  if (error) errorMsg(error.toString())
   return Promise.reject(error)
 })
 

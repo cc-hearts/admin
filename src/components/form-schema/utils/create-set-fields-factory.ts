@@ -1,7 +1,7 @@
+import { Ref, watch } from 'vue'
+import { FormExpose } from '../helper'
 import { fn } from '@cc-heart/utils/helper'
-import { FormExpose } from './form'
-
-export function useFormSetFields(ins: Ref<FormExpose | undefined>) {
+export function createSetFieldsFactory(ins: Ref<FormExpose | undefined>) {
   const taskList: Array<fn> = []
   let isIns = false
   const flush = () => {
@@ -19,9 +19,10 @@ export function useFormSetFields(ins: Ref<FormExpose | undefined>) {
           flush()
         }
       },
-      { immediate: true },
+      {
+        immediate: true,
+      },
     )
-
     if (!ins.value) {
       taskList.push(() => ins.value?.setFieldsValue(target))
     } else {

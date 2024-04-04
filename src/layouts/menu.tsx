@@ -6,8 +6,7 @@ import { useNamespace } from '@/hooks'
 import { ItemType, Menu } from 'ant-design-vue'
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface'
 import { useRouter } from 'vue-router'
-import { CustomerComponent } from '@/types/component'
-import { VNode } from 'vue'
+import type { VNode } from 'vue'
 
 type MenuTree = ItemType & {
   children?: ItemType[]
@@ -28,32 +27,32 @@ export default defineComponent({
 
     function renderIcon(name: string): VNode {
       const Comp = (getIconFunc(name) ||
-        getIconFunc(defaultMenuIconName)) as CustomerComponent
+        getIconFunc(defaultMenuIconName)) as () => VNode
       if (Comp) return <Comp />
       return null as unknown as VNode
     }
 
     function traverseMenu(menu: IMenuTree[]): MenuTree[] {
-      return menu.map((item) => {
-        const target: MenuTree = {
-          key: item.path || item.id,
-          label: item.name,
-          icon: () => renderIcon(item.icon),
-        }
-        if (item.children) {
-          target.children = traverseMenu(item.children)
-        }
-        return target
-      })
+      return menu
+        .filter((target) => !target?.meta?.hidden)
+        .map((item) => {
+          const target: MenuTree = {
+            key: item.path || item.id,
+            label: item.name,
+            icon: () => renderIcon(item.icon),
+          }
+          if (item.children) {
+            target.children = traverseMenu(item.children)
+          }
+          return target
+        })
     }
     getMenuTree().then((res) => {
       const { data } = res
       if (data) {
         state.menu = shallowReactive(traverseMenu(data))
-        console.log(state.menu)
       }
     })
-
     return () => (
       <nav
         class={

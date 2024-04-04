@@ -1,10 +1,12 @@
 import { locales } from '@/configs'
 import { type Locales } from '@/types/config'
+import { localStorageCache } from '@/utils/define-storage'
+
 export function getLocates() {
-  return (localStorage.getItem('locates') as Locales) || 'zh-CN'
+  return (localStorageCache.getItem('locates') as Locales) || 'zh-CN'
 }
 
 export function setLocates(locates: Locales) {
   locales.value = locates
-  localStorage.setItem('locates', locates)
+  localStorageCache.setItem('locates', locates)
 }

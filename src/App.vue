@@ -15,15 +15,13 @@ useInitTheme()
 const antLocale = computed(() => {
   return localesMap[locales.value] || zhCN
 })
+
 </script>
 
 <template>
-  <ConfigProvider
-    :theme="{
-      algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-    }"
-    :locale="antLocale"
-  >
+  <ConfigProvider :theme="{
+    algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm
+  }" :locale="antLocale">
     <RouterView />
   </ConfigProvider>
 </template>

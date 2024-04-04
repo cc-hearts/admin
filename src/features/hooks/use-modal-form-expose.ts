@@ -1,7 +1,7 @@
-import { FormExpose } from '@/components/form/form'
-import { useFormSetFields } from '@/components/form/useFormSetFields'
-import { useResetFields } from '@/components/form/useReset'
-import { fn } from '@cc-heart/utils/helper'
+import { createSetFieldsFactory } from '@/components/form-schema/utils/create-set-fields-factory'
+import { createResetFactory } from '@/components/form-schema/utils/create-reset-factory'
+import type { fn } from '@cc-heart/utils/helper'
+import type { FormExpose } from '@/components/form-schema/helper'
 import { type Ref } from 'vue'
 
 export interface ModalFormExpose {
@@ -13,8 +13,8 @@ export function useModalFormExpose(
   extensionFunc?: (name: keyof ModalFormExpose, target: fn) => fn | void,
 ) {
   const exposedResult: ModalFormExpose = {
-    setFieldsValue: useFormSetFields(formInstanceRef),
-    resetFields: useResetFields(formInstanceRef),
+    setFieldsValue: createSetFieldsFactory(formInstanceRef),
+    resetFields: createResetFactory(formInstanceRef),
   }
   if (extensionFunc instanceof Function) {
     Object.keys(exposedResult).forEach((key) => {
