@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { FormColumn, FormExpose } from '@/components/form/form'
+import { FormExpose } from '@/components/form-schema/helper'
+import { defineFormSchemaProps } from '@/components/form-schema/utils/define-form-schema-props'
 import { defineModal } from '@/components/modal/modal-helper'
 import Modal from '@/components/modal/modal.vue'
 import SelectIcon from '@/features/components/icon/selectIcon.vue'
@@ -53,6 +54,8 @@ const defaultValue = {
 }
 
 function changeFormColumns(value: string) {
+  const formColumn = formSchemaProps.schema || []
+
   const menuNameIndex = formColumn.findIndex((item) => item.name === 'name')
   formColumn[menuNameIndex].label = value === '0' ? '目录名称' : '菜单名称'
   switch (value) {
@@ -94,44 +97,47 @@ function handleChangeFormColumns(e: RadioChangeEvent) {
   changeFormColumns(value)
 }
 
-const formColumn: FormColumn[] = shallowReactive([
-  {
-    type: 'radio',
-    name: 'type',
-    label: '菜单类型',
-    componentProperty: {
-      options: [
-        { label: '目录', value: '0' },
-        { label: '菜单', value: '1' },
-      ],
-      onChange: handleChangeFormColumns,
+const formSchemaProps = defineFormSchemaProps({
+  layout: { span: 1, labelCol: { span: 4 } },
+  schema: [
+    {
+      type: 'radio',
+      name: 'type',
+      label: '菜单类型',
+      componentProperty: {
+        options: [
+          { label: '目录', value: '0' },
+          { label: '菜单', value: '1' },
+        ],
+        onChange: handleChangeFormColumns,
+      },
     },
-  },
-  {
-    type: 'input',
-    name: 'name',
-    label: '菜单名称',
-  },
-  {
-    type: 'select',
-    name: 'pid',
-    label: '父级菜单',
-    componentProperty: {
-      options: menuOptions,
+    {
+      type: 'input',
+      name: 'name',
+      label: '菜单名称',
     },
-  },
-  {
-    type: 'input',
-    name: 'icon',
-    label: '图标',
-    slot: { name: 'icon' },
-  },
-  {
-    type: 'input-number',
-    name: 'sort',
-    label: '排序',
-  },
-])
+    {
+      type: 'select',
+      name: 'pid',
+      label: '父级菜单',
+      componentProperty: {
+        options: menuOptions,
+      },
+    },
+    {
+      type: 'input',
+      name: 'icon',
+      label: '图标',
+      slot: { name: 'icon' },
+    },
+    {
+      type: 'input-number',
+      name: 'sort',
+      label: '排序',
+    },
+  ],
+})
 
 const emits = defineEmits<{ (event: 'refresh'): void }>()
 
@@ -189,8 +195,7 @@ watchEffect(() => {
   >
     <FormSchema
       ref="formRef"
-      :layout="{ span: 1, labelCol: { span: 4 } }"
-      :schema="formColumn"
+      v-bind="formSchemaProps"
       :default-value="defaultValue"
     >
       <template #icon="{ value }">

@@ -5,6 +5,7 @@ import {
   RadioGroup,
   Select,
 } from 'ant-design-vue'
+import { MaybeRef } from 'vue'
 
 export const VERSION = '0.0.1'
 interface Options {
@@ -23,7 +24,7 @@ export interface FormSchema {
     [props: string]: any
   }
   componentProperty?: {
-    options?: Options[]
+    options?: MaybeRef<Options[]>
     [props: string]: any
   }
 }
