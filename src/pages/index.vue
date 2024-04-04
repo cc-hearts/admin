@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { getProfile } from '@/store/profile'
 import { Watermark, Layout } from 'ant-design-vue'
-import SideMenu from '@/layouts/menu'
-import Headers from '@/layouts/headers.vue'
+import SideMenu from '@/layouts/side/menu'
+import Headers from '@/layouts/header/headers.vue'
 import IPopover from '@/components/tooltip/IPopover'
 import Module from '@/icons/module.vue'
+import { toggleOpenConfigModal } from '@/store/app'
+import ConfigModal from '@/layouts/config/config-modal.vue'
 
 const profile = getProfile()
 </script>
@@ -15,7 +17,7 @@ const profile = getProfile()
       <Headers>
         <template #right-icon>
           <IPopover :content="$t('common.config')">
-            <Module />
+            <Module @click="toggleOpenConfigModal" />
           </IPopover>
         </template>
       </Headers>
@@ -31,6 +33,7 @@ const profile = getProfile()
       </div>
     </div>
   </div>
+  <ConfigModal />
 </template>
 
 <route>
@@ -41,3 +44,4 @@ const profile = getProfile()
     }
   }
 </route>
+@/layouts/side/menu

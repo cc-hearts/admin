@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { collapsed, githubUrl } from '@/configs'
-import { useNamespace } from '@/hooks'
+import { defineNamespace } from '@/hooks'
 import { GithubIcon } from '@/icons'
 import LogOut from '@/icons/LogOut.vue'
 import ArrowUp from '@/icons/arrowUp.vue'
@@ -18,15 +18,17 @@ import {
 import { Modal, Popover } from 'ant-design-vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import SwitchTheme from '@/components/switch/toggleDark.vue'
+import SwitchTheme from '@/layouts/config/theme/toggleDark.vue'
 import IPopover from '@/components/tooltip/IPopover'
+import { CcButton } from '@/components'
 
+const { t } = useI18n()
 const router = useRouter()
-const ns = useNamespace('header')
+const ns = defineNamespace('header')
+
 const toGithub = () => {
   if (githubUrl) window.open(githubUrl)
 }
-const { t } = useI18n()
 const handleLogout = () => {
   Modal.confirm({
     title: t('components.headers.title'),
@@ -64,10 +66,10 @@ const toggleCollapsed = () => {
   >
     <slot name="left">
       <div>
-        <a-button @click="toggleCollapsed">
+        <CcButton @click="toggleCollapsed">
           <MenuUnfoldOutlined v-if="collapsed" />
           <MenuFoldOutlined v-else />
-        </a-button>
+        </CcButton>
       </div>
     </slot>
     <div class="flex text-xl items-center" :class="[ns.e('icon')]">

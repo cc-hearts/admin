@@ -1,27 +1,32 @@
 <script setup lang="ts">
-import { isDark, locales } from '@/configs'
+import { locales } from '@/configs'
 import { ConfigProvider, theme } from 'ant-design-vue'
 import enUS from 'ant-design-vue/es/locale/en_US'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import { useInitTheme } from './hooks/use-init-theme'
+import { getAppStore } from './store/app'
 
 const localesMap = {
   'zh-CN': zhCN,
   'en-US': enUS,
 }
 
+const appStore = getAppStore()
+
 useInitTheme()
 
 const antLocale = computed(() => {
   return localesMap[locales.value] || zhCN
 })
-
 </script>
 
 <template>
-  <ConfigProvider :theme="{
-    algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm
-  }" :locale="antLocale">
+  <ConfigProvider
+    :theme="{
+      algorithm: appStore.isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    }"
+    :locale="antLocale"
+  >
     <RouterView />
   </ConfigProvider>
 </template>

@@ -1,66 +1,35 @@
 <script setup lang="ts">
-import { isDark } from '@/configs';
-import { useIsDark, useNamespace } from '@/hooks'
+import { defineNamespace } from '@/hooks'
 import { MoonIcon, SunIcon } from '@/icons'
-import { onMounted, ref } from 'vue'
-const checked = ref(false)
+import { useToggleThemeAnimation } from './use-toggle-theme-animation'
+import { getAppStore } from '@/store/app'
+import { setTheme } from '@/storage'
+
+const appStore = getAppStore()
+const checked = computed(() => appStore.isDark)
 
 function handleToggleTheme(event: MouseEvent) {
-  const x = event.clientX;
-  const y = event.clientY;
-  const endRadius = Math.hypot(
-    Math.max(x, innerWidth - x),
-    Math.max(y, innerHeight - y)
-  );
-
-  let _isDark: boolean
-
-  // @ts-expect-error
-  const transition = document.startViewTransition(() => {
-    const root = document.documentElement;
-    _isDark = root.classList.contains('dark');
-    isDark.value = !isDark.value
-    const methodField = _isDark ? 'remove' : 'add'
-    root.classList[methodField]('dark')
-    toggleChecked()
-  });
-
-  transition.ready.then(() => {
-    const clipPath = [
-      `circle(0px at ${x}px ${y}px)`,
-      `circle(${endRadius}px at ${x}px ${y}px)`,
-    ];
-
-    document.documentElement.animate(
-      {
-        clipPath: _isDark ? [...clipPath].reverse() : clipPath,
-      },
-      {
-        duration: 500,
-        easing: 'ease-in',
-        pseudoElement: _isDark
-          ? '::view-transition-old(root)'
-          : '::view-transition-new(root)',
-      }
-    );
-  });
+  const theme = checked.value ? 'light' : 'dark'
+  useToggleThemeAnimation(event)
+  setTheme(theme)
 }
 
-const ns = useNamespace('appearance')
-function toggleChecked() {
-  checked.value = useIsDark()
-}
-
-onMounted(() => {
-  toggleChecked()
-})
+const ns = defineNamespace('appearance')
 </script>
 
 <template>
   <div class="flex" :class="[ns.cls]">
-    <button role="switch" class="relative block shrink-0 outline-0" :aria-checked="checked" @click="handleToggleTheme">
+    <button
+      role="switch"
+      class="relative block shrink-0 outline-0"
+      :aria-checked="checked"
+      @click="handleToggleTheme"
+    >
       <span :class="[ns.e('check')]">
-        <span class="relative block overflow-hidden rounded-full" :class="[ns.e('icon')]">
+        <span
+          class="relative block overflow-hidden rounded-full"
+          :class="[ns.e('icon')]"
+        >
           <SunIcon />
           <MoonIcon />
         </span>

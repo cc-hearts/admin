@@ -2,7 +2,7 @@ import '@/assets/scss/pages/menu.scss'
 import { collapsed, defaultMenuIconName } from '@/configs'
 import { getIconFunc } from '@/features/components/icon/install'
 import { getMenuTree, type IMenuTree } from '@/features/sys/apis'
-import { useNamespace } from '@/hooks'
+import { defineNamespace } from '@/hooks'
 import { ItemType, Menu } from 'ant-design-vue'
 import { MenuInfo } from 'ant-design-vue/es/menu/src/interface'
 import { useRouter } from 'vue-router'
@@ -15,7 +15,7 @@ type MenuTree = ItemType & {
 export default defineComponent({
   name: 'SideMenu',
   setup() {
-    const ns = useNamespace('side-menu')
+    const ns = defineNamespace('side-menu')
     const router = useRouter()
     const handleClickMenu = (params: MenuInfo) => {
       const { key } = params

@@ -1,4 +1,3 @@
-import { useIsDark } from '@/hooks/use-is-dark'
 import { getMenuCollapse, setMenuCollapse } from '@/storage/collapse'
 import { getLocates } from '@/storage/locates'
 import { type Locales } from '@/types/config'
@@ -6,7 +5,6 @@ import { ref } from 'vue'
 
 export const defaultNamespace = 'cc-admin'
 export const locales = ref<Locales>(getLocates())
-export const isDark = ref(useIsDark())
 export const collapsed = ref(getMenuCollapse())
 export const defaultMenuIconName = 'AppstoreOutlined'
 
@@ -15,6 +13,6 @@ watch(
   (bool) => setMenuCollapse(bool),
 )
 
-export const __IS_DEV__ = import.meta.env.DEV
+export const __IS_DEV__ = !import.meta.env.PROD
 
 export const githubUrl = 'https://github.com/cc-hearts/admin.git'
