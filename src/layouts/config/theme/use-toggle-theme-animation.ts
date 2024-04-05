@@ -14,7 +14,8 @@ export function useToggleThemeAnimation(event: MouseEvent) {
 
   const transition = document.startViewTransition(() => {
     const root = document.documentElement
-    const methodField = root.classList.contains('dark') ? 'remove' : 'add'
+    _isDark = root.classList.contains('dark')
+    const methodField = _isDark ? 'remove' : 'add'
     root.classList[methodField]('dark')
     appStore.isDark = !appStore.isDark
   })
