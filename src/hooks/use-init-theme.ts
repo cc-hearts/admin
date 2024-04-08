@@ -13,7 +13,7 @@ export function useInitTheme() {
   const appStore = getAppStore()
   // 监听系统的变量
   const themeMedia = window.matchMedia('(prefers-color-scheme: light)')
-  themeMedia.addListener((e) => {
+  themeMedia.addEventListener('change', (e) => {
     if (theme === 'auto') {
       appStore.isDark = !e.matches
       const methodField = appStore.isDark ? 'add' : 'remove'
