@@ -4,27 +4,30 @@
       :class="ns.e('modal')"
       class="w-200 h-500px m-auto border border-solid border-#fff bg-#ffffff4f rounded-4 flex"
     >
-      <div class="flex-[1.5] box-border p-10 flex items-center">
+      <div class="flex-[1.2] box-border p-10 flex items-center">
         <img :src="LoginBgImg" />
       </div>
       <div class="flex-1 flex items-center p-r-2">
         <div
-          class="flex flex-col items-center p-4 border border-#fff border-solid rounded-2"
+          class="flex flex-col items-center p-x-10 p-y-6 border border-#fff border-solid rounded-2 gap-5"
           :style="{ 'backdrop-filter': 'blur(8px)' }"
         >
-          <div class="m-b-6">
-            <h2>Admin</h2>
-          </div>
           <Input
-            class="m-b-6"
+            size="large"
             v-model:value="userInfo.username"
             :placeholder="$t('login.usernamePlaceholder')"
           />
           <InputPassword
+            size="large"
             v-model:value="userInfo.password"
             :placeholder="$t('login.passwordPlaceholder')"
           />
-          <Button class="m-t-6 w-full" @click="handleSubmit">{{
+          <div
+            class="self-end cursor-pointer hover:color-[var(--btn-primary-color)] transition-300 text-3.5"
+          >
+            <div>{{ $t('login.forgetPassword') }}</div>
+          </div>
+          <Button size="large" class="w-full" @click="handleSubmit">{{
             $t('login.submitButton')
           }}</Button>
         </div>
@@ -86,6 +89,7 @@ onUnmounted(() => {
 
 <style lang="scss">
 @use '@/assets/scss/lib.scss' as *;
+
 @include b('login') {
   @include e('modal') {
     background: linear-gradient(to bottom, #fff 30%, transparent),
