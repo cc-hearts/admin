@@ -9,7 +9,7 @@
       </div>
       <div class="flex-1 flex items-center p-r-2">
         <div
-          class="flex flex-col items-center p-x-10 p-y-6 border border-#fff border-solid rounded-2 gap-5"
+          class="flex flex-col items-center p-x-10 p-y-6 border border-#fff border-solid rounded-2 gap-5 bg-[rgba(255,255,255,.3)]"
           :style="{ 'backdrop-filter': 'blur(8px)' }"
         >
           <Input
