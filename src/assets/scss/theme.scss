@@ -1,4 +1,6 @@
 :root {
+
+  --global-bg-color: #f5f5fd;
   // text
   --text-color: #303133;
   // background
@@ -18,8 +20,9 @@
 }
 
 :root.dark {
-  --text-color: #e5eaf3;
+  --global-bg-color: #141414;
 
+  --text-color: #e5eaf3;
   --bg-color: #141414;
   --bg-color-2: #181818;
   // text color dark

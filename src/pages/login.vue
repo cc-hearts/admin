@@ -1,18 +1,34 @@
 <template>
-  <div class="h-full w-full flex justify-center items-center">
-    <div class="w-80 text-center">
-      <Input
-        class="m-b-6"
-        v-model:value="userInfo.username"
-        :placeholder="$t('login.usernamePlaceholder')"
-      />
-      <InputPassword
-        v-model:value="userInfo.password"
-        :placeholder="$t('login.passwordPlaceholder')"
-      />
-      <Button class="m-t-6" @click="handleSubmit">{{
-        $t('login.submitButton')
-      }}</Button>
+  <div :class="ns.cls" class="h-full w-full flex bg-[var(--global-bg-color)]">
+    <div
+      :class="ns.e('modal')"
+      class="w-200 h-500px m-auto border border-solid border-#fff bg-#ffffff4f rounded-4 flex"
+    >
+      <div class="flex-[1.5] box-border p-10 flex items-center">
+        <img :src="LoginBgImg" />
+      </div>
+      <div class="flex-1 flex items-center p-r-2">
+        <div
+          class="flex flex-col items-center p-4 border border-#fff border-solid rounded-2"
+          :style="{ 'backdrop-filter': 'blur(8px)' }"
+        >
+          <div class="m-b-6">
+            <h2>Admin</h2>
+          </div>
+          <Input
+            class="m-b-6"
+            v-model:value="userInfo.username"
+            :placeholder="$t('login.usernamePlaceholder')"
+          />
+          <InputPassword
+            v-model:value="userInfo.password"
+            :placeholder="$t('login.passwordPlaceholder')"
+          />
+          <Button class="m-t-6 w-full" @click="handleSubmit">{{
+            $t('login.submitButton')
+          }}</Button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -22,13 +38,18 @@ import { loginApi } from '@/features/user/api'
 import { setRefreshToken, setToken } from '@/storage'
 import { Button, Input, InputPassword } from 'ant-design-vue'
 import { onMounted, onUnmounted, reactive } from 'vue'
+import LoginBgImg from '@/assets/imgs/login-bg.png'
 import md5 from 'md5'
 import { useRouter } from 'vue-router'
 import { __IS_DEV__ } from '@/configs'
+import { defineCssNamespace } from '@/utils/define-css-namespace'
+
 const userInfo = reactive({
   username: '',
   password: '',
 })
+
+const ns = defineCssNamespace('login')
 
 if (__IS_DEV__) {
   userInfo.username = 'admin'
@@ -62,6 +83,16 @@ onUnmounted(() => {
   window.removeEventListener('keypress', listenerEnterToLogin)
 })
 </script>
+
+<style lang="scss">
+@use '@/assets/scss/lib.scss' as *;
+@include b('login') {
+  @include e('modal') {
+    background: linear-gradient(to bottom, #fff 30%, transparent),
+      linear-gradient(120deg, #bbf2f9 20%, #ddd8f8 50%, #ede0da);
+  }
+}
+</style>
 
 <route>
   {
