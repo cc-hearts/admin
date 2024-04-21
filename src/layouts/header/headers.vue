@@ -73,7 +73,7 @@ const toGithub = () => {
   --cc-divider-light: rgba(60, 60, 60, 0.12);
   height: 48px;
   box-shadow: 0 1px 0 var(--header-shadow);
-
+  background: var(--header-bg-color);
   &__icon {
     color: var(--color-text-2);
 

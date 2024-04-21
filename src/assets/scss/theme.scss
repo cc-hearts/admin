@@ -1,10 +1,12 @@
 :root {
   --primary-color: #4096ff;
+  --global-bg-color: #fafafa;
+  --header-bg-color: #fff;
+  --side-bg-color: #fff;
 
   // text
   --text-color: #303133;
   // background
-  --bg-color: #f5f5f5;
   --bg-color-2: #f5f5f5;
   // text color
   --color-text-1: #141414;
@@ -16,14 +18,16 @@
 
   --cc-popover-hover-bg-color: rgba(0, 0, 0, 0.06);
 
-  --main-background-color: rgb(240, 242, 245);
-
   --btn-primary-color: #4096ff;
 }
 
 :root.dark {
+  --primary-color: #165dd7;
+  --global-bg-color: #141414;
+  --header-bg-color: #000;
+  --side-bg-color: #000;
+
   --text-color: #e5eaf3;
-  --bg-color: #141414;
   --bg-color-2: #181818;
   // text color dark
   --color-text-1: rgba(255, 255, 255, 0.9);
@@ -34,7 +38,6 @@
 
   --cc-popover-hover-bg-color: rgba(255, 255, 255, 0.12);
 
-  --main-background-color: rgb(33, 33, 33);
 }
 
 ::view-transition-old(root),

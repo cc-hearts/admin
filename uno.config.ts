@@ -12,7 +12,7 @@ export default defineConfig({
     [
       'bg-main',
       {
-        'background-color': 'var(--main-background-color)',
+        'background-color': 'var(--global-bg-color)',
       },
     ],
   ],
