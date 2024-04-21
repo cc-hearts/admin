@@ -25,3 +25,7 @@ export function toggleOpenConfigModal() {
 export function toggleIsDark() {
   appStore.isDark = !appStore.isDark
 }
+
+export function setAppStoreTheme(theme: AppStore['theme']) {
+  appStore.theme = theme
+}

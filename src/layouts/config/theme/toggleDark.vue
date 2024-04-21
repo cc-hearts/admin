@@ -2,8 +2,8 @@
 import { defineNamespace } from '@/hooks'
 import { MoonIcon, SunIcon } from '@/icons'
 import { useToggleThemeAnimation } from './use-toggle-theme-animation'
-import { getAppStore } from '@/store/app'
-import { setTheme } from '@/storage'
+import { getAppStore, setAppStoreTheme } from '@/store/app'
+import { setLocalTheme } from '@/storage'
 
 const appStore = getAppStore()
 const checked = computed(() => appStore.isDark)
@@ -11,7 +11,8 @@ const checked = computed(() => appStore.isDark)
 function handleToggleTheme(event: MouseEvent) {
   const theme = checked.value ? 'light' : 'dark'
   useToggleThemeAnimation(event)
-  setTheme(theme)
+  setLocalTheme(theme)
+  setAppStoreTheme(theme)
 }
 
 const ns = defineNamespace('appearance')

@@ -1,5 +1,10 @@
 <template>
-  <div :class="ns.cls" class="h-full w-full flex bg-[var(--global-bg-color)]">
+  <Headers>
+    <template #left>
+      <i></i>
+    </template>
+  </Headers>
+  <div :class="ns.cls" class="h-full w-full flex bg-[var(--bg-color)]">
     <div
       :class="ns.e('modal')"
       class="w-200 h-500px m-auto border border-solid border-#fff bg-#ffffff4f rounded-4 flex"
@@ -46,6 +51,7 @@ import md5 from 'md5'
 import { useRouter } from 'vue-router'
 import { __IS_DEV__ } from '@/configs'
 import { defineCssNamespace } from '@/utils/define-css-namespace'
+import Headers from '@/layouts/header/headers.vue'
 
 const userInfo = reactive({
   username: '',
@@ -92,7 +98,7 @@ onUnmounted(() => {
 
 @include b('login') {
   @include e('modal') {
-    background: linear-gradient(to bottom, #fff 30%, transparent),
+    background: linear-gradient(to bottom, var(--bg-color) 30%, transparent),
       linear-gradient(120deg, #bbf2f9 20%, #ddd8f8 50%, #ede0da);
   }
 }

@@ -8,6 +8,11 @@
     >
       <img
         class="w-25 h-15 rounded-1 hover:border-color-#999 border-2 border-solid border-color-transparent transition"
+        :class="
+          item.theme === appStore.theme && [
+            '!border-color-[var(--primary-color)]',
+          ]
+        "
         :src="item.src"
       />
       <text class="m-t-1">{{ item.label }}</text>
@@ -21,8 +26,8 @@ import ThemeDarkPng from '@/assets/imgs/layout/theme-dark.png'
 import ThemeLightDarkPng from '@/assets/imgs/layout/theme-light-dark.png'
 import { useToggleThemeAnimation } from './use-toggle-theme-animation'
 import { useSystemTheme } from '@/hooks/use-system-theme'
-import { getAppStore } from '@/store/app'
-import { setTheme } from '@/storage'
+import { getAppStore, setAppStoreTheme } from '@/store/app'
+import { setLocalTheme } from '@/storage'
 
 const themeOptions = [
   { label: '浅色主题', theme: 'light', src: ThemeLightPng },
@@ -36,8 +41,8 @@ const toggleSystemTheme = (
   event: MouseEvent,
   theme: 'light' | 'dark' | 'auto',
 ) => {
-  setTheme(theme)
-
+  setLocalTheme(theme)
+  setAppStoreTheme(theme)
   if (
     (theme === 'light' && !appStore.isDark) ||
     (theme === 'dark' && appStore.isDark)

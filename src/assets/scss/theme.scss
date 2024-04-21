@@ -1,10 +1,10 @@
 :root {
+  --primary-color: #4096ff;
 
-  --global-bg-color: #f5f5fd;
   // text
   --text-color: #303133;
   // background
-  --bg-color: #ffffff;
+  --bg-color: #f5f5f5;
   --bg-color-2: #f5f5f5;
   // text color
   --color-text-1: #141414;
@@ -22,8 +22,6 @@
 }
 
 :root.dark {
-  --global-bg-color: #141414;
-
   --text-color: #e5eaf3;
   --bg-color: #141414;
   --bg-color-2: #181818;

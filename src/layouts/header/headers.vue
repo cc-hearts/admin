@@ -1,48 +1,20 @@
 <script setup lang="ts">
-import { collapsed, githubUrl } from '@/configs'
+import IPopover from '@/components/tooltip/IPopover'
+import { githubUrl } from '@/configs'
 import { defineNamespace } from '@/hooks'
 import { GithubIcon } from '@/icons'
-import LogOut from '@/icons/LogOut.vue'
 import ArrowUp from '@/icons/arrowUp.vue'
 import I18n from '@/icons/i18n.vue'
-import { loadLanguageAsync } from '@/modules/i18n'
-import { clearRefreshToken, clearToken } from '@/storage'
-import { setLocates } from '@/storage/locates'
-import { type Locales } from '@/types/config'
-import { successTips } from '@/utils/message'
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  MoreOutlined,
-} from '@ant-design/icons-vue'
-import { Modal, Popover } from 'ant-design-vue'
-import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
 import SwitchTheme from '@/layouts/config/theme/toggleDark.vue'
-import IPopover from '@/components/tooltip/IPopover'
-import { CcButton } from '@/components'
+import { loadLanguageAsync } from '@/modules/i18n'
+import { setLocates } from '@/storage'
+import { Locales } from '@/types'
+import { successTips } from '@/utils'
+import { Popover } from 'ant-design-vue'
+import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const router = useRouter()
 const ns = defineNamespace('header')
-
-const toGithub = () => {
-  if (githubUrl) window.open(githubUrl)
-}
-const handleLogout = () => {
-  Modal.confirm({
-    title: t('components.headers.title'),
-    content: t('components.headers.content'),
-    okText: t('components.headers.okText'),
-    cancelText: t('components.headers.cancelText'),
-    onOk() {
-      clearToken()
-      clearRefreshToken()
-      router.push('/login')
-    },
-  })
-}
-
 const locates = [
   { label: '简体中文', value: 'zh-CN' },
   { label: 'English', value: 'en-US' },
@@ -54,8 +26,8 @@ const handleToggleLocates = async (value: Locales) => {
   successTips(t('components.headers.toggleLocatesSuccessMsg'))
 }
 
-const toggleCollapsed = () => {
-  collapsed.value = !collapsed.value
+const toGithub = () => {
+  if (githubUrl) window.open(githubUrl)
 }
 </script>
 
@@ -64,16 +36,8 @@ const toggleCollapsed = () => {
     class="flex justify-between items-center px-3 shrink-0"
     :class="[ns.cls]"
   >
-    <slot name="left">
-      <div>
-        <CcButton @click="toggleCollapsed">
-          <MenuUnfoldOutlined v-if="collapsed" />
-          <MenuFoldOutlined v-else />
-        </CcButton>
-      </div>
-    </slot>
+    <slot name="left"> </slot>
     <div class="flex text-xl items-center" :class="[ns.e('icon')]">
-      <slot name="right-icon"></slot>
       <IPopover content="github">
         <GithubIcon @click="toGithub" />
       </IPopover>
@@ -95,23 +59,7 @@ const toggleCollapsed = () => {
           <I18n />
         </Popover>
       </div>
-      <Popover
-        :overlayClassName="ns.e('custom-popover')"
-        placement="bottomRight"
-      >
-        <template #content>
-          <div
-            class="flex items-center"
-            :class="[ns.e('popover')]"
-            @click="handleLogout"
-          >
-            <LogOut />
-            <div class="popover__split"></div>
-            <span>{{ $t('common.logout') }}</span>
-          </div>
-        </template>
-        <MoreOutlined />
-      </Popover>
+      <slot name="right-icon"></slot>
     </div>
   </header>
 </template>
@@ -159,7 +107,7 @@ const toggleCollapsed = () => {
   &__split {
     $marginX: 9px;
     display: flex;
-
+    align-items: center;
     &::before,
     &::after {
       content: '';
@@ -176,43 +124,12 @@ const toggleCollapsed = () => {
       border-left: 1px solid var(--cc-divider-light);
     }
   }
-
-  @include e('popover') {
-    padding: 2px 4px;
-    transition: all 0.3s;
-    border-radius: 4px;
-    cursor: pointer;
-    color: var(--color-text-2);
-
-    &:hover {
-      background-color: var(--cc-popover-hover-bg-color);
-      color: var(--color-text-1);
-    }
-  }
-
-  @include e('custom-popover') {
-    .ant-popover-inner {
-      padding: 12px 6px;
-    }
-  }
-}
-
-.popover__split {
-  --cc-divider-light: rgba(60, 60, 60, 0.12);
-  width: 1px;
-  height: 16px;
-  margin: 0 4px;
-  border-right: 1px solid var(--cc-divider-light);
 }
 
 .dark {
   @include b('header') {
     --header-shadow: rgb(72, 72, 73);
     --icon-background-color: rgba(255, 255, 255, 0.12);
-    --cc-divider-light: rgba(84, 84, 84, 0.48);
-  }
-
-  .popover__split {
     --cc-divider-light: rgba(84, 84, 84, 0.48);
   }
 }
