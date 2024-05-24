@@ -31,8 +31,8 @@ export function useToggleThemeAnimation(event: MouseEvent) {
         clipPath: _isDark ? [...clipPath].reverse() : clipPath,
       },
       {
-        duration: 500,
-        easing: 'ease-in',
+        duration: 300,
+        easing: 'linear',
         pseudoElement: _isDark
           ? '::view-transition-old(root)'
           : '::view-transition-new(root)',
