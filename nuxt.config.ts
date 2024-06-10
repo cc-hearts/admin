@@ -1,9 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { generatorStyles } from './plugins/preset-css-plugin'
+
+generatorStyles()
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@unocss/nuxt', 'nuxt-primevue'],
-  primevue: {
-    cssLayerOrder: 'reset,primevue',
-  },
-  css: ['primevue/resources/themes/aura-light-green/theme.css'],
+  modules: ['@unocss/nuxt', '@ant-design-vue/nuxt'],
 })

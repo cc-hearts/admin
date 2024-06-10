@@ -5,6 +5,8 @@
 </template>
 
 <style lang="scss">
+@import './assets/scss/ant-design-vue.css';
+
 body,
 html,
 #__nuxt {
