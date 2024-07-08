@@ -1,4 +1,4 @@
-<template>index</template>
+<template>home page</template>
 
 <script setup lang="ts"></script>
 

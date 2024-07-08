@@ -17,30 +17,31 @@
   "devDependencies": {
     "@ant-design-vue/nuxt": "^1.4.1",
     "@ant-design/icons-vue": "^7.0.1",
-    "@cc-heart/utils": "^5.2.0",
-    "@cc-heart/utils-client": "^2.0.2",
-    "@types/md5": "^2.3.5",
-    "@vitejs/plugin-vue": "^4.5.2",
-    "cypress": "^13.7.1",
-    "eslint-plugin-vue": "^9.19.2",
-    "jsdom": "^24.0.0",
-    "lint-staged": "^15.2.0",
-    "prettier": "^3.1.1",
-    "typescript": "^5.3.3",
-    "vitest": "^1.4.0",
     "@cc-heart/eslint-config": "^0.0.5",
     "@cc-heart/gen-index-export": "^2.2.0",
     "@cc-heart/storage-cache": "^0.0.5",
     "@cc-heart/ui-demi": "^0.5.3",
+    "@cc-heart/utils": "^5.2.0",
+    "@cc-heart/utils-client": "^2.0.2",
     "@cc-heart/vue-utils": "^0.0.1",
     "@intlify/unplugin-vue-i18n": "^0.10.1",
+    "@types/md5": "^2.3.5",
     "@types/node": "^20.10.5",
     "@types/nprogress": "^0.2.3",
+    "@unocss/nuxt": "^0.60.4",
+    "@vitejs/plugin-vue": "^4.5.2",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "ant-design-vue": "^4.1.2",
+    "cypress": "^13.7.1",
+    "eslint-plugin-vue": "^9.19.2",
     "husky": "^8.0.3",
+    "jsdom": "^24.0.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
     "sass": "^1.69.5",
+    "typescript": "^5.3.3",
     "unocss": "^0.51.13",
+    "vitest": "^1.4.0",
     "vuedraggable": "^4.1.0"
   },
   "lint-staged": {
@@ -49,5 +50,8 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@9.0.5"
+  "packageManager": "pnpm@9.0.5",
+  "dependencies": {
+    "nuxt": "^3.11.2"
+  }
 }

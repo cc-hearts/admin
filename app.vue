@@ -1,12 +1,12 @@
 <template>
   <NuxtLayout>
-    <NuxtPage />
+    <a-extract-style>
+      <NuxtPage />
+    </a-extract-style>
   </NuxtLayout>
 </template>
 
 <style lang="scss">
-@import './assets/scss/ant-design-vue.css';
-
 body,
 html,
 #__nuxt {
