@@ -6,9 +6,9 @@ export function useReactiveToPromisify<
   S = ReturnType<T>,
   P = any,
 >(hookFn: T, callback: (resolve: Fn, reject: Fn, ret: S) => void) {
-  return () => {
-    const scope = effectScope()
+  const scope = effectScope()
 
+  return () => {
     const ret = new Promise<P>((resolve, reject) => {
       scope.run(() => {
         const ret = hookFn()
