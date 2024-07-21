@@ -1,8 +1,9 @@
-import { Ref, watch } from 'vue'
-import { FormExpose } from '../helper'
-import { fn } from '@cc-heart/utils/helper'
+import type { Ref } from 'vue'
+import { watch } from 'vue'
+import type { FormExpose } from '../helper'
+import type { Fn } from '@cc-heart/utils/helper'
 export function createSetFieldsFactory(ins: Ref<FormExpose | undefined>) {
-  const taskList: Array<fn> = []
+  const taskList: Array<Fn> = []
   let isIns = false
   const flush = () => {
     const task = taskList.slice()

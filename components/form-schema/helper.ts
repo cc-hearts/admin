@@ -26,7 +26,7 @@ export interface FormLayoutProps {
   labelCol?: Record<string, string | number>
   wrapperCol?: Record<string, string | number>
 }
-export type FormProps = {
+export interface FormProps {
   name?: string
   layout?: FormLayoutProps
   schema?: FormSchema[]
