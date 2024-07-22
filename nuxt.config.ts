@@ -2,7 +2,7 @@
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@unocss/nuxt', '@ant-design-vue/nuxt'],
+  modules: ['@unocss/nuxt', '@ant-design-vue/nuxt', '@nuxt/test-utils/module'],
   antd: {
     extractStyle: true,
   },

@@ -38,7 +38,7 @@ const useFetch = createFetch({
               try {
                 const request = await refreshApi()
                 if (request.data) {
-                  const { accessToken, refreshToken } = request.data
+                  const { accessToken, refreshToken } = request.data.value.data
                   setToken(accessToken)
                   setRefreshToken(refreshToken)
                 } else {

@@ -6,10 +6,15 @@
 </template>
 
 <script setup lang="ts">
-import { useFetch } from '~/utils/request'
+import { useRequest } from '~/utils/request'
+import { requestUrl } from '~/configs/request'
 
-const res = useFetch('/user/auth', { method: 'post' })
-console.log(res)
+const res = useRequest('/user/auth', { method: 'post' })
+watch(res.isFinished, () => {
+  if (res.isFinished) {
+    console.log(res.data.value)
+  }
+})
 </script>
 
 <style></style>
