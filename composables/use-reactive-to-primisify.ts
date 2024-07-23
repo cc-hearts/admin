@@ -6,12 +6,13 @@ export function useReactiveToPromisify<
   S = ReturnType<T>,
   P = any,
 >(hookFn: T, callback: (resolve: Fn, reject: Fn, ret: S) => void) {
-  const scope = effectScope()
-
   return () => {
+    const scope = effectScope()
+
     const ret = new Promise<P>((resolve, reject) => {
       scope.run(() => {
         const ret = hookFn()
+
         const watcher = ret?.watchCallback || ret
         watch(
           watcher,

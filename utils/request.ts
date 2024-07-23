@@ -1,6 +1,7 @@
 import { createFetch } from '@vueuse/core'
 import { refreshApi } from '~/apis'
 import { requestUrl } from '~/configs/request'
+import { throwError } from './error'
 import {
   getRefreshToken,
   getToken,
@@ -13,56 +14,51 @@ import {
 const useFetch = createFetch({
   baseUrl: requestUrl,
   options: {
-    async beforeFetch({ options }) {
+    async beforeFetch({ options, cancel }) {
       const token = getToken()
       if (token) {
         options.headers = {
           ...options.headers,
           Authorization: `Bearer ${token}`,
         }
+      } else {
+        cancel()
       }
 
       return { options }
     },
     async afterFetch(params) {
-      try {
-        if (
-          params.response.headers
-            .get('Content-Type')
-            ?.includes('application/json')
-        ) {
-          params.data = await params.response.json()
-          if (params.data.code !== 0) {
-            // refresh token
-            if (params.data.code === 401 && getRefreshToken()) {
-              try {
-                const request = await refreshApi()
-                if (request.data) {
-                  const { accessToken, refreshToken } = request.data.value.data
-                  setToken(accessToken)
-                  setRefreshToken(refreshToken)
-                } else {
-                  removeToken()
-                  removeRefreshToken()
-                  // TODO: redirect to login
-                }
-              } catch (error) {
-                throw new Error(`[refresh token]: ${error?.toString()}`)
-              }
-            } else {
-              throw new Error(params.data.message)
+      if (
+        params.response.headers
+          .get('Content-Type')
+          ?.includes('application/json')
+      ) {
+        params.data = await params.response.json()
+        if (params.data.code !== 0) {
+          // refresh token
+          if (params.data.code === 401 && getRefreshToken()) {
+            try {
+              const request = await refreshApi()
+              const { accessToken, refreshToken } = request.data.value.data
+              setToken(accessToken)
+              setRefreshToken(refreshToken)
+            } catch (error) {
+              removeToken()
+              removeRefreshToken()
+              // TODO: redirect to login
+              throwError(`[refresh token]: ${error?.toString()}`)
             }
+          } else {
+            throwError(params.data.message)
           }
         }
-        return params
-      } finally {
-        //
       }
+      return params
     },
   },
 })
 
-export function useRequest(...rest: Parameters<typeof useFetch>) {
+export function useRequest<T>(...rest: Parameters<typeof useFetch>) {
   const {
     onFetchResponse,
     isFetching: _isFetching,
@@ -70,7 +66,7 @@ export function useRequest(...rest: Parameters<typeof useFetch>) {
     onFetchError,
     execute,
     ...otherParams
-  } = useFetch(...rest)
+  } = useFetch<T>(...rest)
   const isFetching = ref(true)
   const isFinished = ref(false)
   onFetchResponse(async (ctx) => {
