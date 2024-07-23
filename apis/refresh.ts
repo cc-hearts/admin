@@ -25,9 +25,13 @@ export const refreshApi = useReactiveToPromisify(
               .get('Content-Type')
               ?.includes('application/json')
           ) {
-            params.data = await params.response.json()
-            if (params.data.code !== 0) {
-              throwError(params.data.message)
+            try {
+              params.data = await params.response.json()
+              if (params.data.code !== 0) {
+                throwError(params.data.message)
+              }
+            } catch (error) {
+              // error
             }
           }
           return params
@@ -37,14 +41,17 @@ export const refreshApi = useReactiveToPromisify(
     return { ...response, watchCallback: () => response.isFinished.value }
   },
   (resolve, reject, response) => {
-    watchEffect(() => {
-      if (response.isFinished.value) {
-        if (response.data.value?.code === 0) {
-          resolve(response)
-        } else {
-          reject(response.error.value)
+    watch(
+      () => response.isFinished.value,
+      (isFinished) => {
+        if (isFinished) {
+          if (response.data.value?.code === 0) {
+            resolve(response)
+          } else {
+            reject('[refresh error]:' + response)
+          }
         }
-      }
-    })
+      },
+    )
   },
 )

@@ -1,5 +1,6 @@
 import { useRequest } from '../utils/request'
 import { describe, expect, test, vi } from 'vitest'
+import { refreshApi } from '~/apis'
 import { createMockFn } from '~/mocks/utils'
 
 const {
@@ -20,6 +21,12 @@ const {
     mockAuthDataFn: { value: null as any },
     mockRefreshData: { value: null as any },
   }
+})
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason)
+  // 记录日志或者抛出错误以确保测试失败
+  throw reason
 })
 
 createMockFn('/user/refresh', 'post', () => {
@@ -55,6 +62,38 @@ vi.mock('~/storages/token', () => {
 })
 
 describe('request modules', () => {
+  test('refresh token is expired', () => {
+    mockRefreshData.value = {
+      code: 401,
+      data: 'null',
+      message: 'refresh token expired',
+    }
+    mockAuthDataFn.value = () => {
+      return {
+        code: 401,
+        data: 'null',
+        message: 'token expired',
+      }
+    }
+
+    const { isFinished, data } = useRequest<{
+      code: number
+      data: any
+      message: string
+    }>('/user/auth', { method: 'post' })
+    watch(
+      () => isFinished.value,
+      (bool) => {
+        if (bool) {
+          expect(removeTokenFn).toHaveBeenCalled()
+          expect(data.value?.code).toBe(401)
+          expect(data.value?.data).toBe('null')
+          expect(data.value?.message).toBe('token expired')
+        }
+      },
+    )
+  })
+
   test('refresh token success', () => {
     return new Promise<void>((resolve) => {
       mockRefreshData.value = {
@@ -103,42 +142,6 @@ describe('request modules', () => {
               refreshToken: 'newRefreshToken',
             })
             expect(data.value?.message).toBe('请求成功')
-            resolve()
-          }
-        },
-      )
-    })
-  })
-
-  test('refresh token is expired', () => {
-    return new Promise<void>((resolve) => {
-      mockRefreshData.value = {
-        code: 401,
-        data: 'null',
-        message: 'refresh token expired',
-      }
-      mockAuthDataFn.value = () => {
-        return {
-          code: 401,
-          data: 'null',
-          message: 'token expired',
-        }
-      }
-
-      const { isFinished, data } = useRequest<{
-        code: number
-        data: any
-        message: string
-      }>('/user/auth', { method: 'post' })
-      watch(
-        () => isFinished.value,
-        (bool) => {
-          if (bool) {
-            expect(removeTokenFn).toHaveBeenCalled()
-            expect(data.value?.code).toBe(401)
-            expect(data.value?.data).toBe('null')
-            console.log(data.value?.message)
-            expect(data.value?.message).toBe('token expired')
             resolve()
           }
         },

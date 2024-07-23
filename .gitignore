@@ -31,3 +31,4 @@ auto-import.d.ts
 components.d.ts
 mockServiceWorker.js
 .nuxt
+coverage

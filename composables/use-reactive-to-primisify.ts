@@ -1,3 +1,4 @@
+import { noop } from '@cc-heart/utils'
 import type { Fn } from '@cc-heart/utils/helper'
 import { effectScope, watch } from 'vue'
 
@@ -24,9 +25,11 @@ export function useReactiveToPromisify<
       })
     })
 
-    ret.finally(() => {
-      scope.stop()
-    })
+    ret
+      .finally(() => {
+        scope.stop()
+      })
+      .catch(noop)
 
     return ret
   }
