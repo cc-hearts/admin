@@ -1,8 +1,6 @@
-import { beforeEach } from 'node:test'
-import { useRequest } from '../utils/request'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { createMockFn } from '~/mocks/utils'
-
+import { watch } from 'vue'
 const {
   setToken,
   setRefreshToken,
@@ -71,9 +69,44 @@ describe.sequential('request modules', () => {
     mockRefreshData.value = null
     mockAuthDataFn.value = null
     mockAuthExpiredData.value = null
+    token.value = 'token'
   })
 
-  test('refresh token success', async () => {
+  test.sequential('refresh token is expired', async () => {
+    return new Promise<void>((resolve) => {
+      mockRefreshData.value = {
+        code: 401,
+        data: 'null',
+        message: 'refresh token expired',
+      }
+      mockAuthExpiredData.value = {
+        code: 401,
+        data: 'null',
+        message: 'token expired',
+      }
+
+      const { isFinished, data } = useRequest<{
+        code: number
+        data: any
+        message: string
+      }>('/user/authExpired', { method: 'post' })
+
+      watch(
+        () => isFinished.value,
+        (bool) => {
+          if (bool) {
+            expect(removeTokenFn).toHaveBeenCalled()
+            expect(data.value?.code).toBe(401)
+            expect(data.value?.data).toBe('null')
+            expect(data.value?.message).toBe('token expired')
+            resolve()
+          }
+        },
+      )
+    })
+  })
+
+  test.sequential('refresh token success', async () => {
     return new Promise<void>((resolve) => {
       mockRefreshData.value = {
         code: 0,
@@ -83,7 +116,6 @@ describe.sequential('request modules', () => {
         },
         message: '请求成功',
       }
-
       mockAuthDataFn.value = () => {
         const refreshFlag = ++count % 2 === 0
         if (refreshFlag) {
@@ -111,8 +143,8 @@ describe.sequential('request modules', () => {
 
       watch(
         () => isFinished.value,
-        (bool) => {
-          if (bool) {
+        () => {
+          if (isFinished.value) {
             expect(setToken).toHaveBeenCalled()
             expect(data.value?.code).toBe(0)
             expect(data.value?.data).toEqual({
@@ -120,44 +152,6 @@ describe.sequential('request modules', () => {
               refreshToken: 'newRefreshToken',
             })
             expect(data.value?.message).toBe('请求成功')
-            mockAuthDataFn.value = null
-            mockRefreshData.value = null
-            resolve()
-          }
-        },
-      )
-    })
-  })
-
-  test('refresh token is expired', async () => {
-    return new Promise<void>((resolve) => {
-      mockRefreshData.value = {
-        code: 401,
-        data: 'null',
-        message: 'refresh token expired',
-      }
-      mockAuthExpiredData.value = {
-        code: 401,
-        data: 'null',
-        message: 'token expired',
-      }
-
-      const { isFinished, data } = useRequest<{
-        code: number
-        data: any
-        message: string
-      }>('/user/authExpired', { method: 'post' })
-
-      watch(
-        () => isFinished.value,
-        (bool) => {
-          if (bool) {
-            expect(removeTokenFn).toHaveBeenCalled()
-            expect(data.value?.code).toBe(401)
-            expect(data.value?.data).toBe('null')
-            expect(data.value?.message).toBe('token expired')
-            mockAuthExpiredData.value = null
-            mockRefreshData.value = null
 
             resolve()
           }

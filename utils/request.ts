@@ -69,6 +69,7 @@ export function useRequest<T>(...rest: Parameters<typeof useFetch>) {
   } = useFetch<T>(...rest)
   const isFetching = ref(true)
   const isFinished = ref(false)
+
   onFetchResponse(async (ctx) => {
     try {
       if (ctx.headers.get('Content-Type') === 'application/json') {
