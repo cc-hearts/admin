@@ -1,6 +1,6 @@
+import { beforeEach } from 'node:test'
 import { useRequest } from '../utils/request'
 import { describe, expect, test, vi } from 'vitest'
-import { refreshApi } from '~/apis'
 import { createMockFn } from '~/mocks/utils'
 
 const {
@@ -9,6 +9,7 @@ const {
   getMockToken,
   removeTokenFn,
   mockAuthDataFn,
+  mockAuthExpiredData,
   mockRefreshData,
   token,
 } = vi.hoisted(() => {
@@ -19,14 +20,9 @@ const {
     removeTokenFn: vi.fn(),
     token: { value: 'token' },
     mockAuthDataFn: { value: null as any },
+    mockAuthExpiredData: { value: null as any },
     mockRefreshData: { value: null as any },
   }
-})
-
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason)
-  // 记录日志或者抛出错误以确保测试失败
-  throw reason
 })
 
 createMockFn('/user/refresh', 'post', () => {
@@ -36,12 +32,18 @@ createMockFn('/user/refresh', 'post', () => {
 createMockFn('/user/auth', 'post', () => {
   return mockAuthDataFn.value?.()
 })
+
+createMockFn('/user/authExpired', 'post', () => {
+  return mockAuthExpiredData.value
+})
+
 vi.mock('~/utils/error', () => {
   return {
     throwError: vi.fn(),
   }
 })
-vi.mock('~/storages/token', () => {
+
+vi.mock('~/storages/token', async () => {
   return {
     getToken: () => {
       getMockToken()
@@ -61,40 +63,17 @@ vi.mock('~/storages/token', () => {
   }
 })
 
-describe('request modules', () => {
-  test('refresh token is expired', () => {
-    mockRefreshData.value = {
-      code: 401,
-      data: 'null',
-      message: 'refresh token expired',
-    }
-    mockAuthDataFn.value = () => {
-      return {
-        code: 401,
-        data: 'null',
-        message: 'token expired',
-      }
-    }
+describe.sequential('request modules', () => {
+  let count = 0
 
-    const { isFinished, data } = useRequest<{
-      code: number
-      data: any
-      message: string
-    }>('/user/auth', { method: 'post' })
-    watch(
-      () => isFinished.value,
-      (bool) => {
-        if (bool) {
-          expect(removeTokenFn).toHaveBeenCalled()
-          expect(data.value?.code).toBe(401)
-          expect(data.value?.data).toBe('null')
-          expect(data.value?.message).toBe('token expired')
-        }
-      },
-    )
+  beforeEach(() => {
+    count = 0
+    mockRefreshData.value = null
+    mockAuthDataFn.value = null
+    mockAuthExpiredData.value = null
   })
 
-  test('refresh token success', () => {
+  test('refresh token success', async () => {
     return new Promise<void>((resolve) => {
       mockRefreshData.value = {
         code: 0,
@@ -105,7 +84,6 @@ describe('request modules', () => {
         message: '请求成功',
       }
 
-      let count = 0
       mockAuthDataFn.value = () => {
         const refreshFlag = ++count % 2 === 0
         if (refreshFlag) {
@@ -142,6 +120,45 @@ describe('request modules', () => {
               refreshToken: 'newRefreshToken',
             })
             expect(data.value?.message).toBe('请求成功')
+            mockAuthDataFn.value = null
+            mockRefreshData.value = null
+            resolve()
+          }
+        },
+      )
+    })
+  })
+
+  test('refresh token is expired', async () => {
+    return new Promise<void>((resolve) => {
+      mockRefreshData.value = {
+        code: 401,
+        data: 'null',
+        message: 'refresh token expired',
+      }
+      mockAuthExpiredData.value = {
+        code: 401,
+        data: 'null',
+        message: 'token expired',
+      }
+
+      const { isFinished, data } = useRequest<{
+        code: number
+        data: any
+        message: string
+      }>('/user/authExpired', { method: 'post' })
+
+      watch(
+        () => isFinished.value,
+        (bool) => {
+          if (bool) {
+            expect(removeTokenFn).toHaveBeenCalled()
+            expect(data.value?.code).toBe(401)
+            expect(data.value?.data).toBe('null')
+            expect(data.value?.message).toBe('token expired')
+            mockAuthExpiredData.value = null
+            mockRefreshData.value = null
+
             resolve()
           }
         },

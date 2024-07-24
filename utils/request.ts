@@ -83,5 +83,15 @@ export function useRequest<T>(...rest: Parameters<typeof useFetch>) {
       isFinished.value = true
     }
   })
-  return { onFetchResponse, isFetching, isFinished, ...otherParams }
+  onFetchError(() => {
+    isFetching.value = false
+    isFinished.value = true
+  })
+  return {
+    onFetchResponse,
+    onFetchError,
+    isFetching,
+    isFinished,
+    ...otherParams,
+  }
 }
