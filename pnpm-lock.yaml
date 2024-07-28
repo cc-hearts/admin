@@ -26,8 +26,8 @@ devDependencies:
     specifier: ^2.2.0
     version: 2.3.0(rollup@4.18.0)(typescript@5.4.5)
   '@cc-heart/storage-cache':
-    specifier: ^0.0.5
-    version: 0.0.5
+    specifier: ^0.0.6
+    version: 0.0.6
   '@cc-heart/ui-demi':
     specifier: ^0.5.3
     version: 0.5.3
@@ -64,6 +64,9 @@ devDependencies:
   ant-design-vue:
     specifier: ^4.1.2
     version: 4.2.3(vue@3.4.33)
+  css-doodle:
+    specifier: ^0.39.2
+    version: 0.39.2
   cypress:
     specifier: ^13.7.1
     version: 13.11.0
@@ -563,8 +566,8 @@ packages:
       - typescript
     dev: true
 
-  /@cc-heart/storage-cache@0.0.5:
-    resolution: {integrity: sha512-3n5x920Nx0no6kELK4rhqgXOhfzvBJ3Ry6jbTrQGmtjy3TyD7BPkAHwKSASHGwp0CzJ6d/6S4QOqf5Tajpbxkg==}
+  /@cc-heart/storage-cache@0.0.6:
+    resolution: {integrity: sha512-6fDXwOJtc76VqG6nEXSSukpK56bzpA1W0oFwkWVym6se8gqgz1cgi09s0FK7XKM3kXdtO8P4KpX+NNjODmKJMw==}
     dependencies:
       '@cc-heart/utils': 5.2.0
     dev: true
@@ -4501,6 +4504,10 @@ packages:
       postcss: ^8.0.9
     dependencies:
       postcss: 8.4.38
+
+  /css-doodle@0.39.2:
+    resolution: {integrity: sha512-pmfZIpGrY0M4wsvIkHXnGUnze9FD+311IjU0r1yrClvpMUx/zoAo1PnLTT2ylbsaJg/KWkaTdCRCNubGqw5wOw==}
+    dev: true
 
   /css-select@5.1.0:
     resolution: {integrity: sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==}

@@ -1,5 +1,8 @@
 <template>
-  <Card class="w-full max-w-sm">
+  <!--Background -->
+  <Background />
+
+  <Card class="relative z-1 w-full max-w-sm">
     <div class="w-full flex items-center justify-center p-t-6 p-b-2">
       <img src="/logo.svg" class="w-8 h-8" />
     </div>
@@ -25,6 +28,7 @@
 
 <script setup lang="ts">
 import { FormSchema, Card, Button, Divider } from '~/components'
+import Background from '~/components/css-doodle/gradient-background.vue'
 
 definePageMeta({
   layout: 'login-layout',
@@ -59,5 +63,3 @@ const handleLogin = async () => {
   console.log(formSchemaRef.value.getFieldsValue())
 }
 </script>
-
-<style></style>
