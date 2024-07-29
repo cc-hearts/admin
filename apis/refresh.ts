@@ -1,5 +1,5 @@
-import { useReactiveToPromisify } from '~/composables/use-reactive-to-primisify'
 import { useFetch } from '@vueuse/core'
+import { useReactiveToPromisify } from '@cc-heart/vue-utils'
 import { requestUrl } from '~/configs/request'
 import { getToken } from '~/storages/token'
 import { throwError } from '~/utils/error'
