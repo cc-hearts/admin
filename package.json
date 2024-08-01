@@ -23,7 +23,7 @@
     "@cc-heart/ui-demi": "^0.5.3",
     "@cc-heart/utils": "^5.2.0",
     "@cc-heart/utils-client": "^2.0.2",
-    "@cc-heart/vue-utils": "^0.0.3",
+    "@cc-heart/vue-utils": "^0.0.4",
     "@nuxt/test-utils": "^3.13.1",
     "@types/node": "^20.10.5",
     "@unocss/nuxt": "^0.60.4",

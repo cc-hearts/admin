@@ -38,20 +38,21 @@ export const refreshApi = useReactiveToPromisify(
         },
       },
     )
-    return { ...response, watchCallback: () => response.isFinished.value }
+    const { isFetching } = response
+    const onWatcherCallback = isFetching
+
+    return {
+      ...response,
+      onWatcherCallback,
+    }
   },
   (resolve, reject, response) => {
-    watch(
-      () => response.isFinished.value,
-      (isFinished) => {
-        if (isFinished) {
-          if (response.data.value?.code === 0) {
-            resolve(response)
-          } else {
-            reject('[refresh error]:' + response)
-          }
-        }
-      },
-    )
+    if (response.isFinished.value) {
+      if (response.data.value?.code === 0) {
+        resolve(response)
+      } else {
+        reject('[refresh error]:' + response)
+      }
+    }
   },
 )
