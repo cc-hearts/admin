@@ -22,6 +22,7 @@ const useFetch = createFetch({
           Authorization: `Bearer ${token}`,
         }
       } else {
+        console.log('refresh cancel', token)
         cancel()
       }
 
@@ -64,6 +65,7 @@ export function useRequest<T>(...rest: Parameters<typeof useFetch>) {
     isFetching: _isFetching,
     isFinished: _isFinished,
     onFetchError,
+    data,
     execute,
     ...otherParams
   } = useFetch<T>(...rest)
@@ -73,8 +75,7 @@ export function useRequest<T>(...rest: Parameters<typeof useFetch>) {
   onFetchResponse(async (ctx) => {
     try {
       if (ctx.headers.get('Content-Type') === 'application/json') {
-        // @ts-expect-error: error
-        const response = await ctx._fmResults.json
+        const response = data.value
         if (response?.code === 401) {
           await execute()
         }
@@ -93,6 +94,7 @@ export function useRequest<T>(...rest: Parameters<typeof useFetch>) {
     onFetchError,
     isFetching,
     isFinished,
+    data,
     ...otherParams,
   }
 }
