@@ -75,7 +75,7 @@ export function useRequest<T>(...rest: Parameters<typeof useFetch>) {
   onFetchResponse(async (ctx) => {
     try {
       if (ctx.headers.get('Content-Type') === 'application/json') {
-        const response = data.value
+        const response = data.value as { code: number } | null
         if (response?.code === 401) {
           await execute()
         }
