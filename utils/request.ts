@@ -10,11 +10,12 @@ import {
   setRefreshToken,
   setToken,
 } from '~/storages/token'
+import { useErrorMessage } from '~/components'
 
 const useFetch = createFetch({
   baseUrl: requestUrl,
   options: {
-    async beforeFetch({ options, cancel }) {
+    async beforeFetch({ options, url, cancel }) {
       const token = getToken()
       if (token) {
         options.headers = {
@@ -22,7 +23,9 @@ const useFetch = createFetch({
           Authorization: `Bearer ${token}`,
         }
       } else {
-        console.log('refresh cancel', token)
+        useErrorMessage(
+          `The request is canceled because the token does not exist. url: ${url}`,
+        )
         cancel()
       }
 

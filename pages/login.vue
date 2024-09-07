@@ -1,5 +1,5 @@
 <template>
-  <!--Background -->
+  <!-- Background -->
   <Background />
 
   <Card class="relative z-1 w-full max-w-sm">
@@ -61,5 +61,8 @@ const handleLogin = async () => {
   if (!bool) return
 
   console.log(formSchemaRef.value.getFieldsValue())
+  useRequest('/user/auth', {
+    method: 'post',
+  })
 }
 </script>

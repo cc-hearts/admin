@@ -1,1 +1,1 @@
-export { Button, Divider, Input } from 'ant-design-vue'
+export { Button, Divider, Input, message } from 'ant-design-vue'

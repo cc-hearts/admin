@@ -1,4 +1,4 @@
-<template>404</template>
+<template></template>
 
 <script setup lang="ts"></script>
 
