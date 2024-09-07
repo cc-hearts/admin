@@ -1,13 +1,13 @@
-import { defineConfig } from 'vitest/config'
+import { resolve } from 'path'
+import { defineVitestConfig } from '@nuxt/test-utils/config'
 
-export default defineConfig({
-  test: {
-    environment: 'jsdom',
-    setupFiles: ['./src/tests/setup-vitest.config.js'],
-  },
+export default defineVitestConfig({
   resolve: {
     alias: {
-      '@': '/src',
+      '~': resolve(''),
     },
+  },
+  test: {
+    environment: 'nuxt',
   },
 })
