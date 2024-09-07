@@ -10,6 +10,7 @@ import {
   setRefreshToken,
   setToken,
 } from '~/storages/token'
+import { effectScope } from 'vue'
 import { useErrorMessage } from '~/components'
 
 const useFetch = createFetch({
@@ -75,6 +76,23 @@ export function useRequest<T>(...rest: Parameters<typeof useFetch>) {
   const isFetching = ref(true)
   const isFinished = ref(false)
 
+  const scope = effectScope()
+  scope.run(() => {
+    watchEffect(() => {
+      if (_isFetching.value !== isFetching.value) {
+        isFetching.value = _isFetching.value
+      }
+
+      if (_isFinished.value !== isFinished.value) {
+        isFinished.value = _isFinished.value
+      }
+    })
+  })
+  const stop = () => {
+    scope.stop()
+    isFetching.value = false
+    isFinished.value = true
+  }
   onFetchResponse(async (ctx) => {
     try {
       if (ctx.headers.get('Content-Type') === 'application/json') {
@@ -84,13 +102,11 @@ export function useRequest<T>(...rest: Parameters<typeof useFetch>) {
         }
       }
     } finally {
-      isFetching.value = false
-      isFinished.value = true
+      stop()
     }
   })
   onFetchError(() => {
-    isFetching.value = false
-    isFinished.value = true
+    stop()
   })
   return {
     onFetchResponse,
