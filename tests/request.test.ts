@@ -16,7 +16,7 @@ const {
     setRefreshToken: vi.fn(),
     getMockToken: vi.fn(),
     removeTokenFn: vi.fn(),
-    token: { value: 'token' },
+    token: { value: 'token' as string | undefined },
     mockAuthDataFn: { value: null as any },
     mockAuthExpiredData: { value: null as any },
     mockRefreshData: { value: null as any },
@@ -153,6 +153,26 @@ describe.sequential('request modules', () => {
             })
             expect(data.value?.message).toBe('请求成功')
 
+            resolve()
+          }
+        },
+      )
+    })
+  })
+
+  test.sequential('request should cancel when token is not exist', async () => {
+    return new Promise<void>((resolve) => {
+      token.value = undefined
+      const { data, error, isFinished } = useRequest('/user/profile', {
+        method: 'get',
+      })
+
+      watch(
+        () => isFinished.value,
+        () => {
+          if (isFinished.value) {
+            expect(data.value).toBe(null)
+            expect(error.value).toBe(null)
             resolve()
           }
         },
