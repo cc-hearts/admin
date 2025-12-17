@@ -4,10 +4,7 @@ import { defineVitestConfig } from '@nuxt/test-utils/config'
 export default defineVitestConfig({
   resolve: {
     alias: {
-      '~': resolve(''),
+       '@': resolve(__dirname, './src'),
     },
-  },
-  test: {
-    environment: 'nuxt',
   },
 })
