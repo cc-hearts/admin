@@ -106,7 +106,7 @@ const ctx = useSidebar()
     </div>
 
     <!-- rail -->
-    <button
+    <!-- <button
       data-sidebar="rail"
       data-slot="sidebar-rail"
       aria-label="Toggle Sidebar"
@@ -124,6 +124,6 @@ const ctx = useSidebar()
         'rtl:in-data-[side=left]:cursor-e-resize rtl:in-data-[side=right]:cursor-w-resize',
         'rtl:[[data-side=left][data-state=collapsed]_&]:cursor-w-resize rtl:[[data-side=right][data-state=collapsed]_&]:cursor-e-resize'
       )"
-    />
+    /> -->
   </div>
 </template>
