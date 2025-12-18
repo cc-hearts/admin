@@ -80,7 +80,7 @@ onBeforeUnmount(() => {
   <div
     data-slot="sidebar-wrapper"
     :style="styleVars"
-    :class="cn('group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar', props.class)"
+    :class="cn('group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar h-full', props.class)"
   >
     <slot />
   </div>

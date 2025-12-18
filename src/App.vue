@@ -3,9 +3,9 @@ import SideBar from './layouts/sidebar/index.vue';
 </script>
 
 <template>
-    <div class="flex h-full w-[256px]">
-        <SideBar />
-    </div>
+    <SideBar>
+        <div class="flex-1"></div>
+    </SideBar>
 </template>
 
 <style>
@@ -15,6 +15,7 @@ body,
     height: 100%;
     width: 100%;
 }
+
 * {
     box-sizing: border-box;
 }
