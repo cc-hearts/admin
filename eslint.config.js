@@ -1,6 +1,3 @@
-import { typescript, vue } from '@cc-heart/eslint-config'
+import { typescript } from '@cc-heart/eslint-config'
 
-export default [
-  ...typescript(),
-  ...vue(),
-]
+export default [...typescript()]
