@@ -1,4 +1,13 @@
-import { ref,  inject, provide, type InjectionKey, type Ref, type ComputedRef } from 'vue'
+import {
+  ref,
+  inject,
+  provide,
+  onMounted,
+  onBeforeUnmount,
+  type InjectionKey,
+  type Ref,
+  type ComputedRef,
+} from 'vue'
 
 // 常量定义
 export const SIDEBAR_COOKIE_NAME = 'sidebar_state'
@@ -9,7 +18,7 @@ export const SIDEBAR_WIDTH_ICON = '3rem'
 export const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
 
 // Context 类型
-type SidebarContext = {
+interface SidebarContext {
   state: ComputedRef<'expanded' | 'collapsed'>
   open: Ref<boolean>
   setOpen: (value: boolean) => void
@@ -19,7 +28,9 @@ type SidebarContext = {
   toggleSidebar: () => void
 }
 
-const SIDEBAR_CONTEXT_KEY = Symbol('SIDEBAR_CONTEXT_KEY') as InjectionKey<SidebarContext>
+const SIDEBAR_CONTEXT_KEY = Symbol(
+  'SIDEBAR_CONTEXT_KEY',
+) as InjectionKey<SidebarContext>
 
 export function useSidebar() {
   const context = inject(SIDEBAR_CONTEXT_KEY)
@@ -34,10 +45,17 @@ export function provideSidebarContext(context: SidebarContext) {
 export function useIsMobile() {
   const isMobile = ref(false)
   if (typeof window !== 'undefined') {
-     const mql = window.matchMedia(`(max-width: 768px)`)
-     const onChange = () => { isMobile.value = mql.matches }
-     mql.addEventListener('change', onChange)
-     isMobile.value = mql.matches
+    const mql = window.matchMedia(`(max-width: 768px)`)
+    const onChange = () => {
+      isMobile.value = mql.matches
+    }
+    onMounted(() => {
+      isMobile.value = mql.matches
+      mql.addEventListener('change', onChange)
+    })
+    onBeforeUnmount(() => {
+      mql.removeEventListener('change', onChange)
+    })
   }
   return isMobile
 }

@@ -3,6 +3,7 @@ import SideBar from './layouts/sidebar/index.vue'
 import Header from './components/layout/Header.vue'
 import TopNav from './components/layout/TopNav.vue'
 import ConfigDrawer from './components/ConfigDrawer.vue'
+import ThemeSwitch from './components/ThemeSwitch.vue'
 import UnauthorizedError from './components/errors/UnauthorizedError.vue'
 import ForbiddenError from './components/errors/ForbiddenError.vue'
 import NotFoundError from './components/errors/NotFoundError.vue'
@@ -58,41 +59,10 @@ onMounted(() => {
     <Header>
       <TopNav :links="topNav" />
       <div class="ms-auto flex items-center space-x-4">
+        <ThemeSwitch />
         <ConfigDrawer />
       </div>
     </Header>
-    <div v-if="view === 'dashboard'" class="p-4">
-      <div class="mb-2 flex items-center justify-between">
-        <h1 class="text-2xl font-bold tracking-tight">Dashboard</h1>
-        <div class="text-muted-foreground text-sm">Content area</div>
-      </div>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="rounded-lg border p-4">
-          <div class="text-sm font-medium">Card A</div>
-          <div class="text-xs text-muted-foreground mt-1">Description</div>
-        </div>
-        <div class="rounded-lg border p-4">
-          <div class="text-sm font-medium">Card B</div>
-          <div class="text-xs text-muted-foreground mt-1">Description</div>
-        </div>
-        <div class="rounded-lg border p-4">
-          <div class="text-sm font-medium">Card C</div>
-          <div class="text-xs text-muted-foreground mt-1">Description</div>
-        </div>
-      </div>
-      <div class="mt-6 text-xs text-muted-foreground">
-        Errors playground: <a href="#errors/401" class="underline">401</a>,
-        <a href="#errors/403" class="underline">403</a>,
-        <a href="#errors/404" class="underline">404</a>,
-        <a href="#errors/500" class="underline">500</a>,
-        <a href="#errors/503" class="underline">503</a>
-      </div>
-    </div>
-    <UnauthorizedError v-else-if="view === 'error-401'" />
-    <ForbiddenError v-else-if="view === 'error-403'" />
-    <NotFoundError v-else-if="view === 'error-404'" />
-    <GeneralError v-else-if="view === 'error-500'" />
-    <MaintenanceError v-else-if="view === 'error-503'" />
   </SideBar>
 </template>
 

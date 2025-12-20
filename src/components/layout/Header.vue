@@ -36,7 +36,7 @@ const toggleSidebar = () => {
   <header
     :class="
       cn(
-        'z-50 h-16',
+        'z-5 h-16',
         props.fixed && 'sticky top-0 w-[inherit]',
         offset > 10 && props.fixed ? 'shadow' : 'shadow-none',
         props.class,

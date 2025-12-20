@@ -8,16 +8,15 @@ const LAYOUT_COLLAPSIBLE_COOKIE_NAME = 'layout_collapsible'
 const LAYOUT_VARIANT_COOKIE_NAME = 'layout_variant'
 const LAYOUT_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 
-const DEFAULT_VARIANT: Variant = 'sidebar'
+const DEFAULT_VARIANT: Variant = 'inset'
 const DEFAULT_COLLAPSIBLE: Collapsible = 'icon'
-
 
 const collapsible = ref<Collapsible>(
   (getCookie(LAYOUT_COLLAPSIBLE_COOKIE_NAME) as Collapsible) ||
-  DEFAULT_COLLAPSIBLE
+    DEFAULT_COLLAPSIBLE,
 )
 const variant = ref<Variant>(
-  (getCookie(LAYOUT_VARIANT_COOKIE_NAME) as Variant) || DEFAULT_VARIANT
+  (getCookie(LAYOUT_VARIANT_COOKIE_NAME) as Variant) || DEFAULT_VARIANT,
 )
 
 const setCollapsible = (c: Collapsible) => {
@@ -33,9 +32,6 @@ const resetLayout = () => {
   setVariant(DEFAULT_VARIANT)
 }
 
-
-
-
 export function useLayout() {
   return {
     resetLayout,
@@ -47,4 +43,3 @@ export function useLayout() {
     setVariant,
   }
 }
-

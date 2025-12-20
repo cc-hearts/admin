@@ -16,11 +16,17 @@ const props = withDefaults(
     class?: string
     style?: Record<string, string>
   }>(),
-  { defaultOpen: true }
+  { defaultOpen: true },
 )
 
 const isMobile = useIsMobile()
 const openMobile = ref(false)
+
+function getCookie(name: string) {
+  if (typeof document === 'undefined') return undefined
+  const row = document.cookie.split('; ').find((r) => r.startsWith(`${name}=`))
+  return row ? decodeURIComponent(row.split('=')[1]) : undefined
+}
 
 const _open = ref(!!props.defaultOpen)
 const open = computed(() => _open.value)
@@ -69,6 +75,10 @@ const handleKeyDown = (event: KeyboardEvent) => {
 }
 
 onMounted(() => {
+  const persisted = getCookie(SIDEBAR_COOKIE_NAME)
+  if (persisted === 'true' || persisted === 'false') {
+    _open.value = persisted === 'true'
+  }
   window.addEventListener('keydown', handleKeyDown)
 })
 onBeforeUnmount(() => {
@@ -80,10 +90,14 @@ onBeforeUnmount(() => {
   <div
     data-slot="sidebar-wrapper"
     :style="styleVars"
-    :class="cn('group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar h-full', props.class)"
+    :class="
+      cn(
+        'group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar h-full',
+        props.class,
+      )
+    "
   >
     <slot />
   </div>
   <!-- TooltipProvider 对齐省略，Vue 版可后续补充 -->
 </template>
-
