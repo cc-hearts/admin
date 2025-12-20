@@ -9,7 +9,7 @@ const props = withDefaults(
     fixed?: boolean
     class?: string
   }>(),
-  { fixed: false }
+  { fixed: false },
 )
 
 const offset = ref(0)
@@ -39,7 +39,7 @@ const toggleSidebar = () => {
         'z-50 h-16',
         props.fixed && 'sticky top-0 w-[inherit]',
         offset > 10 && props.fixed ? 'shadow' : 'shadow-none',
-        props.class
+        props.class,
       )
     "
   >
@@ -49,7 +49,7 @@ const toggleSidebar = () => {
           'relative flex h-full items-center gap-3 p-4 sm:gap-4',
           offset > 10 &&
             props.fixed &&
-            'after:absolute after:inset-0 after:-z-10 after:bg-background/20 after:backdrop-blur-lg'
+            'after:absolute after:inset-0 after:-z-10 after:bg-background/20 after:backdrop-blur-lg',
         )
       "
     >
@@ -57,7 +57,7 @@ const toggleSidebar = () => {
         type="button"
         aria-label="Toggle Sidebar"
         @click="toggleSidebar"
-        class="inline-flex size-7 items-center justify-center rounded-md border bg-background text-foreground hover:bg-muted max-md:scale-125"
+        class="inline-flex cursor-pointer size-7 items-center justify-center rounded-md border bg-background text-foreground hover:bg-muted max-md:scale-125"
       >
         <PanelLeft class="size-4" />
       </button>
