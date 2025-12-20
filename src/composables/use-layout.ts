@@ -8,7 +8,7 @@ const LAYOUT_COLLAPSIBLE_COOKIE_NAME = 'layout_collapsible'
 const LAYOUT_VARIANT_COOKIE_NAME = 'layout_variant'
 const LAYOUT_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 
-const DEFAULT_VARIANT: Variant = 'inset'
+const DEFAULT_VARIANT: Variant = 'sidebar'
 const DEFAULT_COLLAPSIBLE: Collapsible = 'icon'
 
 
