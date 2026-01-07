@@ -8,7 +8,6 @@
 </template>
 
 <script setup lang="ts">
-import SidebarProvider from './SidebarProvider.vue'
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar'
 import AppSidebar from './AppSidebar.vue'
-import SidebarInset from './SidebarInset.vue'
 </script>

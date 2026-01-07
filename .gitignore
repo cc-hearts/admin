@@ -32,3 +32,4 @@ components.d.ts
 mockServiceWorker.js
 .nuxt
 coverage
+.trae/**

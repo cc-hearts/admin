@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import Sidebar from './sidebar.vue'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from '@/components/ui/sidebar'
 import { useLayout } from '@/composables/use-layout'
 import { sidebarData } from '@/components/layout/data/sidebar-data'
 import TeamSwitcher from '@/components/layout/TeamSwitcher.vue'
@@ -14,21 +20,19 @@ const layout = useLayout()
     :collapsible="layout?.collapsible?.value ?? 'icon'"
     :variant="layout?.variant?.value ?? 'inset'"
   >
-    <div data-slot="sidebar-header" class="flex flex-col gap-2 p-2">
+    <SidebarHeader>
       <TeamSwitcher :teams="sidebarData.teams" />
-    </div>
-    <div
-      data-slot="sidebar-content"
-      class="flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden group-data-[variant=floating]:overflow-visible"
-    >
+    </SidebarHeader>
+    <SidebarContent>
       <NavGroup
         v-for="group in sidebarData.navGroups"
         :key="group.title"
         v-bind="group"
       />
-    </div>
-    <div data-slot="sidebar-footer" class="flex flex-col gap-2 p-2">
+    </SidebarContent>
+    <SidebarFooter>
       <NavUser :user="sidebarData.user" />
-    </div>
+    </SidebarFooter>
+    <SidebarRail />
   </Sidebar>
 </template>

@@ -9,6 +9,7 @@ import {
   SIDEBAR_KEYBOARD_SHORTCUT,
 } from '@/composables/use-sidebar'
 import { provideSidebarContext, useIsMobile } from '@/composables/use-sidebar'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 const props = withDefaults(
   defineProps<{
@@ -58,11 +59,11 @@ provideSidebarContext({
   toggleSidebar,
 })
 
-const styleVars = {
+const styleVars = computed(() => ({
   '--sidebar-width': SIDEBAR_WIDTH,
   '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,
   ...(props.style || {}),
-} as Record<string, string>
+}))
 
 const handleKeyDown = (event: KeyboardEvent) => {
   if (
@@ -87,17 +88,18 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div
-    data-slot="sidebar-wrapper"
-    :style="styleVars"
-    :class="
-      cn(
-        'group/sidebar-wrapper flex w-full has-data-[variant=inset]:bg-sidebar h-full',
-        props.class,
-      )
-    "
-  >
-    <slot />
-  </div>
-  <!-- TooltipProvider 对齐省略，Vue 版可后续补充 -->
+  <TooltipProvider :delay-duration="0">
+    <div
+      data-slot="sidebar-wrapper"
+      :style="styleVars"
+      :class="
+        cn(
+          'group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar',
+          props.class,
+        )
+      "
+    >
+      <slot />
+    </div>
+  </TooltipProvider>
 </template>
