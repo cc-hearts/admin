@@ -47,6 +47,7 @@
     "@vueuse/core": "^14.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "lottie-web": "^5.13.0",
     "lucide-vue-next": "^0.561.0",
     "reka-ui": "^2.6.1",
     "tailwind-merge": "^3.4.0",

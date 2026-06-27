@@ -9,6 +9,7 @@ import ForbiddenError from './components/errors/ForbiddenError.vue'
 import NotFoundError from './components/errors/NotFoundError.vue'
 import GeneralError from './components/errors/GeneralError.vue'
 import MaintenanceError from './components/errors/MaintenanceError.vue'
+import DecorativeBackgroundAnimation from './components/lottie/DecorativeBackgroundAnimation.vue'
 import { onMounted, ref } from 'vue'
 
 const topNav = [
@@ -56,13 +57,32 @@ onMounted(() => {
 
 <template>
   <SideBar>
-    <Header>
-      <TopNav :links="topNav" />
-      <div class="ms-auto flex items-center space-x-4">
-        <ThemeSwitch />
-        <ConfigDrawer />
+    <div class="relative isolate z-10">
+      <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div
+          class="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2"
+        >
+          <DecorativeBackgroundAnimation />
+        </div>
       </div>
-    </Header>
+
+      <Header>
+        <TopNav :links="topNav" />
+        <div class="ms-auto flex items-center space-x-4">
+          <ThemeSwitch />
+          <ConfigDrawer />
+        </div>
+      </Header>
+
+      <main class="relative min-h-[calc(100svh-4rem)] p-6">
+        <UnauthorizedError v-if="view === 'error-401'" />
+        <ForbiddenError v-else-if="view === 'error-403'" />
+        <NotFoundError v-else-if="view === 'error-404'" />
+        <GeneralError v-else-if="view === 'error-500'" />
+        <MaintenanceError v-else-if="view === 'error-503'" />
+        <section v-else class="h-full" aria-label="Dashboard" />
+      </main>
+    </div>
   </SideBar>
 </template>
 
